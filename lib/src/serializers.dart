@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
+import 'package:erp_fronted/src/branches.dart';
 import 'package:erp_fronted/src/meta_link.dart';
 import 'modules.dart';
 
@@ -10,6 +11,7 @@ part 'serializers.g.dart';
   Modules,
   Meta,
   Links,
+  Branches
 ])
 
 Serializers serializers = _$serializers;

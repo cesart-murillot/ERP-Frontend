@@ -20,15 +20,13 @@ abstract class Modules implements Built<Modules, ModulesBuilder> {
 abstract class Module implements Built<Module, ModuleBuilder> {
   static Serializer<Module> get serializer => _$moduleSerializer;
 
-  @BuiltValueField(wireName: 'id')
   int get id;
-
-  @BuiltValueField(wireName: 'module')
   String get module;
 
   Module._();
   factory Module([void Function(ModuleBuilder) updates]) = _$Module;
 }
+
 
 // abstract class Data implements Built<Data, DataBuilder> {
 //   static Serializer<Data>get serializer => _$dataSerializer;
