@@ -3,18 +3,28 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:erp_fronted/src/meta_link.dart';
 
-import 'branches.g.dart';
+part 'branches.g.dart';
 
 abstract class Branches implements Built<Branches, BranchesBuilder> {
   static Serializer<Branches> get serializer => _$branchesSerializer;
 
-  String get name;
-  String get address;
-  BuiltList<Warehouses>? get warehouses;
+  BuiltList<Data> get data;
   Links get links;
   Meta get meta;
 
-  factory Branches([void Function(BranchesBuilder) updates]) = _Branches;
+  Branches._();
+  factory Branches([void Function(BranchesBuilder) updates]) = _$Branches;
+}
+
+abstract class Data implements Built<Data, DataBuilder> {
+  static Serializer<Data> get serializer => _$dataSerializer;
+
+  String get name;
+  String get address;
+  BuiltList<Warehouses>? get warehouses;
+
+  Data._();
+  factory Data([void Function(DataBuilder) updates]) = _$Data;
 }
 
 abstract class Warehouses implements Built<Warehouses, WarehousesBuilder> {
@@ -24,7 +34,7 @@ abstract class Warehouses implements Built<Warehouses, WarehousesBuilder> {
   BuiltList<Sections>? get sections;
 
   Warehouses._();
-  factory Warehouses([void Function(WarehousesBuilder) updates]) = _Warehouses;
+  factory Warehouses([void Function(WarehousesBuilder) updates]) = _$Warehouses;
 }
 
 abstract class Sections implements Built<Sections, SectionsBuilder> {
@@ -34,7 +44,7 @@ abstract class Sections implements Built<Sections, SectionsBuilder> {
   int get warehouse_id;
   String get created_at;
   String get updated_at;
-  String? get delteted_at;
+  String? get deleted_at;
   Sections._();
-  factory Sections([void Function(SectionsBuilder) updates]) = _Sections;
+  factory Sections([void Function(SectionsBuilder) updates]) = _$Sections;
 }

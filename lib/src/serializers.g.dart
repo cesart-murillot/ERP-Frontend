@@ -8,6 +8,7 @@ part of 'serializers.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Branches.serializer)
+      ..add(Data.serializer)
       ..add(Links.serializer)
       ..add(Meta.serializer)
       ..add(Module.serializer)
@@ -15,6 +16,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Navigation.serializer)
       ..add(Sections.serializer)
       ..add(Warehouses.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Data)]),
+          () => new ListBuilder<Data>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Module)]),
           () => new ListBuilder<Module>())
