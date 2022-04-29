@@ -8,23 +8,44 @@
 import 'dart:convert';
 
 import 'package:erp_fronted/src/branches.dart';
+import 'package:erp_fronted/src/meta_link.dart';
 import 'package:erp_fronted/src/modules.dart';
+import 'package:erp_fronted/src/products.dart';
 import 'package:erp_fronted/src/serializers.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_test/flutter_test.dart';
-import 'package:erp_fronted/main.dart';
+
 import 'package:http/http.dart' as http;
 
 void main() {
-/*  test("get json over network", () async {
-    var url = Uri.http('127.0.0.1:8000', 'api/branches');
+
+  test("get json over network", () async {
+    var url = Uri.http('127.0.0.1:8000', 'api/modules');
     final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      if (data.isNotEmpty) {}
-    }
-  });*/
+    Modules? modules = standardSerializers.deserializeWith(Modules.serializer, json.decode(response.body));
+
+    expect(modules?.data.first.module, "asdf");
+  });
+
+  test("get Products over network", () async {
+    var url = Uri.http('127.0.0.1:8000', 'api/products');
+    final response = await http.get(url);
+
+    Products? products = standardSerializers.deserializeWith(Products.serializer, json.decode(response.body));
+
+    expect(products?.data.first.name, "Germany");
+  });
+
+
+  test("parse product", (){
+    const jsonString = """
+    {"name":"Product 1","image_url":"an image","length":"20","height":"20","weight":"10","units_box":6,"brand_product":"A brand","origin_product":"A country"}
+    """;
+
+    Product? product = standardSerializers.deserializeWith(Product.serializer, json.decode(jsonString));
+    expect(product?.name, "Product 1");
+  });
 
   test("parses module", () {
     const jsonString =
@@ -40,5 +61,16 @@ void main() {
     Branches? branches = standardSerializers.deserializeWith(Branches.serializer, json.decode(jsonString));
     expect(branches?.data.first.name, "Parisian PLC");
   });
+
+  test("parses products", () {
+
+    const jsonString =
+    """{"data":[{"name":"Product 2","image_url":"an image","length":"20","height":"20","weight":"10","units_box":6,"brand_product":"A brand","origin_product":"A country"}]}""";
+    Products? products = standardSerializers.deserializeWith(Products.serializer, json.decode(jsonString));
+
+    expect(products?.data.first.name, "Product 2");
+  });
+
 }
+
 

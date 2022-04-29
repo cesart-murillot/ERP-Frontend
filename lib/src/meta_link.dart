@@ -6,6 +6,7 @@ part 'meta_link.g.dart';
 
 abstract class Links implements Built<Links, LinksBuilder> {
   static Serializer<Links> get serializer => _$linksSerializer;
+
   String get first;
   String get last;
   String? get prev;
