@@ -1,3 +1,4 @@
+/*
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -39,4 +40,4 @@ abstract class Navigation implements Built<Navigation, NavigationBuilder> {
 
   Navigation._();
   factory Navigation([void Function(NavigationBuilder) updates]) = _$Navigation;
-}
+}*/

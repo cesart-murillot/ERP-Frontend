@@ -1,3 +1,4 @@
+/*
 import 'dart:io';
 
 import 'package:built_collection/built_collection.dart';
@@ -33,4 +34,4 @@ abstract class Product implements Built<Product, ProductBuilder> {
 
   Product._();
   factory Product([void Function(ProductBuilder) updates]) = _$Product;
-}
+}*/

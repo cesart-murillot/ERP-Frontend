@@ -7,36 +7,41 @@
 
 import 'dart:convert';
 
-import 'package:erp_fronted/src/branches.dart';
-import 'package:erp_fronted/src/meta_link.dart';
-import 'package:erp_fronted/src/modules.dart';
-import 'package:erp_fronted/src/products.dart';
-import 'package:erp_fronted/src/serializers.dart';
-
+import 'package:erp_fronted/src/models/meta_model.dart';
+import 'package:erp_fronted/src/models/product_model.dart';
+import 'package:erp_fronted/src/models/serializers.dart';
+import 'package:erp_fronted/src/resources/product_api_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:http/http.dart' as http;
 
 void main() {
 
-  test("get json over network", () async {
+/*  test("get json over network", () async {
     var url = Uri.http('127.0.0.1:8000', 'api/modules');
     final response = await http.get(url);
 
     Modules? modules = standardSerializers.deserializeWith(Modules.serializer, json.decode(response.body));
 
     expect(modules?.data.first.module, "asdf");
+  });*/
+
+  test("get Products over network dfsa", () {
+    const jsonString = """{"data":[{"name":"Product 1","image_url":"an image","length":"20","height":"20","weight":"10","units_box":6,"brand_product":"A brand","origin_product":"A country"}]}""";
+
+    ProductData? products = standardSerializers.deserializeWith(ProductData.serializer, json.decode(jsonString));
+
+    expect(products?.data.first.name, "Product 1");
   });
 
   test("get Products over network", () async {
     var url = Uri.http('127.0.0.1:8000', 'api/products');
     final response = await http.get(url);
 
-    Products? products = standardSerializers.deserializeWith(Products.serializer, json.decode(response.body));
+    ProductData? products = standardSerializers.deserializeWith(ProductData.serializer, json.decode(response.body));
 
     expect(products?.data.first.name, "Germany");
   });
-
 
   test("parse product", (){
     const jsonString = """
@@ -47,6 +52,35 @@ void main() {
     expect(product?.name, "Product 1");
   });
 
+  test("parse link", (){
+    const jsonString = """
+    {"first":"http:\/\/127.0.0.1:8000\/api\/modules?page=1","last":"http:\/\/127.0.0.1:8000\/api\/modules?page=1","prev":null,"next":null}
+    """;
+
+    LinkData? product = standardSerializers.deserializeWith(LinkData.serializer, json.decode(jsonString));
+    expect(product?.first, "http:\/\/127.0.0.1:8000\/api\/modules?page=1");
+  });
+
+  test("parse meta", (){
+    const jsonString = """
+    {"url":null,"label":"&laquo; Previous","active":false}
+    """;
+
+    NavigationData? product = standardSerializers.deserializeWith(NavigationData.serializer, json.decode(jsonString));
+    expect(product?.url, null);
+  });
+
+  test("parse complete meta", (){
+    const jsonString = """
+    {"current_page":1,"from":1,"last_page":2,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/127.0.0.1:8000\/api\/products?page=1","label":"1","active":true},{"url":"http:\/\/127.0.0.1:8000\/api\/products?page=2","label":"2","active":false},{"url":"http:\/\/127.0.0.1:8000\/api\/products?page=2","label":"Next &raquo;","active":false}],"path":"http:\/\/127.0.0.1:8000\/api\/products","per_page":5,"to":5,"total":10}
+    """;
+
+    MetaData? product = standardSerializers.deserializeWith(MetaData.serializer, json.decode(jsonString));
+    expect(product?.links.first.url, null);
+  });
+
+
+/*
   test("parses module", () {
     const jsonString =
         """{"data":[{"id":1,"module":"Germany"},{"id":2,"module":"Svalbard & Jan Mayen Islands"},{"id":3,"module":"Bosnia and Herzegovina"},{"id":4,"module":"Monaco"},{"id":5,"module":"Syrian Arab Republic"},{"id":6,"module":"Lebanon"},{"id":7,"module":"Japan"},{"id":8,"module":"Slovenia"},{"id":9,"module":"Indonesia"},{"id":10,"module":"Ireland"}],"links":{"first":"http:\/\/127.0.0.1:8000\/api\/modules?page=1","last":"http:\/\/127.0.0.1:8000\/api\/modules?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"« Previous","active":false},{"url":"http:\/\/127.0.0.1:8000\/api\/modules?page=1","label":"1","active":true},{"url":null,"label":"Next »","active":false}],"path":"http:\/\/127.0.0.1:8000\/api\/modules","per_page":10,"to":10,"total":10}}""";
@@ -69,7 +103,7 @@ void main() {
     Products? products = standardSerializers.deserializeWith(Products.serializer, json.decode(jsonString));
 
     expect(products?.data.first.name, "Product 2");
-  });
+  });*/
 
 }
 

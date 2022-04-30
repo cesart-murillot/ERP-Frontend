@@ -1,23 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'meta_link.dart';
+part of 'meta_model.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<Links> _$linksSerializer = new _$LinksSerializer();
-Serializer<Meta> _$metaSerializer = new _$MetaSerializer();
-Serializer<Navigation> _$navigationSerializer = new _$NavigationSerializer();
+Serializer<LinkData> _$linkDataSerializer = new _$LinkDataSerializer();
+Serializer<MetaData> _$metaDataSerializer = new _$MetaDataSerializer();
+Serializer<NavigationData> _$navigationDataSerializer =
+    new _$NavigationDataSerializer();
 
-class _$LinksSerializer implements StructuredSerializer<Links> {
+class _$LinkDataSerializer implements StructuredSerializer<LinkData> {
   @override
-  final Iterable<Type> types = const [Links, _$Links];
+  final Iterable<Type> types = const [LinkData, _$LinkData];
   @override
-  final String wireName = 'Links';
+  final String wireName = 'LinkData';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Links object,
+  Iterable<Object?> serialize(Serializers serializers, LinkData object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'first',
@@ -45,9 +46,9 @@ class _$LinksSerializer implements StructuredSerializer<Links> {
   }
 
   @override
-  Links deserialize(Serializers serializers, Iterable<Object?> serialized,
+  LinkData deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new LinksBuilder();
+    final result = new LinkDataBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -78,14 +79,14 @@ class _$LinksSerializer implements StructuredSerializer<Links> {
   }
 }
 
-class _$MetaSerializer implements StructuredSerializer<Meta> {
+class _$MetaDataSerializer implements StructuredSerializer<MetaData> {
   @override
-  final Iterable<Type> types = const [Meta, _$Meta];
+  final Iterable<Type> types = const [MetaData, _$MetaData];
   @override
-  final String wireName = 'Meta';
+  final String wireName = 'MetaData';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Meta object,
+  Iterable<Object?> serialize(Serializers serializers, MetaData object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'current_page',
@@ -98,8 +99,8 @@ class _$MetaSerializer implements StructuredSerializer<Meta> {
           specifiedType: const FullType(int)),
       'links',
       serializers.serialize(object.links,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(Navigation)])),
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(NavigationData)])),
       'path',
       serializers.serialize(object.path, specifiedType: const FullType(String)),
       'per_page',
@@ -115,9 +116,9 @@ class _$MetaSerializer implements StructuredSerializer<Meta> {
   }
 
   @override
-  Meta deserialize(Serializers serializers, Iterable<Object?> serialized,
+  MetaData deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new MetaBuilder();
+    final result = new MetaDataBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -140,7 +141,7 @@ class _$MetaSerializer implements StructuredSerializer<Meta> {
         case 'links':
           result.links.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(Navigation)]))!
+                      BuiltList, const [const FullType(NavigationData)]))!
               as BuiltList<Object?>);
           break;
         case 'path':
@@ -166,14 +167,15 @@ class _$MetaSerializer implements StructuredSerializer<Meta> {
   }
 }
 
-class _$NavigationSerializer implements StructuredSerializer<Navigation> {
+class _$NavigationDataSerializer
+    implements StructuredSerializer<NavigationData> {
   @override
-  final Iterable<Type> types = const [Navigation, _$Navigation];
+  final Iterable<Type> types = const [NavigationData, _$NavigationData];
   @override
-  final String wireName = 'Navigation';
+  final String wireName = 'NavigationData';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Navigation object,
+  Iterable<Object?> serialize(Serializers serializers, NavigationData object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'label',
@@ -194,9 +196,10 @@ class _$NavigationSerializer implements StructuredSerializer<Navigation> {
   }
 
   @override
-  Navigation deserialize(Serializers serializers, Iterable<Object?> serialized,
+  NavigationData deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new NavigationBuilder();
+    final result = new NavigationDataBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -223,7 +226,7 @@ class _$NavigationSerializer implements StructuredSerializer<Navigation> {
   }
 }
 
-class _$Links extends Links {
+class _$LinkData extends LinkData {
   @override
   final String first;
   @override
@@ -233,26 +236,26 @@ class _$Links extends Links {
   @override
   final String? next;
 
-  factory _$Links([void Function(LinksBuilder)? updates]) =>
-      (new LinksBuilder()..update(updates)).build();
+  factory _$LinkData([void Function(LinkDataBuilder)? updates]) =>
+      (new LinkDataBuilder()..update(updates)).build();
 
-  _$Links._({required this.first, required this.last, this.prev, this.next})
+  _$LinkData._({required this.first, required this.last, this.prev, this.next})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(first, 'Links', 'first');
-    BuiltValueNullFieldError.checkNotNull(last, 'Links', 'last');
+    BuiltValueNullFieldError.checkNotNull(first, 'LinkData', 'first');
+    BuiltValueNullFieldError.checkNotNull(last, 'LinkData', 'last');
   }
 
   @override
-  Links rebuild(void Function(LinksBuilder) updates) =>
+  LinkData rebuild(void Function(LinkDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  LinksBuilder toBuilder() => new LinksBuilder()..replace(this);
+  LinkDataBuilder toBuilder() => new LinkDataBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Links &&
+    return other is LinkData &&
         first == other.first &&
         last == other.last &&
         prev == other.prev &&
@@ -268,7 +271,7 @@ class _$Links extends Links {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Links')
+    return (newBuiltValueToStringHelper('LinkData')
           ..add('first', first)
           ..add('last', last)
           ..add('prev', prev)
@@ -277,8 +280,8 @@ class _$Links extends Links {
   }
 }
 
-class LinksBuilder implements Builder<Links, LinksBuilder> {
-  _$Links? _$v;
+class LinkDataBuilder implements Builder<LinkData, LinkDataBuilder> {
+  _$LinkData? _$v;
 
   String? _first;
   String? get first => _$this._first;
@@ -296,9 +299,9 @@ class LinksBuilder implements Builder<Links, LinksBuilder> {
   String? get next => _$this._next;
   set next(String? next) => _$this._next = next;
 
-  LinksBuilder();
+  LinkDataBuilder();
 
-  LinksBuilder get _$this {
+  LinkDataBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _first = $v.first;
@@ -311,23 +314,24 @@ class LinksBuilder implements Builder<Links, LinksBuilder> {
   }
 
   @override
-  void replace(Links other) {
+  void replace(LinkData other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$Links;
+    _$v = other as _$LinkData;
   }
 
   @override
-  void update(void Function(LinksBuilder)? updates) {
+  void update(void Function(LinkDataBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$Links build() {
+  _$LinkData build() {
     final _$result = _$v ??
-        new _$Links._(
-            first:
-                BuiltValueNullFieldError.checkNotNull(first, 'Links', 'first'),
-            last: BuiltValueNullFieldError.checkNotNull(last, 'Links', 'last'),
+        new _$LinkData._(
+            first: BuiltValueNullFieldError.checkNotNull(
+                first, 'LinkData', 'first'),
+            last:
+                BuiltValueNullFieldError.checkNotNull(last, 'LinkData', 'last'),
             prev: prev,
             next: next);
     replace(_$result);
@@ -335,7 +339,7 @@ class LinksBuilder implements Builder<Links, LinksBuilder> {
   }
 }
 
-class _$Meta extends Meta {
+class _$MetaData extends MetaData {
   @override
   final int current_page;
   @override
@@ -343,7 +347,7 @@ class _$Meta extends Meta {
   @override
   final int last_page;
   @override
-  final BuiltList<Navigation> links;
+  final BuiltList<NavigationData> links;
   @override
   final String path;
   @override
@@ -353,10 +357,10 @@ class _$Meta extends Meta {
   @override
   final int total;
 
-  factory _$Meta([void Function(MetaBuilder)? updates]) =>
-      (new MetaBuilder()..update(updates)).build();
+  factory _$MetaData([void Function(MetaDataBuilder)? updates]) =>
+      (new MetaDataBuilder()..update(updates)).build();
 
-  _$Meta._(
+  _$MetaData._(
       {required this.current_page,
       required this.from,
       required this.last_page,
@@ -366,27 +370,28 @@ class _$Meta extends Meta {
       required this.to,
       required this.total})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(current_page, 'Meta', 'current_page');
-    BuiltValueNullFieldError.checkNotNull(from, 'Meta', 'from');
-    BuiltValueNullFieldError.checkNotNull(last_page, 'Meta', 'last_page');
-    BuiltValueNullFieldError.checkNotNull(links, 'Meta', 'links');
-    BuiltValueNullFieldError.checkNotNull(path, 'Meta', 'path');
-    BuiltValueNullFieldError.checkNotNull(per_page, 'Meta', 'per_page');
-    BuiltValueNullFieldError.checkNotNull(to, 'Meta', 'to');
-    BuiltValueNullFieldError.checkNotNull(total, 'Meta', 'total');
+    BuiltValueNullFieldError.checkNotNull(
+        current_page, 'MetaData', 'current_page');
+    BuiltValueNullFieldError.checkNotNull(from, 'MetaData', 'from');
+    BuiltValueNullFieldError.checkNotNull(last_page, 'MetaData', 'last_page');
+    BuiltValueNullFieldError.checkNotNull(links, 'MetaData', 'links');
+    BuiltValueNullFieldError.checkNotNull(path, 'MetaData', 'path');
+    BuiltValueNullFieldError.checkNotNull(per_page, 'MetaData', 'per_page');
+    BuiltValueNullFieldError.checkNotNull(to, 'MetaData', 'to');
+    BuiltValueNullFieldError.checkNotNull(total, 'MetaData', 'total');
   }
 
   @override
-  Meta rebuild(void Function(MetaBuilder) updates) =>
+  MetaData rebuild(void Function(MetaDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  MetaBuilder toBuilder() => new MetaBuilder()..replace(this);
+  MetaDataBuilder toBuilder() => new MetaDataBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Meta &&
+    return other is MetaData &&
         current_page == other.current_page &&
         from == other.from &&
         last_page == other.last_page &&
@@ -415,7 +420,7 @@ class _$Meta extends Meta {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Meta')
+    return (newBuiltValueToStringHelper('MetaData')
           ..add('current_page', current_page)
           ..add('from', from)
           ..add('last_page', last_page)
@@ -428,8 +433,8 @@ class _$Meta extends Meta {
   }
 }
 
-class MetaBuilder implements Builder<Meta, MetaBuilder> {
-  _$Meta? _$v;
+class MetaDataBuilder implements Builder<MetaData, MetaDataBuilder> {
+  _$MetaData? _$v;
 
   int? _current_page;
   int? get current_page => _$this._current_page;
@@ -443,10 +448,10 @@ class MetaBuilder implements Builder<Meta, MetaBuilder> {
   int? get last_page => _$this._last_page;
   set last_page(int? last_page) => _$this._last_page = last_page;
 
-  ListBuilder<Navigation>? _links;
-  ListBuilder<Navigation> get links =>
-      _$this._links ??= new ListBuilder<Navigation>();
-  set links(ListBuilder<Navigation>? links) => _$this._links = links;
+  ListBuilder<NavigationData>? _links;
+  ListBuilder<NavigationData> get links =>
+      _$this._links ??= new ListBuilder<NavigationData>();
+  set links(ListBuilder<NavigationData>? links) => _$this._links = links;
 
   String? _path;
   String? get path => _$this._path;
@@ -464,9 +469,9 @@ class MetaBuilder implements Builder<Meta, MetaBuilder> {
   int? get total => _$this._total;
   set total(int? total) => _$this._total = total;
 
-  MetaBuilder();
+  MetaDataBuilder();
 
-  MetaBuilder get _$this {
+  MetaDataBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _current_page = $v.current_page;
@@ -483,34 +488,36 @@ class MetaBuilder implements Builder<Meta, MetaBuilder> {
   }
 
   @override
-  void replace(Meta other) {
+  void replace(MetaData other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$Meta;
+    _$v = other as _$MetaData;
   }
 
   @override
-  void update(void Function(MetaBuilder)? updates) {
+  void update(void Function(MetaDataBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$Meta build() {
-    _$Meta _$result;
+  _$MetaData build() {
+    _$MetaData _$result;
     try {
       _$result = _$v ??
-          new _$Meta._(
+          new _$MetaData._(
               current_page: BuiltValueNullFieldError.checkNotNull(
-                  current_page, 'Meta', 'current_page'),
-              from: BuiltValueNullFieldError.checkNotNull(from, 'Meta', 'from'),
+                  current_page, 'MetaData', 'current_page'),
+              from: BuiltValueNullFieldError.checkNotNull(
+                  from, 'MetaData', 'from'),
               last_page: BuiltValueNullFieldError.checkNotNull(
-                  last_page, 'Meta', 'last_page'),
+                  last_page, 'MetaData', 'last_page'),
               links: links.build(),
-              path: BuiltValueNullFieldError.checkNotNull(path, 'Meta', 'path'),
+              path: BuiltValueNullFieldError.checkNotNull(
+                  path, 'MetaData', 'path'),
               per_page: BuiltValueNullFieldError.checkNotNull(
-                  per_page, 'Meta', 'per_page'),
-              to: BuiltValueNullFieldError.checkNotNull(to, 'Meta', 'to'),
+                  per_page, 'MetaData', 'per_page'),
+              to: BuiltValueNullFieldError.checkNotNull(to, 'MetaData', 'to'),
               total: BuiltValueNullFieldError.checkNotNull(
-                  total, 'Meta', 'total'));
+                  total, 'MetaData', 'total'));
     } catch (_) {
       late String _$failedField;
       try {
@@ -518,7 +525,7 @@ class MetaBuilder implements Builder<Meta, MetaBuilder> {
         links.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'Meta', _$failedField, e.toString());
+            'MetaData', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -527,7 +534,7 @@ class MetaBuilder implements Builder<Meta, MetaBuilder> {
   }
 }
 
-class _$Navigation extends Navigation {
+class _$NavigationData extends NavigationData {
   @override
   final String? url;
   @override
@@ -535,26 +542,27 @@ class _$Navigation extends Navigation {
   @override
   final bool active;
 
-  factory _$Navigation([void Function(NavigationBuilder)? updates]) =>
-      (new NavigationBuilder()..update(updates)).build();
+  factory _$NavigationData([void Function(NavigationDataBuilder)? updates]) =>
+      (new NavigationDataBuilder()..update(updates)).build();
 
-  _$Navigation._({this.url, required this.label, required this.active})
+  _$NavigationData._({this.url, required this.label, required this.active})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(label, 'Navigation', 'label');
-    BuiltValueNullFieldError.checkNotNull(active, 'Navigation', 'active');
+    BuiltValueNullFieldError.checkNotNull(label, 'NavigationData', 'label');
+    BuiltValueNullFieldError.checkNotNull(active, 'NavigationData', 'active');
   }
 
   @override
-  Navigation rebuild(void Function(NavigationBuilder) updates) =>
+  NavigationData rebuild(void Function(NavigationDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  NavigationBuilder toBuilder() => new NavigationBuilder()..replace(this);
+  NavigationDataBuilder toBuilder() =>
+      new NavigationDataBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Navigation &&
+    return other is NavigationData &&
         url == other.url &&
         label == other.label &&
         active == other.active;
@@ -567,7 +575,7 @@ class _$Navigation extends Navigation {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Navigation')
+    return (newBuiltValueToStringHelper('NavigationData')
           ..add('url', url)
           ..add('label', label)
           ..add('active', active))
@@ -575,8 +583,9 @@ class _$Navigation extends Navigation {
   }
 }
 
-class NavigationBuilder implements Builder<Navigation, NavigationBuilder> {
-  _$Navigation? _$v;
+class NavigationDataBuilder
+    implements Builder<NavigationData, NavigationDataBuilder> {
+  _$NavigationData? _$v;
 
   String? _url;
   String? get url => _$this._url;
@@ -590,9 +599,9 @@ class NavigationBuilder implements Builder<Navigation, NavigationBuilder> {
   bool? get active => _$this._active;
   set active(bool? active) => _$this._active = active;
 
-  NavigationBuilder();
+  NavigationDataBuilder();
 
-  NavigationBuilder get _$this {
+  NavigationDataBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _url = $v.url;
@@ -604,25 +613,25 @@ class NavigationBuilder implements Builder<Navigation, NavigationBuilder> {
   }
 
   @override
-  void replace(Navigation other) {
+  void replace(NavigationData other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$Navigation;
+    _$v = other as _$NavigationData;
   }
 
   @override
-  void update(void Function(NavigationBuilder)? updates) {
+  void update(void Function(NavigationDataBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$Navigation build() {
+  _$NavigationData build() {
     final _$result = _$v ??
-        new _$Navigation._(
+        new _$NavigationData._(
             url: url,
             label: BuiltValueNullFieldError.checkNotNull(
-                label, 'Navigation', 'label'),
+                label, 'NavigationData', 'label'),
             active: BuiltValueNullFieldError.checkNotNull(
-                active, 'Navigation', 'active'));
+                active, 'NavigationData', 'active'));
     replace(_$result);
     return _$result;
   }

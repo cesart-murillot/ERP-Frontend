@@ -1,41 +1,37 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'products.dart';
+part of 'product_model.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<Products> _$productsSerializer = new _$ProductsSerializer();
+Serializer<ProductData> _$productDataSerializer = new _$ProductDataSerializer();
 Serializer<Product> _$productSerializer = new _$ProductSerializer();
 
-class _$ProductsSerializer implements StructuredSerializer<Products> {
+class _$ProductDataSerializer implements StructuredSerializer<ProductData> {
   @override
-  final Iterable<Type> types = const [Products, _$Products];
+  final Iterable<Type> types = const [ProductData, _$ProductData];
   @override
-  final String wireName = 'Products';
+  final String wireName = 'ProductData';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Products object,
+  Iterable<Object?> serialize(Serializers serializers, ProductData object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
               const FullType(BuiltList, const [const FullType(Product)])),
-      'links',
-      serializers.serialize(object.links, specifiedType: const FullType(Links)),
-      'meta',
-      serializers.serialize(object.meta, specifiedType: const FullType(Meta)),
     ];
 
     return result;
   }
 
   @override
-  Products deserialize(Serializers serializers, Iterable<Object?> serialized,
+  ProductData deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ProductsBuilder();
+    final result = new ProductDataBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -48,14 +44,6 @@ class _$ProductsSerializer implements StructuredSerializer<Products> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(Product)]))!
               as BuiltList<Object?>);
-          break;
-        case 'links':
-          result.links.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Links))! as Links);
-          break;
-        case 'meta':
-          result.meta.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Meta))! as Meta);
           break;
       }
     }
@@ -152,113 +140,84 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
   }
 }
 
-class _$Products extends Products {
+class _$ProductData extends ProductData {
   @override
   final BuiltList<Product> data;
-  @override
-  final Links links;
-  @override
-  final Meta meta;
 
-  factory _$Products([void Function(ProductsBuilder)? updates]) =>
-      (new ProductsBuilder()..update(updates)).build();
+  factory _$ProductData([void Function(ProductDataBuilder)? updates]) =>
+      (new ProductDataBuilder()..update(updates)).build();
 
-  _$Products._({required this.data, required this.links, required this.meta})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'Products', 'data');
-    BuiltValueNullFieldError.checkNotNull(links, 'Products', 'links');
-    BuiltValueNullFieldError.checkNotNull(meta, 'Products', 'meta');
+  _$ProductData._({required this.data}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(data, 'ProductData', 'data');
   }
 
   @override
-  Products rebuild(void Function(ProductsBuilder) updates) =>
+  ProductData rebuild(void Function(ProductDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ProductsBuilder toBuilder() => new ProductsBuilder()..replace(this);
+  ProductDataBuilder toBuilder() => new ProductDataBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Products &&
-        data == other.data &&
-        links == other.links &&
-        meta == other.meta;
+    return other is ProductData && data == other.data;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, data.hashCode), links.hashCode), meta.hashCode));
+    return $jf($jc(0, data.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Products')
-          ..add('data', data)
-          ..add('links', links)
-          ..add('meta', meta))
+    return (newBuiltValueToStringHelper('ProductData')..add('data', data))
         .toString();
   }
 }
 
-class ProductsBuilder implements Builder<Products, ProductsBuilder> {
-  _$Products? _$v;
+class ProductDataBuilder implements Builder<ProductData, ProductDataBuilder> {
+  _$ProductData? _$v;
 
   ListBuilder<Product>? _data;
   ListBuilder<Product> get data => _$this._data ??= new ListBuilder<Product>();
   set data(ListBuilder<Product>? data) => _$this._data = data;
 
-  LinksBuilder? _links;
-  LinksBuilder get links => _$this._links ??= new LinksBuilder();
-  set links(LinksBuilder? links) => _$this._links = links;
+  ProductDataBuilder();
 
-  MetaBuilder? _meta;
-  MetaBuilder get meta => _$this._meta ??= new MetaBuilder();
-  set meta(MetaBuilder? meta) => _$this._meta = meta;
-
-  ProductsBuilder();
-
-  ProductsBuilder get _$this {
+  ProductDataBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _data = $v.data.toBuilder();
-      _links = $v.links.toBuilder();
-      _meta = $v.meta.toBuilder();
       _$v = null;
     }
     return this;
   }
 
   @override
-  void replace(Products other) {
+  void replace(ProductData other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$Products;
+    _$v = other as _$ProductData;
   }
 
   @override
-  void update(void Function(ProductsBuilder)? updates) {
+  void update(void Function(ProductDataBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$Products build() {
-    _$Products _$result;
+  _$ProductData build() {
+    _$ProductData _$result;
     try {
-      _$result = _$v ??
-          new _$Products._(
-              data: data.build(), links: links.build(), meta: meta.build());
+      _$result = _$v ?? new _$ProductData._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
-        _$failedField = 'links';
-        links.build();
-        _$failedField = 'meta';
-        meta.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'Products', _$failedField, e.toString());
+            'ProductData', _$failedField, e.toString());
       }
       rethrow;
     }
