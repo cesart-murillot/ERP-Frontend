@@ -29,6 +29,13 @@ class ProductListState extends State<ProductList> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Products'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: ProductSearch());
+              },
+              icon: const Icon(Icons.search))
+        ],
       ),
       body: StreamBuilder(
         stream: bloc.data,
@@ -40,6 +47,17 @@ class ProductListState extends State<ProductList> {
           }
           return const Center(child: CircularProgressIndicator());
         },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          const BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(
+              icon: IconButton(
+                icon: const Icon(Icons.home),
+                onPressed: () {},
+              ),
+              label: "Press"),
+        ],
       ),
     );
   }
@@ -56,13 +74,61 @@ class ProductListState extends State<ProductList> {
 
   Widget listViewer(AsyncSnapshot<ProductData?> snapshot) {
     return ListView.builder(
-      padding: const EdgeInsets.all(8.0),
-      itemCount: snapshot.data?.data.length,
-      itemBuilder: (BuildContext context, int index) {
-        return SizedBox(
-          height: 50,
-          child: Text(snapshot.data?.data[index].name ?? 'failed to load'),
-        );
-      });
+        padding: const EdgeInsets.all(8.0),
+        itemCount: snapshot.data?.data.length,
+        itemBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            child: Card(
+              margin: const EdgeInsets.all(8.0),
+              child: ListTile(
+                subtitle: Text(
+                    snapshot.data?.data[index].brand_product ?? 'No brand'),
+                leading: const FlutterLogo(),
+                title:
+                    Text(snapshot.data?.data[index].name ?? 'failed to load'),
+                onTap: () {
+                  return;
+                },
+              ),
+            ),
+          );
+        });
+  }
+}
+
+class ProductSearch extends SearchDelegate<ProductData?> {
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    //throw UnimplementedError();
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      )
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          close(context, null);
+        },
+        icon: const Icon(Icons.arrow_back));
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    return Container();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // TODO: implement buildSuggestions
+    return Text(query);
   }
 }

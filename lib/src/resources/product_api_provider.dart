@@ -13,4 +13,11 @@ class ProductApiProvider {
       throw Exception('Faild to load products');
     }
   }
+
+  Future<Product?> postProductList() async {
+    http.Response request;
+    var url = Uri.http('127.0.0.1:8000', 'api/products');
+    request = await http.post(url);
+    return null;
+  }
 }
