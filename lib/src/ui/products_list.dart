@@ -4,6 +4,8 @@ import 'package:erp_fronted/src/models/product_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductList extends StatefulWidget {
+  const ProductList({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return ProductListState();
