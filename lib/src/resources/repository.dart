@@ -6,4 +6,5 @@ class Repository {
   final productApiProvider = ProductApiProvider();
 
   Future<ProductData?> fetchProductList() => productApiProvider.fetchProductList();
+  Future<void> fetchLogin() => productApiProvider.login();
 }

@@ -35,4 +35,10 @@ class ProductApiProvider {
     /*response = http.post(url, headers: <String, String> {
       'Content-Type': 'application/json; charset=UTF-8'},body: Seriali);*/
   }
+
+  Future<void> login() async {
+    print('Attemting login');
+    await Future.delayed(const Duration(seconds: 3));
+    print('Logged in');
+  }
 }
