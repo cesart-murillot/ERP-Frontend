@@ -7,11 +7,14 @@
 
 import 'dart:convert';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
 import 'package:erp_fronted/src/models/product_model.dart';
 import 'package:erp_fronted/src/models/serializers.dart';
 import 'package:erp_fronted/src/resources/product_api_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:erp_fronted/src/resources/product_api_provider.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -79,7 +82,46 @@ void main() {
     expect(product?.links.first.url, null);
   });
 
+  test('Encode to json', () {
+    const jsonString = """
+    {"name":"Product 1","image_url":"an image","length":"20","height":"20","weight":"10","units_box":6,"brand_product":"A brand","origin_product":"A country"}
+    """;
 
+    Product? product = standardSerializers.deserializeWith(Product.serializer, json.decode(jsonString));
+
+    /*List<Product> list = [];
+    //list.add(product!);
+
+    ListBuilder<Product?> listBuilder = list as ListBuilder<Product?>;
+    listBuilder.add(product);*/
+
+    Object? jsonSerial = standardSerializers.serializeWith(Product.serializer, product);
+    if (kDebugMode) {
+      print(jsonEncode(jsonSerial));
+      //print(product.first.name);
+    }
+    if (kDebugMode) {
+      print(jsonSerial.toString());
+    }
+  });
+
+  test('posting product', () async {
+    const jsonString = """
+    {"products":[{"name":"Product 1","image_url":"an image","length":"20","height":"20","weight":"10","units_box":6,"brand_product":"A brand","origin_product":"A country"}]}
+    """;
+    ProductData? product = standardSerializers.deserializeWith(ProductData.serializer, json.decode(jsonString));
+    Object? jsonSerial = standardSerializers.serializeWith(ProductData.serializer, product);
+    var url = Uri.http('127.0.0.1:8000', 'api/products');
+    http.Response response;
+    response = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: jsonEncode(jsonSerial));
+    print(jsonEncode(jsonSerial));
+    print(response.body);
+  });
 /*
   test("parses module", () {
     const jsonString =
