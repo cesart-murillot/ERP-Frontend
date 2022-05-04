@@ -8,10 +8,12 @@
 import 'dart:convert';
 
 import 'package:built_collection/built_collection.dart';
+import 'package:erp_fronted/module/modules/module_model.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
 import 'package:erp_fronted/src/models/product_model.dart';
 import 'package:erp_fronted/src/models/serializers.dart';
 import 'package:erp_fronted/src/resources/product_api_provider.dart';
+import 'package:erp_fronted/src/resources/repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:erp_fronted/src/resources/product_api_provider.dart';
@@ -121,6 +123,13 @@ void main() {
         body: jsonEncode(jsonSerial));
     print(jsonEncode(jsonSerial));
     print(response.body);
+  });
+
+  test('get modules', () async {
+    final _repository = Repository();
+    Modules? modules = await _repository.fetchModuleList();
+
+    print(modules?.modules.first);
   });
 /*
   test("parses module", () {

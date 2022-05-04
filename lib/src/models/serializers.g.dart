@@ -9,9 +9,14 @@ part of 'serializers.dart';
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(LinkData.serializer)
       ..add(MetaData.serializer)
+      ..add(Module.serializer)
+      ..add(Modules.serializer)
       ..add(NavigationData.serializer)
       ..add(Product.serializer)
       ..add(ProductData.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Module)]),
+          () => new ListBuilder<Module>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(NavigationData)]),
           () => new ListBuilder<NavigationData>())
