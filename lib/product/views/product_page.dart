@@ -9,6 +9,18 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          children: const [
+            DrawerHeader(child: FlutterLogo()),
+            ListTile(
+              title: Text('Titulo 1'),
+              leading: Icon(Icons.settings),
+            ),
+          ],
+        ),
+        elevation: 8.0,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
