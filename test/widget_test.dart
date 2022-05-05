@@ -23,47 +23,47 @@ import 'package:http/http.dart' as http;
 void main() {
 
 /*  test("get json over network", () async {
-    var url = Uri.http('127.0.0.1:8000', 'api/modules');
+    var url = Uri.http('127.0.0.1:8000', 'api/models');
     final response = await http.get(url);
 
-    Modules? modules = standardSerializers.deserializeWith(Modules.serializer, json.decode(response.body));
+    Modules? models = standardSerializers.deserializeWith(Modules.serializer, json.decode(response.body));
 
-    expect(modules?.data.first.module, "asdf");
+    expect(models?.data.first.module, "asdf");
   });*/
 
-  test("get Products over network dfsa", () {
+/*  test("get Products over network dfsa", () {
     const jsonString = """{"data":[{"name":"Product 1","image_url":"an image","length":"20","height":"20","weight":"10","units_box":6,"brand_product":"A brand","origin_product":"A country"}]}""";
 
     ProductData? products = standardSerializers.deserializeWith(ProductData.serializer, json.decode(jsonString));
 
     expect(products?.data.first.name, "Product 1");
-  });
+  });*/
 
-  test("get Products over network", () async {
+/*  test("get Products over network", () async {
     var url = Uri.http('127.0.0.1:8000', 'api/products');
     final response = await http.get(url);
 
     ProductData? products = standardSerializers.deserializeWith(ProductData.serializer, json.decode(response.body));
 
     expect(products?.data.first.name, "Germany");
-  });
+  });*/
 
-  test("parse product", (){
+/*  test("parse product", (){
     const jsonString = """
     {"name":"Product 1","image_url":"an image","length":"20","height":"20","weight":"10","units_box":6,"brand_product":"A brand","origin_product":"A country"}
     """;
 
     Product? product = standardSerializers.deserializeWith(Product.serializer, json.decode(jsonString));
     expect(product?.name, "Product 1");
-  });
+  });*/
 
   test("parse link", (){
     const jsonString = """
-    {"first":"http:\/\/127.0.0.1:8000\/api\/modules?page=1","last":"http:\/\/127.0.0.1:8000\/api\/modules?page=1","prev":null,"next":null}
+    {"first":"http:\/\/127.0.0.1:8000\/api\/models?page=1","last":"http:\/\/127.0.0.1:8000\/api\/models?page=1","prev":null,"next":null}
     """;
 
     LinkData? product = standardSerializers.deserializeWith(LinkData.serializer, json.decode(jsonString));
-    expect(product?.first, "http:\/\/127.0.0.1:8000\/api\/modules?page=1");
+    expect(product?.first, "http:\/\/127.0.0.1:8000\/api\/models?page=1");
   });
 
   test("parse meta", (){
@@ -84,18 +84,18 @@ void main() {
     expect(product?.links.first.url, null);
   });
 
-  test('Encode to json', () {
+/*  test('Encode to json', () {
     const jsonString = """
     {"name":"Product 1","image_url":"an image","length":"20","height":"20","weight":"10","units_box":6,"brand_product":"A brand","origin_product":"A country"}
     """;
 
     Product? product = standardSerializers.deserializeWith(Product.serializer, json.decode(jsonString));
 
-    /*List<Product> list = [];
+    *//*List<Product> list = [];
     //list.add(product!);
 
     ListBuilder<Product?> listBuilder = list as ListBuilder<Product?>;
-    listBuilder.add(product);*/
+    listBuilder.add(product);*//*
 
     Object? jsonSerial = standardSerializers.serializeWith(Product.serializer, product);
     if (kDebugMode) {
@@ -105,9 +105,9 @@ void main() {
     if (kDebugMode) {
       print(jsonSerial.toString());
     }
-  });
+  });*/
 
-  test('posting product', () async {
+/*  test('posting product', () async {
     const jsonString = """
     {"products":[{"name":"Product 1","image_url":"an image","length":"20","height":"20","weight":"10","units_box":6,"brand_product":"A brand","origin_product":"A country"}]}
     """;
@@ -123,9 +123,9 @@ void main() {
         body: jsonEncode(jsonSerial));
     print(jsonEncode(jsonSerial));
     print(response.body);
-  });
+  });*/
 
-  test('get modules', () async {
+  test('get models', () async {
     final _repository = Repository();
     Modules? modules = await _repository.fetchModuleList();
 
@@ -134,9 +134,9 @@ void main() {
 /*
   test("parses module", () {
     const jsonString =
-        """{"data":[{"id":1,"module":"Germany"},{"id":2,"module":"Svalbard & Jan Mayen Islands"},{"id":3,"module":"Bosnia and Herzegovina"},{"id":4,"module":"Monaco"},{"id":5,"module":"Syrian Arab Republic"},{"id":6,"module":"Lebanon"},{"id":7,"module":"Japan"},{"id":8,"module":"Slovenia"},{"id":9,"module":"Indonesia"},{"id":10,"module":"Ireland"}],"links":{"first":"http:\/\/127.0.0.1:8000\/api\/modules?page=1","last":"http:\/\/127.0.0.1:8000\/api\/modules?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"« Previous","active":false},{"url":"http:\/\/127.0.0.1:8000\/api\/modules?page=1","label":"1","active":true},{"url":null,"label":"Next »","active":false}],"path":"http:\/\/127.0.0.1:8000\/api\/modules","per_page":10,"to":10,"total":10}}""";
-    Modules? modules = standardSerializers.deserializeWith(Modules.serializer, json.decode(jsonString));
-    expect(modules?.data.first.module, "Germany");
+        """{"data":[{"id":1,"module":"Germany"},{"id":2,"module":"Svalbard & Jan Mayen Islands"},{"id":3,"module":"Bosnia and Herzegovina"},{"id":4,"module":"Monaco"},{"id":5,"module":"Syrian Arab Republic"},{"id":6,"module":"Lebanon"},{"id":7,"module":"Japan"},{"id":8,"module":"Slovenia"},{"id":9,"module":"Indonesia"},{"id":10,"module":"Ireland"}],"links":{"first":"http:\/\/127.0.0.1:8000\/api\/models?page=1","last":"http:\/\/127.0.0.1:8000\/api\/models?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"« Previous","active":false},{"url":"http:\/\/127.0.0.1:8000\/api\/models?page=1","label":"1","active":true},{"url":null,"label":"Next »","active":false}],"path":"http:\/\/127.0.0.1:8000\/api\/models","per_page":10,"to":10,"total":10}}""";
+    Modules? models = standardSerializers.deserializeWith(Modules.serializer, json.decode(jsonString));
+    expect(models?.data.first.module, "Germany");
   });
 
   test("parses branches", () {

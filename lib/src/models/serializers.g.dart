@@ -13,7 +13,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Modules.serializer)
       ..add(NavigationData.serializer)
       ..add(Product.serializer)
-      ..add(ProductData.serializer)
+      ..add(Products.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Module)]),
           () => new ListBuilder<Module>())

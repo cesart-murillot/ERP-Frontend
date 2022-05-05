@@ -5,7 +5,7 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'package:erp_fronted/src/branches.dart';
 import 'package:erp_fronted/src/meta_link.dart';
 import 'package:erp_fronted/src/products.dart';
-import 'modules.dart';
+import 'models.dart';
 
 part 'serializers.g.dart';
 

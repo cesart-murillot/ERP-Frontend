@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:erp_fronted/module/modules/module_model.dart';
+import 'package:erp_fronted/product/models/product_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:erp_fronted/src/models/product_model.dart';
 import 'package:erp_fronted/src/models/serializers.dart';
 
 class ProductApiProvider {
-  Future<ProductData?> fetchProductList() async {
+/*  Future<ProductData?> fetchProductList() async {
     http.Response response;
     var url = Uri.http('127.0.0.1:8000', 'api/products');
     response = await http.get(url);
@@ -15,16 +16,26 @@ class ProductApiProvider {
     } else {
       throw Exception('Failed to load products');
     }
+  }*/
+  Future<Products?> fetchProductList() async {
+    http.Response response;
+    var url = Uri.http('127.0.0.1:8000', 'api/products');
+    response = await http.get(url);
+    if (response.statusCode == 200) {
+      return parseProducts(response.body);
+    } else {
+      throw Exception('Failed to load products');
+    }
   }
 
   Future<Modules?> fetchModuleList() async {
     http.Response response;
-    var url = Uri.http('127.0.0.1:8000', 'api/modules');
+    var url = Uri.http('127.0.0.1:8000', 'api/models');
     response = await http.get(url);
     if (response.statusCode == 200) {
       return parseModules(response.body);
     } else {
-      throw Exception('Faild to load modules');
+      throw Exception('Faild to load models');
     }
   }
 

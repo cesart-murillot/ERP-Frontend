@@ -6,28 +6,28 @@ enum ModuleStatus { initial, success, failure }
 class ModuleState extends Equatable {
   const ModuleState({
     this.status = ModuleStatus.initial,
-    this.modules,
+    this.models,
   });
 
   final ModuleStatus status;
-  final Modules? modules;
+  final Modules? models;
 
   ModuleState copyWith({
     ModuleStatus? status,
-    Modules? modules,
+    Modules? models,
   }) {
     return ModuleState(
       status: status ?? this.status,
-      modules: modules ?? this.modules,
+      models: models ?? this.models,
     );
   }
 
   @override
   String toString() {
-    return '''ModulesState { status: $status, modules: ${modules?.modules.length}''';
+    return '''ModulesState { status: $status, models: ${models?.models.length}''';
   }
 
-  List<Object?> get props => [status, modules];
+  List<Object?> get props => [status, models];
 }*/
 
 class ModuleState extends Equatable {

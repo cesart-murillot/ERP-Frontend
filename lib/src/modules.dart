@@ -5,7 +5,7 @@ import 'package:built_value/serializer.dart';
 
 import 'meta_link.dart';
 
-part 'modules.g.dart';
+part 'models.g.dart';
 
 abstract class Modules implements Built<Modules, ModulesBuilder> {
   static Serializer<Modules> get serializer => _$modulesSerializer;

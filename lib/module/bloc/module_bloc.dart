@@ -19,13 +19,13 @@ class ModuleBloc extends Bloc<ModuleEvent, ModuleState> {
   Future<void> _onModuleFetch(ModuleFetch event, Emitter<ModuleState> emitter) async{
    try {
      if(state.status == ModuleStatus.initial) {
-       Modules? modules = await repository.fetchModuleList();
+       Modules? models = await repository.fetchModuleList();
        return emitter(
-         state.copyWith(status: ModuleStatus.success, modules: modules!)
+         state.copyWith(status: ModuleStatus.success, models: models!)
        );
      }
    } catch (e) {
-     emitter(state.copyWith(status: ModuleStatus.failure, modules: null));
+     emitter(state.copyWith(status: ModuleStatus.failure, models: null));
    }
   }*/
   final Repository repository;

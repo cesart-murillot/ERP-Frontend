@@ -10,11 +10,11 @@ class ModulePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Modules'),
+        title: const Text('Modulos'),
       ),
       body: BlocProvider(
         create: (context) => ModuleCubit(Repository()),
-        child: Example(),
+        child: const Example(),
       ),
     );
   }

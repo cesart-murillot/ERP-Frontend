@@ -1,3 +1,4 @@
+/*
 import 'package:erp_fronted/src/models/product_model.dart';
 import 'package:erp_fronted/src/resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
@@ -18,4 +19,4 @@ class ProductsBloc {
   }
 }
 
-final bloc = ProductsBloc();
+final bloc = ProductsBloc();*/

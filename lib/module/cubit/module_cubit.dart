@@ -11,8 +11,8 @@ class ModuleCubit extends Cubit<ModuleState> {
   ModuleCubit(this._moduleRepository) : super(const ModuleInitial());
 
   Future<void> getModules() async {
+    emit(const ModuleLoading());
     try {
-      emit(const ModuleLoading());
       final modules = await _moduleRepository.fetchModuleList();
       emit(ModuleLoaded(modules));
     } catch(e){

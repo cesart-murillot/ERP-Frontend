@@ -1,27 +1,26 @@
-/*
 import 'dart:convert';
 
 import 'package:built_collection/built_collection.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
 import 'package:erp_fronted/src/models/serializers.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
 
 part 'product_model.g.dart';
 
-abstract class ProductData implements Built<ProductData, ProductDataBuilder> {
-  static Serializer<ProductData> get serializer => _$productDataSerializer;
-
-  BuiltList<Product> get data;
-  //LinkData get links;
-  //MetaData get meta;
-
-  ProductData._();
-  factory ProductData([void Function(ProductDataBuilder) updates]) = _$ProductData;
+abstract class Products implements Built<Products, ProductsBuilder> {
+  static Serializer<Products> get serializer => _$productsSerializer;
+  
+  BuiltList<Product> get products;
+  LinkData get links;
+  MetaData get meta;
+  
+  Products._();
+  factory Products([void Function(ProductsBuilder) updates]) = _$Products;
 }
 
 abstract class Product implements Built<Product, ProductBuilder> {
-
   static Serializer<Product> get serializer => _$productSerializer;
 
   String get name;
@@ -37,10 +36,8 @@ abstract class Product implements Built<Product, ProductBuilder> {
   factory Product([void Function(ProductBuilder) updates]) = _$Product;
 }
 
-ProductData? parseProductData(String jsonString){
+Products? parseProducts(String jsonString) {
   final parsed = jsonDecode(jsonString);
-  ProductData? productData = standardSerializers.deserializeWith(ProductData.serializer, parsed);
-  return productData;
+  Products? products = standardSerializers.deserializeWith(Products.serializer, parsed);
+  return products;
 }
-
-*/
