@@ -9,6 +9,18 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Inicio',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Buscar',
+          ),
+        ],
+      ),
       appBar: AppBar(
         title: const Text('Productos'),
       ),
@@ -35,20 +47,44 @@ class _TestState extends State<Test> {
         if (state is ProductInitial) {
           return ElevatedButton(
             onPressed: () {},
-            child: Text('Press me'),
+            child: const Text('Press me'),
           );
         } else if (state is ProductLoaded) {
           return ListView.builder(
             itemCount: state.products!.products.length,
             itemBuilder: (BuildContext context, int index) {
-              return Card(child: ListTile(
-                title: Text(state.products!.products[index].name),
-              ),);
+              return Card(
+                margin: const EdgeInsets.all(16.0),
+                child: ListTile(
+                  leading: const FlutterLogo(),
+                  trailing: const FlutterLogo(),
+                  hoverColor: Colors.lightBlueAccent,
+                  onTap: () {},
+                  selectedTileColor: Colors.blueGrey,
+                  tileColor: Colors.greenAccent,
+                  title: Text(state.products!.products[index].name),
+                  subtitle: Text(
+                      state.products!.products[index].units_box.toString()),
+                  contentPadding: const EdgeInsets.all(10.0),
+                ),
+              );
             },
           );
         }
-        return const Text('Pres');
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }
 }
+
+class ProductCard extends StatelessWidget {
+  const ProductCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Card(
+
+    );
+  }
+}
+
