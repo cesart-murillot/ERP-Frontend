@@ -11,8 +11,8 @@ class LoginPage extends StatelessWidget {
 
   LoginPage({Key? key}) : super(key: key);
 
-  final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
+  final TextEditingController username = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

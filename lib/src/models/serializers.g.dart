@@ -7,6 +7,7 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(Branch.serializer)
       ..add(LinkData.serializer)
       ..add(MetaData.serializer)
       ..add(Module.serializer)

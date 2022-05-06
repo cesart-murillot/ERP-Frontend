@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
+import 'package:erp_fronted/branch/models/branch_model.dart';
 import 'package:erp_fronted/employee/models/user_model.dart';
 import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
@@ -15,7 +16,8 @@ part 'serializers.g.dart';
   MetaData,
   Modules,
   Module,
-  User
+  User,
+  Branch
 ])
 
 Serializers serializers = _$serializers;
