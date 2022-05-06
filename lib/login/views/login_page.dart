@@ -11,13 +11,16 @@ class LoginPage extends StatelessWidget {
 
   LoginPage({Key? key}) : super(key: key);
 
+  final TextEditingController username = TextEditingController();
+  final TextEditingController password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
         child: _loginForm(),
         create: (context) => LoginBloc(
-          repository: context.read<Repository>(),
+          repository: Repository(),
         ),
       ),
     );
@@ -44,6 +47,7 @@ class LoginPage extends StatelessWidget {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         return TextFormField(
+          controller: password,
           obscureText: true,
           decoration: const InputDecoration(
             icon: Icon(Icons.security),
@@ -63,6 +67,7 @@ class LoginPage extends StatelessWidget {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         return TextFormField(
+          controller: username,
           decoration: const InputDecoration(
             icon: Icon(Icons.person),
             hintText: 'Usuario',
@@ -85,7 +90,8 @@ class LoginPage extends StatelessWidget {
           : ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  context.read<LoginBloc>().add(LoginSubmitted());
+                  _formKey.currentState!.save();
+                  context.read<LoginBloc>().add(LoginSubmitted(username: username.text, password: password.text));
                 }
               },
               child: const Text('Ingresar'),

@@ -8,7 +8,8 @@
 import 'dart:convert';
 
 import 'package:built_collection/built_collection.dart';
-import 'package:erp_fronted/module/modules/module_model.dart';
+import 'package:erp_fronted/employee/models/user_model.dart';
+import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
 import 'package:erp_fronted/src/models/product_model.dart';
 import 'package:erp_fronted/src/models/serializers.dart';
@@ -56,6 +57,43 @@ void main() {
     Product? product = standardSerializers.deserializeWith(Product.serializer, json.decode(jsonString));
     expect(product?.name, "Product 1");
   });*/
+
+
+  test('instantiate user', (){
+    var user = User((b) => b..email = 'cesar@gmail.com'..password = '123');
+    print(user);
+
+    Object? jsonSerial = standardSerializers.serializeWith(User.serializer, user);
+    print(jsonSerial);
+
+    print(jsonEncode(jsonSerial));
+
+  });
+
+  test('get user by id', () async {
+    final _repository = Repository();
+    try {
+      String response = await _repository.fetchUser(1);
+      print(response);
+      User? user = parseUser(response);
+
+      print(user.toString());
+    } catch (e) {
+      print('error');
+    }
+  });
+  test('Login attempt', () async {
+    const user = '';
+    final _repository = Repository();
+
+    try {
+      String response = await _repository.attemptLogin(user);
+      print(response);
+    } catch (e) {
+      print('error');
+    }
+
+  });
 
   test("parse link", (){
     const jsonString = """

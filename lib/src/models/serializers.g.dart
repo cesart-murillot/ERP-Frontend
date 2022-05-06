@@ -14,6 +14,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(NavigationData.serializer)
       ..add(Product.serializer)
       ..add(Products.serializer)
+      ..add(User.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Module)]),
           () => new ListBuilder<Module>())

@@ -41,3 +41,9 @@ Products? parseProducts(String jsonString) {
   Products? products = standardSerializers.deserializeWith(Products.serializer, parsed);
   return products;
 }
+
+Product? parseProduct(String productString) {
+  final parsedProduct = jsonDecode(productString);
+  Product? product = standardSerializers.deserializeWith(Product.serializer, parsedProduct);
+  return product;
+}

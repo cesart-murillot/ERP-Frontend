@@ -1,10 +1,7 @@
-import 'dart:convert';
-
-import 'package:erp_fronted/module/modules/module_model.dart';
+import 'package:erp_fronted/employee/models/user_model.dart';
+import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/product/models/product_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:erp_fronted/src/models/product_model.dart';
-import 'package:erp_fronted/src/models/serializers.dart';
 
 class ProductApiProvider {
 /*  Future<ProductData?> fetchProductList() async {
@@ -25,6 +22,17 @@ class ProductApiProvider {
       return parseProducts(response.body);
     } else {
       throw Exception('Failed to load products');
+    }
+  }
+
+  Future<String> fetchUserData(int userId) async {
+    http.Response response;
+    var url = Uri.http('127.0.0.1:8000', 'api/users/' + userId.toString());
+    response = await http.get(url);
+    if(response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Error');
     }
   }
 
@@ -63,5 +71,22 @@ class ProductApiProvider {
     print('Attemting login');
     await Future.delayed(const Duration(seconds: 3));
     print('Logged in');
+  }
+
+  Future<String> loginAttempt(String user) async {
+    var url = Uri.http('127.0.0.1:8000', 'api/login');
+    http.Response response;
+    response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: user,
+    );
+    if (response.statusCode == 422) {
+      print("no funciono");
+    }
+    return response.body;
   }
 }

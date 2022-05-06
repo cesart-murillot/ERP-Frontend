@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:erp_fronted/module/modules/module_model.dart';
+import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:equatable/equatable.dart';
 import '../../src/resources/repository.dart';
 

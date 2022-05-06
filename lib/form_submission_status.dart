@@ -7,11 +7,12 @@ class InitialFormStatus extends FormSubmissionStatus {
 }
 
 class FormSubmitting extends FormSubmissionStatus {
-  const FormSubmitting();
+
 }
 
 class SubmissionSuccess extends FormSubmissionStatus {
-
+  final String response;
+  SubmissionSuccess(this.response);
 }
 
 class SubmissionFailed extends FormSubmissionStatus {
