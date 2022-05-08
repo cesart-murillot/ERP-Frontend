@@ -81,6 +81,7 @@ class ProductApiProvider {
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        //'Authorization': 'Bearer ' + token,
       },
       body: user,
     );
@@ -89,4 +90,5 @@ class ProductApiProvider {
     }
     return response.body;
   }
+
 }

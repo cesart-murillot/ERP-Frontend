@@ -12,10 +12,10 @@ abstract class Branch implements Built<Branch, BranchBuilder> {
   int? get id;
 
   @BuiltValueField(wireName: 'name_branch')
-  String get nameBranch;
+  String? get nameBranch;
 
   @BuiltValueField(wireName: 'address_branch')
-  String get addressBranch;
+  String? get addressBranch;
 
   Branch._();
   factory Branch([void Function(BranchBuilder) updates]) = _$Branch;

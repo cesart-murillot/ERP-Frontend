@@ -17,20 +17,27 @@ class _$BranchSerializer implements StructuredSerializer<Branch> {
   @override
   Iterable<Object?> serialize(Serializers serializers, Branch object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[
-      'name_branch',
-      serializers.serialize(object.nameBranch,
-          specifiedType: const FullType(String)),
-      'address_branch',
-      serializers.serialize(object.addressBranch,
-          specifiedType: const FullType(String)),
-    ];
+    final result = <Object?>[];
     Object? value;
     value = object.id;
     if (value != null) {
       result
         ..add('id')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.nameBranch;
+    if (value != null) {
+      result
+        ..add('name_branch')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.addressBranch;
+    if (value != null) {
+      result
+        ..add('address_branch')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -52,11 +59,11 @@ class _$BranchSerializer implements StructuredSerializer<Branch> {
           break;
         case 'name_branch':
           result.nameBranch = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'address_branch':
           result.addressBranch = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+              specifiedType: const FullType(String)) as String?;
           break;
       }
     }
@@ -69,19 +76,14 @@ class _$Branch extends Branch {
   @override
   final int? id;
   @override
-  final String nameBranch;
+  final String? nameBranch;
   @override
-  final String addressBranch;
+  final String? addressBranch;
 
   factory _$Branch([void Function(BranchBuilder)? updates]) =>
       (new BranchBuilder()..update(updates)).build();
 
-  _$Branch._({this.id, required this.nameBranch, required this.addressBranch})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(nameBranch, 'Branch', 'nameBranch');
-    BuiltValueNullFieldError.checkNotNull(
-        addressBranch, 'Branch', 'addressBranch');
-  }
+  _$Branch._({this.id, this.nameBranch, this.addressBranch}) : super._();
 
   @override
   Branch rebuild(void Function(BranchBuilder) updates) =>
@@ -159,11 +161,7 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
   _$Branch build() {
     final _$result = _$v ??
         new _$Branch._(
-            id: id,
-            nameBranch: BuiltValueNullFieldError.checkNotNull(
-                nameBranch, 'Branch', 'nameBranch'),
-            addressBranch: BuiltValueNullFieldError.checkNotNull(
-                addressBranch, 'Branch', 'addressBranch'));
+            id: id, nameBranch: nameBranch, addressBranch: addressBranch);
     replace(_$result);
     return _$result;
   }
