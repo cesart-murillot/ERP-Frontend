@@ -115,11 +115,20 @@ class _BranchFormItemWidgetState extends State<BranchFormItemWidget> {
 }
 
 class BranchForm extends StatefulWidget {
-  const BranchForm({Key? key, required this.removeBranch, required this.index})
+  BranchForm(
+      {Key? key,
+      required this.removeBranch,
+      required this.index,
+      required this.callback})
       : super(key: key);
 
   final Function removeBranch;
+  final void Function(int) callback;
   final int index;
+
+  final TextEditingController _nameBranchController = TextEditingController();
+  final TextEditingController _addressBranchController =
+      TextEditingController();
 
   @override
   State<BranchForm> createState() => _BranchFormState();
@@ -146,6 +155,9 @@ class _BranchFormState extends State<BranchForm> {
                   padding: const EdgeInsets.all(8.0),
                   child: IconButton(
                     onPressed: () {
+                      print(widget._nameBranchController.text +
+                          ' ' +
+                          widget._addressBranchController.text);
                       print(widget.index);
                     },
                     icon: const Icon(Icons.check),
@@ -155,7 +167,8 @@ class _BranchFormState extends State<BranchForm> {
                   padding: const EdgeInsets.all(8.0),
                   child: IconButton(
                     onPressed: () {
-                      widget.removeBranch();
+                      //widget.removeBranch();
+                      widget.callback(widget.index);
                     },
                     icon: const Icon(Icons.delete),
                   ),
@@ -163,12 +176,14 @@ class _BranchFormState extends State<BranchForm> {
               ],
             ),
             TextFormField(
+              controller: widget._nameBranchController,
               decoration: const InputDecoration(
                 icon: Icon(Icons.work),
                 labelText: 'Nombre de la sucursal',
               ),
             ),
             TextFormField(
+              controller: widget._addressBranchController,
               decoration: const InputDecoration(
                   icon: Icon(Icons.map), labelText: 'Dirección'),
             ),
@@ -193,7 +208,18 @@ class _BranchFormState extends State<BranchForm> {
                     }, icon: const Icon(Icons.delete),),
                   ],
                 );*/
-                return _warehouseList[index];
+                return Row(
+                  children: [
+                    Expanded(
+                      child: _warehouseList[index],
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.delete),
+                      iconSize: 16.0,
+                    ),
+                  ],
+                );
               },
               itemCount: _warehouseList.length,
             )
@@ -245,7 +271,7 @@ class _WarehouseFormState extends State<WarehouseForm> {
           icon: const Icon(Icons.warehouse),
           suffixIcon: IconButton(
             onPressed: () {
-              widget.removeWarehouse(widget.index);
+              widget.removeWarehouse();
             },
             icon: const Icon(Icons.close),
           ),
@@ -293,21 +319,22 @@ class _ListBranchState extends State<ListBranch> {
         shrinkWrap: true,
         itemCount: _branchFormList.length,
         itemBuilder: (_, index) {
-          return Column(
-            children: [
-              _branchFormList[index],
-              IconButton(
-                onPressed: () {
-                  print(index);
-                  setState(() {
-                    _branchFormList.removeAt(index);
-                  });
-                },
-                icon: const Icon(Icons.delete),
-              ),
-            ],
-          );
-          //return _branchFormList[index];
+          return Card(
+            child: Row(
+              children: [
+                Expanded(child: _branchFormList[index]),
+                IconButton(
+                  onPressed: () {
+                    print(index);
+                    setState(() {
+                      _branchFormList.removeAt(index);
+                    });
+                  },
+                  icon: const Icon(Icons.delete),
+                ),
+              ],
+            ),
+          ); //return _branchFormList[index];
         },
       ),
     );
@@ -321,7 +348,9 @@ class _ListBranchState extends State<ListBranch> {
 
   _removeBranch(int index) {
     setState(() {
+      //_branchFormList.rem
       _branchFormList.removeAt(index);
+      //_branchFormList.remove(value);
     });
   }
 
@@ -334,6 +363,7 @@ class _ListBranchState extends State<ListBranch> {
         onRemove: () => onRemove(branchList.length - 1),
       ));*/
       _branchFormList.add(BranchForm(
+        callback: _removeBranch,
         index: _branchFormList.length,
         removeBranch: () => _removeBranch(_branchFormList.length - 1),
         //removeBranch: () => _removeBranch(),
@@ -342,8 +372,8 @@ class _ListBranchState extends State<ListBranch> {
   }
 
   onSave() {
-    for (int i = 0; i < branchList.length; i++) {
-      print(branchList[i]._addressBranchController.text);
+    for (int i = 0; i < _branchFormList.length; i++) {
+      print(_branchFormList[i]._addressBranchController.text);
     }
   }
 }
