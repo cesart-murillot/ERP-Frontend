@@ -6,7 +6,73 @@ part of 'branch_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+Serializer<Branches> _$branchesSerializer = new _$BranchesSerializer();
 Serializer<Branch> _$branchSerializer = new _$BranchSerializer();
+
+class _$BranchesSerializer implements StructuredSerializer<Branches> {
+  @override
+  final Iterable<Type> types = const [Branches, _$Branches];
+  @override
+  final String wireName = 'Branches';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, Branches object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'branches',
+      serializers.serialize(object.branches,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(Branch)])),
+    ];
+    Object? value;
+    value = object.links;
+    if (value != null) {
+      result
+        ..add('links')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(LinkData)));
+    }
+    value = object.meta;
+    if (value != null) {
+      result
+        ..add('meta')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(MetaData)));
+    }
+    return result;
+  }
+
+  @override
+  Branches deserialize(Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new BranchesBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'branches':
+          result.branches.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(Branch)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'links':
+          result.links.replace(serializers.deserialize(value,
+              specifiedType: const FullType(LinkData))! as LinkData);
+          break;
+        case 'meta':
+          result.meta.replace(serializers.deserialize(value,
+              specifiedType: const FullType(MetaData))! as MetaData);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
 
 class _$BranchSerializer implements StructuredSerializer<Branch> {
   @override
@@ -69,6 +135,122 @@ class _$BranchSerializer implements StructuredSerializer<Branch> {
     }
 
     return result.build();
+  }
+}
+
+class _$Branches extends Branches {
+  @override
+  final BuiltList<Branch> branches;
+  @override
+  final LinkData? links;
+  @override
+  final MetaData? meta;
+
+  factory _$Branches([void Function(BranchesBuilder)? updates]) =>
+      (new BranchesBuilder()..update(updates)).build();
+
+  _$Branches._({required this.branches, this.links, this.meta}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(branches, 'Branches', 'branches');
+  }
+
+  @override
+  Branches rebuild(void Function(BranchesBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  BranchesBuilder toBuilder() => new BranchesBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is Branches &&
+        branches == other.branches &&
+        links == other.links &&
+        meta == other.meta;
+  }
+
+  @override
+  int get hashCode {
+    return $jf(
+        $jc($jc($jc(0, branches.hashCode), links.hashCode), meta.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('Branches')
+          ..add('branches', branches)
+          ..add('links', links)
+          ..add('meta', meta))
+        .toString();
+  }
+}
+
+class BranchesBuilder implements Builder<Branches, BranchesBuilder> {
+  _$Branches? _$v;
+
+  ListBuilder<Branch>? _branches;
+  ListBuilder<Branch> get branches =>
+      _$this._branches ??= new ListBuilder<Branch>();
+  set branches(ListBuilder<Branch>? branches) => _$this._branches = branches;
+
+  LinkDataBuilder? _links;
+  LinkDataBuilder get links => _$this._links ??= new LinkDataBuilder();
+  set links(LinkDataBuilder? links) => _$this._links = links;
+
+  MetaDataBuilder? _meta;
+  MetaDataBuilder get meta => _$this._meta ??= new MetaDataBuilder();
+  set meta(MetaDataBuilder? meta) => _$this._meta = meta;
+
+  BranchesBuilder();
+
+  BranchesBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _branches = $v.branches.toBuilder();
+      _links = $v.links?.toBuilder();
+      _meta = $v.meta?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(Branches other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$Branches;
+  }
+
+  @override
+  void update(void Function(BranchesBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$Branches build() {
+    _$Branches _$result;
+    try {
+      _$result = _$v ??
+          new _$Branches._(
+              branches: branches.build(),
+              links: _links?.build(),
+              meta: _meta?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'branches';
+        branches.build();
+        _$failedField = 'links';
+        _links?.build();
+        _$failedField = 'meta';
+        _meta?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Branches', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
   }
 }
 

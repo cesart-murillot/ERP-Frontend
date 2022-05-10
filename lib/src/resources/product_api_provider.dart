@@ -1,19 +1,35 @@
 import 'package:erp_fronted/employee/models/user_model.dart';
 import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/product/models/product_model.dart';
+import 'package:erp_fronted/src/resources/generic_serializer.dart';
 import 'package:http/http.dart' as http;
 
+enum UnEncodePath {products, branches, warehouses}
+const String authority = '127.0.0.1:8000/';
 class ProductApiProvider {
-/*  Future<ProductData?> fetchProductList() async {
+
+  Future<String> getDataModel(UnEncodePath unEncodePath) async {
     http.Response response;
-    var url = Uri.http('127.0.0.1:8000', 'api/products');
-    response = await http.get(url);
-    if (response.statusCode == 200) {
-      return parseProductData(response.body);
-    } else {
-      throw Exception('Failed to load products');
+    final Uri url;
+    switch (unEncodePath) {
+      case UnEncodePath.branches:
+        url = Uri.http('127.0.0.1:8000', 'api/branches');
+        break;
+      case UnEncodePath.products:
+        url = Uri.http('127.0.0.1:8000', 'api/products');
+        break;
+      case UnEncodePath.warehouses:
+        url = Uri.http('127.0.0.1:8000', 'api/warehouses');
+        break;
     }
-  }*/
+
+    response = await http.get(url);
+    if (response.statusCode == 200 && response.body.isNotEmpty) {
+      return response.body;
+    }
+    throw Exception('No data');
+  }
+
   Future<Products?> fetchProductList() async {
     http.Response response;
     var url = Uri.http('127.0.0.1:8000', 'api/products');
@@ -53,7 +69,8 @@ class ProductApiProvider {
     response = await http.post(url,
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Authorization': 'Bearer'
         },
         body: product);
 
@@ -90,5 +107,7 @@ class ProductApiProvider {
     }
     return response.body;
   }
+
+
 
 }

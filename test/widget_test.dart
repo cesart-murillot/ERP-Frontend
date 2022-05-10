@@ -8,6 +8,8 @@
 import 'dart:convert';
 
 import 'package:built_collection/built_collection.dart';
+import 'package:built_value/serializer.dart';
+import 'package:erp_fronted/branch/models/branch_model.dart';
 import 'package:erp_fronted/employee/models/user_model.dart';
 import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
@@ -20,6 +22,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:erp_fronted/src/resources/product_api_provider.dart';
 
 import 'package:http/http.dart' as http;
+
+//enum UnEncodePath {products, branches, warehouses}
 
 void main() {
 
@@ -58,6 +62,40 @@ void main() {
     expect(product?.name, "Product 1");
   });*/
 
+  test('generic', (){
+    String? objectToString<T>(final T object, Serializer serializer){
+      final Object? objectSerialized = standardSerializers.serializeWith(serializer, object);
+      final String? objectString = jsonEncode(objectSerialized);
+
+      return objectString;
+    }
+
+    T parseObject<T>(final String objectString, Serializer serializer){
+      final parsedObject = jsonDecode(objectString);
+      T object = standardSerializers.deserializeWith(serializer, parsedObject);
+      return object;
+    }
+
+
+    var branches = Branches((p0) {
+      for (int i = 0; i < 3; i++) {
+        var branch = Branch((p0) => p0.nameBranch = 'hola' + i.toString(),);
+        p0.branches.add(branch);
+      }
+    },);
+
+    var user = User((b) => b..email = 'cesar@gmail.com'..password = '123');
+
+    String? a = objectToString<User>(user, User.serializer);
+    print(a);
+
+    String? b = objectToString<Branches>(branches, Branches.serializer);
+    print(b);
+
+    print(parseObject(a!, User.serializer));
+    print(parseObject(b!, Branches.serializer));
+  });
+
 
   test('instantiate user', (){
     var user = User((b) => b..email = 'cesar@gmail.com'..password = '123');
@@ -68,6 +106,19 @@ void main() {
 
     print(jsonEncode(jsonSerial));
 
+  });
+
+  test('instantiate branches', () {
+    var branches = Branches((p0) {
+      for (int i = 0; i < 3; i++) {
+        var branch = Branch((p0) => p0.nameBranch = 'hola' + i.toString(),);
+        p0.branches.add(branch);
+      }
+    },);
+
+    print(branches.branches[0].nameBranch);
+    print(branches.branches[1].nameBranch);
+    print(branches.branches[2].nameBranch);
   });
 
   test('get user by id', () async {
@@ -120,6 +171,16 @@ void main() {
 
     MetaData? product = standardSerializers.deserializeWith(MetaData.serializer, json.decode(jsonString));
     expect(product?.links.first.url, null);
+  });
+
+  test('new URI', () async {
+    final repository = Repository();
+
+    const String authority = '127.0.0.1:8000/api/';
+
+    //print(authority + UnEncodePath.branches.name);
+    String branchesString = await repository.fetchData(UnEncodePath.branches);
+    print(branchesString);
   });
 
 /*  test('Encode to json', () {
