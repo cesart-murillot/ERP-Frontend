@@ -3,6 +3,7 @@ part of 'branch_bloc.dart';
 abstract class BranchState extends Equatable {
   const BranchState();
 
+  get branches => null;
 }
 
 class BranchInitialState extends BranchState {
@@ -27,6 +28,15 @@ class BranchLoadedState extends BranchState {
   List<Object?> get props => throw UnimplementedError();
 }
 
+class SingleBranchLoadedState extends BranchState {
+  final Branch? branch;
+  const SingleBranchLoadedState(this.branch);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
+
 class BranchErrorState extends BranchState {
   final String message;
   const BranchErrorState(this.message);
@@ -43,3 +53,12 @@ class AddedBranchToList extends BranchState {
   List<Object?> get props => [branchForm];
 }
 
+class ShowBranchDetails extends BranchState {
+  final int id;
+  const ShowBranchDetails(this.id);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+  
+}

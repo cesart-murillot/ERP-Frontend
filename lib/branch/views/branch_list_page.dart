@@ -43,15 +43,23 @@ class _DisplayBranchesState extends State<DisplayBranches> {
               return ListTile(
                 leading: const FlutterLogo(),
                 onTap: () {
-                  context.read<BranchBloc>().add(AddBranchEvent());
+                  context.read<BranchBloc>().add(FetchSingleBranchEvent(
+                      state.branches!.branches[index].id!));
                 },
                 subtitle: Text(state.branches!.branches[index].addressBranch!),
                 title: Text(state.branches!.branches[index].nameBranch!),
               );
             },
           );
-        } else if (state is BranchErrorState) {}
-        return Container(child: Text('Hola'),);
+        } else if (state is BranchErrorState) {
+        } else if (state is SingleBranchLoadedState) {
+          return Card(
+            child: Text(state.branch!.nameBranch!),
+          );
+        }
+        return Container(
+          child: Text('Hola'),
+        );
       },
     );
   }

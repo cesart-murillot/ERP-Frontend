@@ -4,11 +4,34 @@ import 'package:erp_fronted/product/models/product_model.dart';
 import 'package:erp_fronted/src/resources/generic_serializer.dart';
 import 'package:http/http.dart' as http;
 
-enum UnEncodePath {products, branches, warehouses}
+enum UnEncodePath { products, branches, warehouses }
 const String authority = '127.0.0.1:8000/';
-class ProductApiProvider {
 
-  Future<String> getDataModel(UnEncodePath unEncodePath) async {
+class ProductApiProvider {
+  Future<String> getDataModel(UnEncodePath unEncodePath,
+      [String id = '']) async {
+    http.Response response;
+    final Uri url;
+    switch (unEncodePath) {
+      case UnEncodePath.branches:
+        url = Uri.http('127.0.0.1:8000', 'api/branches/' + id);
+        break;
+      case UnEncodePath.products:
+        url = Uri.http('127.0.0.1:8000', 'api/products');
+        break;
+      case UnEncodePath.warehouses:
+        url = Uri.http('127.0.0.1:8000', 'api/warehouses');
+        break;
+    }
+
+    response = await http.get(url);
+    if (response.statusCode == 200 && response.body.isNotEmpty) {
+      return response.body;
+    }
+    throw Exception('No data');
+  }
+
+  Future<String> getDatumModel(UnEncodePath unEncodePath, int id) async {
     http.Response response;
     final Uri url;
     switch (unEncodePath) {
@@ -21,6 +44,11 @@ class ProductApiProvider {
       case UnEncodePath.warehouses:
         url = Uri.http('127.0.0.1:8000', 'api/warehouses');
         break;
+    }
+
+    response = await http.get(url);
+    if (response.statusCode == 200 && response.body.isNotEmpty) {
+      return response.body;
     }
 
     response = await http.get(url);
@@ -45,7 +73,7 @@ class ProductApiProvider {
     http.Response response;
     var url = Uri.http('127.0.0.1:8000', 'api/users/' + userId.toString());
     response = await http.get(url);
-    if(response.statusCode == 200) {
+    if (response.statusCode == 200) {
       return response.body;
     } else {
       throw Exception('Error');
@@ -107,7 +135,4 @@ class ProductApiProvider {
     }
     return response.body;
   }
-
-
-
 }

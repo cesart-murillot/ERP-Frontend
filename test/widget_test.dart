@@ -15,6 +15,7 @@ import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
 import 'package:erp_fronted/src/models/product_model.dart';
 import 'package:erp_fronted/src/models/serializers.dart';
+import 'package:erp_fronted/src/resources/generic_serializer.dart';
 import 'package:erp_fronted/src/resources/product_api_provider.dart';
 import 'package:erp_fronted/src/resources/repository.dart';
 import 'package:flutter/foundation.dart';
@@ -26,7 +27,6 @@ import 'package:http/http.dart' as http;
 //enum UnEncodePath {products, branches, warehouses}
 
 void main() {
-
 /*  test("get json over network", () async {
     var url = Uri.http('127.0.0.1:8000', 'api/models');
     final response = await http.get(url);
@@ -62,29 +62,35 @@ void main() {
     expect(product?.name, "Product 1");
   });*/
 
-  test('generic', (){
-    String? objectToString<T>(final T object, Serializer serializer){
-      final Object? objectSerialized = standardSerializers.serializeWith(serializer, object);
+  test('generic', () {
+    String? objectToString<T>(final T object, Serializer serializer) {
+      final Object? objectSerialized =
+          standardSerializers.serializeWith(serializer, object);
       final String? objectString = jsonEncode(objectSerialized);
 
       return objectString;
     }
 
-    T parseObject<T>(final String objectString, Serializer serializer){
+    T parseObject<T>(final String objectString, Serializer serializer) {
       final parsedObject = jsonDecode(objectString);
       T object = standardSerializers.deserializeWith(serializer, parsedObject);
       return object;
     }
 
+    var branches = Branches(
+      (p0) {
+        for (int i = 0; i < 3; i++) {
+          var branch = Branch(
+            (p0) => p0.nameBranch = 'hola' + i.toString(),
+          );
+          p0.branches.add(branch);
+        }
+      },
+    );
 
-    var branches = Branches((p0) {
-      for (int i = 0; i < 3; i++) {
-        var branch = Branch((p0) => p0.nameBranch = 'hola' + i.toString(),);
-        p0.branches.add(branch);
-      }
-    },);
-
-    var user = User((b) => b..email = 'cesar@gmail.com'..password = '123');
+    var user = User((b) => b
+      ..email = 'cesar@gmail.com'
+      ..password = '123');
 
     String? a = objectToString<User>(user, User.serializer);
     print(a);
@@ -96,25 +102,30 @@ void main() {
     print(parseObject(b!, Branches.serializer));
   });
 
-
-  test('instantiate user', (){
-    var user = User((b) => b..email = 'cesar@gmail.com'..password = '123');
+  test('instantiate user', () {
+    var user = User((b) => b
+      ..email = 'cesar@gmail.com'
+      ..password = '123');
     print(user);
 
-    Object? jsonSerial = standardSerializers.serializeWith(User.serializer, user);
+    Object? jsonSerial =
+        standardSerializers.serializeWith(User.serializer, user);
     print(jsonSerial);
 
     print(jsonEncode(jsonSerial));
-
   });
 
   test('instantiate branches', () {
-    var branches = Branches((p0) {
-      for (int i = 0; i < 3; i++) {
-        var branch = Branch((p0) => p0.nameBranch = 'hola' + i.toString(),);
-        p0.branches.add(branch);
-      }
-    },);
+    var branches = Branches(
+      (p0) {
+        for (int i = 0; i < 3; i++) {
+          var branch = Branch(
+            (p0) => p0.nameBranch = 'hola' + i.toString(),
+          );
+          p0.branches.add(branch);
+        }
+      },
+    );
 
     print(branches.branches[0].nameBranch);
     print(branches.branches[1].nameBranch);
@@ -143,33 +154,35 @@ void main() {
     } catch (e) {
       print('error');
     }
-
   });
 
-  test("parse link", (){
+  test("parse link", () {
     const jsonString = """
     {"first":"http:\/\/127.0.0.1:8000\/api\/models?page=1","last":"http:\/\/127.0.0.1:8000\/api\/models?page=1","prev":null,"next":null}
     """;
 
-    LinkData? product = standardSerializers.deserializeWith(LinkData.serializer, json.decode(jsonString));
+    LinkData? product = standardSerializers.deserializeWith(
+        LinkData.serializer, json.decode(jsonString));
     expect(product?.first, "http:\/\/127.0.0.1:8000\/api\/models?page=1");
   });
 
-  test("parse meta", (){
+  test("parse meta", () {
     const jsonString = """
     {"url":null,"label":"&laquo; Previous","active":false}
     """;
 
-    NavigationData? product = standardSerializers.deserializeWith(NavigationData.serializer, json.decode(jsonString));
+    NavigationData? product = standardSerializers.deserializeWith(
+        NavigationData.serializer, json.decode(jsonString));
     expect(product?.url, null);
   });
 
-  test("parse complete meta", (){
+  test("parse complete meta", () {
     const jsonString = """
     {"current_page":1,"from":1,"last_page":2,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/127.0.0.1:8000\/api\/products?page=1","label":"1","active":true},{"url":"http:\/\/127.0.0.1:8000\/api\/products?page=2","label":"2","active":false},{"url":"http:\/\/127.0.0.1:8000\/api\/products?page=2","label":"Next &raquo;","active":false}],"path":"http:\/\/127.0.0.1:8000\/api\/products","per_page":5,"to":5,"total":10}
     """;
 
-    MetaData? product = standardSerializers.deserializeWith(MetaData.serializer, json.decode(jsonString));
+    MetaData? product = standardSerializers.deserializeWith(
+        MetaData.serializer, json.decode(jsonString));
     expect(product?.links.first.url, null);
   });
 
@@ -181,6 +194,7 @@ void main() {
     //print(authority + UnEncodePath.branches.name);
     String branchesString = await repository.fetchData(UnEncodePath.branches);
     print(branchesString);
+    print(parseObject(branchesString, Branch.serializer));
   });
 
 /*  test('Encode to json', () {
@@ -190,11 +204,11 @@ void main() {
 
     Product? product = standardSerializers.deserializeWith(Product.serializer, json.decode(jsonString));
 
-    *//*List<Product> list = [];
+    */ /*List<Product> list = [];
     //list.add(product!);
 
     ListBuilder<Product?> listBuilder = list as ListBuilder<Product?>;
-    listBuilder.add(product);*//*
+    listBuilder.add(product);*/ /*
 
     Object? jsonSerial = standardSerializers.serializeWith(Product.serializer, product);
     if (kDebugMode) {
@@ -254,7 +268,4 @@ void main() {
 
     expect(products?.data.first.name, "Product 2");
   });*/
-
 }
-
-

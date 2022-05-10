@@ -15,16 +15,34 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
 
   BranchBloc(this.repository) : super(const BranchInitialState()) {
     on<FetchBranchesEvent>(_fetchBranches);
+    on<FetchSingleBranchEvent>(_fetchSingleBranch);
   }
 
-  Future<void> _fetchBranches(FetchBranchesEvent event, Emitter<BranchState> emitter) async {
+  Future<void> _fetchBranches(
+      FetchBranchesEvent event, Emitter<BranchState> emitter) async {
     emitter(const BranchLoadingState());
     try {
-      final String branchesString = await repository.fetchData(UnEncodePath.branches);
-      final branches = parseObject(branchesString, Branches.serializer);
+      final String branchesString =
+          await repository.fetchData(UnEncodePath.branches);
+      final branches =
+          parseObject<Branches>(branchesString, Branches.serializer);
       emitter(BranchLoadedState(branches));
     } catch (e) {
       emitter(BranchErrorState(e.toString()));
+    }
+  }
+
+  Future<void> _fetchSingleBranch(
+      FetchSingleBranchEvent event, Emitter<BranchState> emitter) async {
+    emitter(const BranchLoadingState());
+    try {
+      final branchString = await repository.fetchData(
+          UnEncodePath.branches, event.id.toString());
+      final branch = parseObject<Branch>(branchString, Branch.serializer);
+      emitter(SingleBranchLoadedState(branch));
+      print(branch);
+    } on Exception catch (e) {
+      // TODO
     }
   }
 }
