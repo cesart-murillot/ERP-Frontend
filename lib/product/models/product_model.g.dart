@@ -163,7 +163,7 @@ class _$Products extends Products {
   final MetaData meta;
 
   factory _$Products([void Function(ProductsBuilder)? updates]) =>
-      (new ProductsBuilder()..update(updates)).build();
+      (new ProductsBuilder()..update(updates))._build();
 
   _$Products._(
       {required this.products, required this.links, required this.meta})
@@ -246,7 +246,9 @@ class ProductsBuilder implements Builder<Products, ProductsBuilder> {
   }
 
   @override
-  _$Products build() {
+  Products build() => _build();
+
+  _$Products _build() {
     _$Products _$result;
     try {
       _$result = _$v ??
@@ -293,7 +295,7 @@ class _$Product extends Product {
   final String origin_product;
 
   factory _$Product([void Function(ProductBuilder)? updates]) =>
-      (new ProductBuilder()..update(updates)).build();
+      (new ProductBuilder()..update(updates))._build();
 
   _$Product._(
       {required this.name,
@@ -436,7 +438,9 @@ class ProductBuilder implements Builder<Product, ProductBuilder> {
   }
 
   @override
-  _$Product build() {
+  Product build() => _build();
+
+  _$Product _build() {
     final _$result = _$v ??
         new _$Product._(
             name:
@@ -460,4 +464,4 @@ class ProductBuilder implements Builder<Product, ProductBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

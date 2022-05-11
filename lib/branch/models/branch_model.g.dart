@@ -147,7 +147,7 @@ class _$Branches extends Branches {
   final MetaData? meta;
 
   factory _$Branches([void Function(BranchesBuilder)? updates]) =>
-      (new BranchesBuilder()..update(updates)).build();
+      (new BranchesBuilder()..update(updates))._build();
 
   _$Branches._({required this.branches, this.links, this.meta}) : super._() {
     BuiltValueNullFieldError.checkNotNull(branches, 'Branches', 'branches');
@@ -226,7 +226,9 @@ class BranchesBuilder implements Builder<Branches, BranchesBuilder> {
   }
 
   @override
-  _$Branches build() {
+  Branches build() => _build();
+
+  _$Branches _build() {
     _$Branches _$result;
     try {
       _$result = _$v ??
@@ -263,7 +265,7 @@ class _$Branch extends Branch {
   final String? addressBranch;
 
   factory _$Branch([void Function(BranchBuilder)? updates]) =>
-      (new BranchBuilder()..update(updates)).build();
+      (new BranchBuilder()..update(updates))._build();
 
   _$Branch._({this.id, this.nameBranch, this.addressBranch}) : super._();
 
@@ -340,7 +342,9 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
   }
 
   @override
-  _$Branch build() {
+  Branch build() => _build();
+
+  _$Branch _build() {
     final _$result = _$v ??
         new _$Branch._(
             id: id, nameBranch: nameBranch, addressBranch: addressBranch);
@@ -349,4 +353,4 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

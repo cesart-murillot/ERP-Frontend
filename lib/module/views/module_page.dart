@@ -51,7 +51,7 @@ class _ExampleState extends State<Example> {
             itemBuilder: (BuildContext context, int index) {
               return Card(
                 child: ListTile(
-                  title: Text(state.modules!.modules[index].module),
+                  title: Text(state.modules!.modules[index].nameModule),
                 ),
               );
             },

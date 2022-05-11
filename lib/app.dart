@@ -1,22 +1,48 @@
-import 'package:erp_fronted/branch/bloc/branch_bloc.dart';
-import 'package:erp_fronted/branch/models/branch_model.dart';
-import 'package:erp_fronted/branch/views/branch_create_page.dart';
-import 'package:erp_fronted/branch/views/branch_list_page.dart';
 import 'package:erp_fronted/product/views/product_page.dart';
-import 'package:erp_fronted/src/resources/repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'login/views/login_page.dart';
 
+/*
 class App extends MaterialApp {
-  App({Key? key})
+  const App({Key? key})
       : super(
           key: key,
-          home: BlocProvider(create: (_) => BranchBloc(Repository()),
-          child: const BranchList()),
+          home: const MainLoginPage(),
+    */
+/*home: BlocProvider(create: (_) => BranchBloc(Repository()),
+          child: const BranchList()),*//*
+
         );
+
 }
+*/
+
+class AppPro extends StatelessWidget {
+  const AppPro({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      initialRoute: '/',
+      onGenerateRoute: generateRoute,
+    );
+  }
+}
+
+Route<dynamic>? generateRoute(RouteSettings settings) {
+  final args = settings.arguments;
+
+  switch (settings.name) {
+    case '/':
+      return MaterialPageRoute(builder: (_) => const MainLoginPage());
+    case 'product':
+      return MaterialPageRoute(builder: (_) => const ProductPage());
+    default:
+      return MaterialPageRoute(builder: (_) => const MainLoginPage());
+  }
+}
+
 
 /*class App extends MaterialApp {
   const App({Key? key}) : super(key: key, home: const ModulePage());

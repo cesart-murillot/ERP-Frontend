@@ -2,8 +2,6 @@ part of 'branch_bloc.dart';
 
 abstract class BranchState extends Equatable {
   const BranchState();
-
-  get branches => null;
 }
 
 class BranchInitialState extends BranchState {
@@ -31,6 +29,14 @@ class BranchLoadedState extends BranchState {
 class SingleBranchLoadedState extends BranchState {
   final Branch? branch;
   const SingleBranchLoadedState(this.branch);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
+
+class PopSingleBranch extends BranchState {
+  const PopSingleBranch();
 
   @override
   // TODO: implement props

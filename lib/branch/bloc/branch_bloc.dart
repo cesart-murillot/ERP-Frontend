@@ -39,10 +39,11 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
       final branchString = await repository.fetchData(
           UnEncodePath.branches, event.id.toString());
       final branch = parseObject<Branch>(branchString, Branch.serializer);
-      emitter(SingleBranchLoadedState(branch));
       print(branch);
+      emitter(SingleBranchLoadedState(branch));
     } on Exception catch (e) {
-      // TODO
+      print('noo');
+      emitter(BranchErrorState(e.toString()));
     }
   }
 }

@@ -8,6 +8,8 @@ import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
 import 'package:erp_fronted/product/models/product_model.dart';
 
+import '../../employee/models/employee_model.dart';
+
 part 'serializers.g.dart';
 
 @SerializersFor([
@@ -21,7 +23,8 @@ part 'serializers.g.dart';
   Branch,
   Branches,
   Warehouse,
-  Warehouses
+  Warehouses,
+  Employee,
 ])
 
 Serializers serializers = _$serializers;

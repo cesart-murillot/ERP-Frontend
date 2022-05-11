@@ -4,7 +4,7 @@ import 'package:erp_fronted/product/models/product_model.dart';
 import 'package:erp_fronted/src/resources/generic_serializer.dart';
 import 'package:http/http.dart' as http;
 
-enum UnEncodePath { products, branches, warehouses }
+enum UnEncodePath { products, branches, warehouses, modules, users, employees}
 const String authority = '127.0.0.1:8000/';
 
 class ProductApiProvider {
@@ -17,38 +17,20 @@ class ProductApiProvider {
         url = Uri.http('127.0.0.1:8000', 'api/branches/' + id);
         break;
       case UnEncodePath.products:
-        url = Uri.http('127.0.0.1:8000', 'api/products');
+        url = Uri.http('127.0.0.1:8000', 'api/products/');
         break;
       case UnEncodePath.warehouses:
-        url = Uri.http('127.0.0.1:8000', 'api/warehouses');
+        url = Uri.http('127.0.0.1:8000', 'api/warehouses/');
         break;
-    }
-
-    response = await http.get(url);
-    if (response.statusCode == 200 && response.body.isNotEmpty) {
-      return response.body;
-    }
-    throw Exception('No data');
-  }
-
-  Future<String> getDatumModel(UnEncodePath unEncodePath, int id) async {
-    http.Response response;
-    final Uri url;
-    switch (unEncodePath) {
-      case UnEncodePath.branches:
-        url = Uri.http('127.0.0.1:8000', 'api/branches');
+      case UnEncodePath.modules:
+        url = Uri.http('127.0.0.1:8000', 'api/modules/');
         break;
-      case UnEncodePath.products:
-        url = Uri.http('127.0.0.1:8000', 'api/products');
+      case UnEncodePath.users:
+        url = Uri.http('127.0.0.1:8000', 'api/users/' + id);
         break;
-      case UnEncodePath.warehouses:
-        url = Uri.http('127.0.0.1:8000', 'api/warehouses');
+      case UnEncodePath.employees:
+        url = Uri.http('127.0.0.1:8000', 'api/employees/' + id);
         break;
-    }
-
-    response = await http.get(url);
-    if (response.statusCode == 200 && response.body.isNotEmpty) {
-      return response.body;
     }
 
     response = await http.get(url);

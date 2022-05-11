@@ -76,13 +76,31 @@ class _$ModuleSerializer implements StructuredSerializer<Module> {
   Iterable<Object?> serialize(Serializers serializers, Module object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
-      'module',
-      serializers.serialize(object.module,
+      'name_module',
+      serializers.serialize(object.nameModule,
           specifiedType: const FullType(String)),
     ];
-
+    Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.iconModule;
+    if (value != null) {
+      result
+        ..add('icon_module')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.routeModule;
+    if (value != null) {
+      result
+        ..add('route_module')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -99,11 +117,19 @@ class _$ModuleSerializer implements StructuredSerializer<Module> {
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+              specifiedType: const FullType(int)) as int?;
           break;
-        case 'module':
-          result.module = serializers.deserialize(value,
+        case 'name_module':
+          result.nameModule = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
+          break;
+        case 'icon_module':
+          result.iconModule = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'route_module':
+          result.routeModule = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
       }
     }
@@ -121,7 +147,7 @@ class _$Modules extends Modules {
   final MetaData meta;
 
   factory _$Modules([void Function(ModulesBuilder)? updates]) =>
-      (new ModulesBuilder()..update(updates)).build();
+      (new ModulesBuilder()..update(updates))._build();
 
   _$Modules._({required this.modules, required this.links, required this.meta})
       : super._() {
@@ -203,7 +229,9 @@ class ModulesBuilder implements Builder<Modules, ModulesBuilder> {
   }
 
   @override
-  _$Modules build() {
+  Modules build() => _build();
+
+  _$Modules _build() {
     _$Modules _$result;
     try {
       _$result = _$v ??
@@ -233,16 +261,21 @@ class ModulesBuilder implements Builder<Modules, ModulesBuilder> {
 
 class _$Module extends Module {
   @override
-  final int id;
+  final int? id;
   @override
-  final String module;
+  final String nameModule;
+  @override
+  final String? iconModule;
+  @override
+  final String? routeModule;
 
   factory _$Module([void Function(ModuleBuilder)? updates]) =>
-      (new ModuleBuilder()..update(updates)).build();
+      (new ModuleBuilder()..update(updates))._build();
 
-  _$Module._({required this.id, required this.module}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, 'Module', 'id');
-    BuiltValueNullFieldError.checkNotNull(module, 'Module', 'module');
+  _$Module._(
+      {this.id, required this.nameModule, this.iconModule, this.routeModule})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(nameModule, 'Module', 'nameModule');
   }
 
   @override
@@ -255,19 +288,27 @@ class _$Module extends Module {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Module && id == other.id && module == other.module;
+    return other is Module &&
+        id == other.id &&
+        nameModule == other.nameModule &&
+        iconModule == other.iconModule &&
+        routeModule == other.routeModule;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, id.hashCode), module.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, id.hashCode), nameModule.hashCode), iconModule.hashCode),
+        routeModule.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Module')
           ..add('id', id)
-          ..add('module', module))
+          ..add('nameModule', nameModule)
+          ..add('iconModule', iconModule)
+          ..add('routeModule', routeModule))
         .toString();
   }
 }
@@ -279,9 +320,17 @@ class ModuleBuilder implements Builder<Module, ModuleBuilder> {
   int? get id => _$this._id;
   set id(int? id) => _$this._id = id;
 
-  String? _module;
-  String? get module => _$this._module;
-  set module(String? module) => _$this._module = module;
+  String? _nameModule;
+  String? get nameModule => _$this._nameModule;
+  set nameModule(String? nameModule) => _$this._nameModule = nameModule;
+
+  String? _iconModule;
+  String? get iconModule => _$this._iconModule;
+  set iconModule(String? iconModule) => _$this._iconModule = iconModule;
+
+  String? _routeModule;
+  String? get routeModule => _$this._routeModule;
+  set routeModule(String? routeModule) => _$this._routeModule = routeModule;
 
   ModuleBuilder();
 
@@ -289,7 +338,9 @@ class ModuleBuilder implements Builder<Module, ModuleBuilder> {
     final $v = _$v;
     if ($v != null) {
       _id = $v.id;
-      _module = $v.module;
+      _nameModule = $v.nameModule;
+      _iconModule = $v.iconModule;
+      _routeModule = $v.routeModule;
       _$v = null;
     }
     return this;
@@ -307,15 +358,19 @@ class ModuleBuilder implements Builder<Module, ModuleBuilder> {
   }
 
   @override
-  _$Module build() {
+  Module build() => _build();
+
+  _$Module _build() {
     final _$result = _$v ??
         new _$Module._(
-            id: BuiltValueNullFieldError.checkNotNull(id, 'Module', 'id'),
-            module: BuiltValueNullFieldError.checkNotNull(
-                module, 'Module', 'module'));
+            id: id,
+            nameModule: BuiltValueNullFieldError.checkNotNull(
+                nameModule, 'Module', 'nameModule'),
+            iconModule: iconModule,
+            routeModule: routeModule);
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
