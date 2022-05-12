@@ -8,8 +8,7 @@ enum UnEncodePath { products, branches, warehouses, modules, users, employees}
 const String authority = '127.0.0.1:8000/';
 
 class ProductApiProvider {
-  Future<String> getDataModel(UnEncodePath unEncodePath,
-      [String id = '']) async {
+  Future<String> getDataModel(UnEncodePath unEncodePath, [String id = '', Map<String, dynamic> query = const {'':''}]) async {
     http.Response response;
     final Uri url;
     switch (unEncodePath) {
@@ -17,7 +16,9 @@ class ProductApiProvider {
         url = Uri.http('127.0.0.1:8000', 'api/branches/' + id);
         break;
       case UnEncodePath.products:
-        url = Uri.http('127.0.0.1:8000', 'api/products/');
+        url = Uri(scheme: 'http', host: '127.0.0.1', port: 8000, path: 'api/products/'+id, queryParameters: query);
+        print(url);
+        //url = Uri.http('127.0.0.1:8000', 'api/products/', id);
         break;
       case UnEncodePath.warehouses:
         url = Uri.http('127.0.0.1:8000', 'api/warehouses/');
@@ -34,7 +35,7 @@ class ProductApiProvider {
     }
 
     response = await http.get(url);
-    if (response.statusCode == 200 && response.body.isNotEmpty) {
+    if (response.statusCode == 200) {
       return response.body;
     }
     throw Exception('No data');

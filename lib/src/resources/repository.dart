@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 class Repository {
   final productApiProvider = ProductApiProvider();
 
-  Future<String> fetchData(UnEncodePath unEncodePath, [String? id]) =>
-      productApiProvider.getDataModel(unEncodePath, id ?? '');
+  Future<String> fetchData(UnEncodePath unEncodePath, [String? id, Map<String, dynamic> query = const {}]) =>
+      productApiProvider.getDataModel(unEncodePath, id ?? '', query);
 
   Future<Products?> fetchProductList() => productApiProvider.fetchProductList();
   Future<void> fetchLogin() => productApiProvider.login();

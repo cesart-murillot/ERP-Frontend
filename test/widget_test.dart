@@ -268,4 +268,19 @@ void main() {
 
     expect(products?.data.first.name, "Product 2");
   });*/
+
+  test('search query', () async {
+    final _repository = Repository();
+    final String productSuggestionString = await _repository.fetchData(UnEncodePath.products, 'fire');
+/*    http.Response response;
+    Uri url = Uri.http('127.0.0.1:8000', 'api/products/', {'search': 'fire'});
+    response = await http.get(url);*/
+    print(productSuggestionString);
+  });
+
+  test('uri url', () {
+    Uri url = Uri(port: 8000, host: '127.0.0.1', path: 'api/products/', queryParameters: {'':''}, scheme: 'http');
+    print(url);
+  });
+
 }

@@ -36,3 +36,14 @@ class ErrorLoadingInfoState extends MainState {
   // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
 }
+
+class RedirectingToPage extends MainState {
+  final Widget widget;
+  const RedirectingToPage(this.widget);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
+
+//Product page

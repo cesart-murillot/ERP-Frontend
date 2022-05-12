@@ -23,14 +23,22 @@ class _$ProductsSerializer implements StructuredSerializer<Products> {
       serializers.serialize(object.products,
           specifiedType:
               const FullType(BuiltList, const [const FullType(Product)])),
-      'links',
-      serializers.serialize(object.links,
-          specifiedType: const FullType(LinkData)),
-      'meta',
-      serializers.serialize(object.meta,
-          specifiedType: const FullType(MetaData)),
     ];
-
+    Object? value;
+    value = object.links;
+    if (value != null) {
+      result
+        ..add('links')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(LinkData)));
+    }
+    value = object.meta;
+    if (value != null) {
+      result
+        ..add('meta')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(MetaData)));
+    }
     return result;
   }
 
@@ -76,31 +84,61 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
   Iterable<Object?> serialize(Serializers serializers, Product object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'image_url',
-      serializers.serialize(object.image_url,
-          specifiedType: const FullType(String)),
-      'length',
-      serializers.serialize(object.length,
-          specifiedType: const FullType(String)),
-      'height',
-      serializers.serialize(object.height,
-          specifiedType: const FullType(String)),
-      'weight',
-      serializers.serialize(object.weight,
-          specifiedType: const FullType(String)),
-      'units_box',
-      serializers.serialize(object.units_box,
-          specifiedType: const FullType(int)),
-      'brand_product',
-      serializers.serialize(object.brand_product,
+      'name_product',
+      serializers.serialize(object.nameProduct,
           specifiedType: const FullType(String)),
       'origin_product',
-      serializers.serialize(object.origin_product,
+      serializers.serialize(object.originProduct,
           specifiedType: const FullType(String)),
     ];
-
+    Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.imageProduct;
+    if (value != null) {
+      result
+        ..add('image_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.lengthProduct;
+    if (value != null) {
+      result
+        ..add('length_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.heightProduct;
+    if (value != null) {
+      result
+        ..add('height_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.weightProduct;
+    if (value != null) {
+      result
+        ..add('weight_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.unitsBoxProduct;
+    if (value != null) {
+      result
+        ..add('units_box_product')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.brandProduct;
+    if (value != null) {
+      result
+        ..add('brand_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -115,36 +153,40 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'name':
-          result.name = serializers.deserialize(value,
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'name_product':
+          result.nameProduct = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'image_url':
-          result.image_url = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+        case 'image_product':
+          result.imageProduct = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
-        case 'length':
-          result.length = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+        case 'length_product':
+          result.lengthProduct = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
-        case 'height':
-          result.height = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+        case 'height_product':
+          result.heightProduct = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
-        case 'weight':
-          result.weight = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+        case 'weight_product':
+          result.weightProduct = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
-        case 'units_box':
-          result.units_box = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+        case 'units_box_product':
+          result.unitsBoxProduct = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'brand_product':
-          result.brand_product = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.brandProduct = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'origin_product':
-          result.origin_product = serializers.deserialize(value,
+          result.originProduct = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
       }
@@ -158,19 +200,15 @@ class _$Products extends Products {
   @override
   final BuiltList<Product> products;
   @override
-  final LinkData links;
+  final LinkData? links;
   @override
-  final MetaData meta;
+  final MetaData? meta;
 
   factory _$Products([void Function(ProductsBuilder)? updates]) =>
       (new ProductsBuilder()..update(updates))._build();
 
-  _$Products._(
-      {required this.products, required this.links, required this.meta})
-      : super._() {
+  _$Products._({required this.products, this.links, this.meta}) : super._() {
     BuiltValueNullFieldError.checkNotNull(products, 'Products', 'products');
-    BuiltValueNullFieldError.checkNotNull(links, 'Products', 'links');
-    BuiltValueNullFieldError.checkNotNull(meta, 'Products', 'meta');
   }
 
   @override
@@ -227,8 +265,8 @@ class ProductsBuilder implements Builder<Products, ProductsBuilder> {
     final $v = _$v;
     if ($v != null) {
       _products = $v.products.toBuilder();
-      _links = $v.links.toBuilder();
-      _meta = $v.meta.toBuilder();
+      _links = $v.links?.toBuilder();
+      _meta = $v.meta?.toBuilder();
       _$v = null;
     }
     return this;
@@ -254,17 +292,17 @@ class ProductsBuilder implements Builder<Products, ProductsBuilder> {
       _$result = _$v ??
           new _$Products._(
               products: products.build(),
-              links: links.build(),
-              meta: meta.build());
+              links: _links?.build(),
+              meta: _meta?.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'products';
         products.build();
         _$failedField = 'links';
-        links.build();
+        _links?.build();
         _$failedField = 'meta';
-        meta.build();
+        _meta?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'Products', _$failedField, e.toString());
@@ -278,45 +316,42 @@ class ProductsBuilder implements Builder<Products, ProductsBuilder> {
 
 class _$Product extends Product {
   @override
-  final String name;
+  final int? id;
   @override
-  final String image_url;
+  final String nameProduct;
   @override
-  final String length;
+  final String? imageProduct;
   @override
-  final String height;
+  final String? lengthProduct;
   @override
-  final String weight;
+  final String? heightProduct;
   @override
-  final int units_box;
+  final String? weightProduct;
   @override
-  final String brand_product;
+  final int? unitsBoxProduct;
   @override
-  final String origin_product;
+  final String? brandProduct;
+  @override
+  final String originProduct;
 
   factory _$Product([void Function(ProductBuilder)? updates]) =>
       (new ProductBuilder()..update(updates))._build();
 
   _$Product._(
-      {required this.name,
-      required this.image_url,
-      required this.length,
-      required this.height,
-      required this.weight,
-      required this.units_box,
-      required this.brand_product,
-      required this.origin_product})
+      {this.id,
+      required this.nameProduct,
+      this.imageProduct,
+      this.lengthProduct,
+      this.heightProduct,
+      this.weightProduct,
+      this.unitsBoxProduct,
+      this.brandProduct,
+      required this.originProduct})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, 'Product', 'name');
-    BuiltValueNullFieldError.checkNotNull(image_url, 'Product', 'image_url');
-    BuiltValueNullFieldError.checkNotNull(length, 'Product', 'length');
-    BuiltValueNullFieldError.checkNotNull(height, 'Product', 'height');
-    BuiltValueNullFieldError.checkNotNull(weight, 'Product', 'weight');
-    BuiltValueNullFieldError.checkNotNull(units_box, 'Product', 'units_box');
     BuiltValueNullFieldError.checkNotNull(
-        brand_product, 'Product', 'brand_product');
+        nameProduct, 'Product', 'nameProduct');
     BuiltValueNullFieldError.checkNotNull(
-        origin_product, 'Product', 'origin_product');
+        originProduct, 'Product', 'originProduct');
   }
 
   @override
@@ -330,14 +365,15 @@ class _$Product extends Product {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Product &&
-        name == other.name &&
-        image_url == other.image_url &&
-        length == other.length &&
-        height == other.height &&
-        weight == other.weight &&
-        units_box == other.units_box &&
-        brand_product == other.brand_product &&
-        origin_product == other.origin_product;
+        id == other.id &&
+        nameProduct == other.nameProduct &&
+        imageProduct == other.imageProduct &&
+        lengthProduct == other.lengthProduct &&
+        heightProduct == other.heightProduct &&
+        weightProduct == other.weightProduct &&
+        unitsBoxProduct == other.unitsBoxProduct &&
+        brandProduct == other.brandProduct &&
+        originProduct == other.originProduct;
   }
 
   @override
@@ -347,26 +383,29 @@ class _$Product extends Product {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, name.hashCode), image_url.hashCode),
-                            length.hashCode),
-                        height.hashCode),
-                    weight.hashCode),
-                units_box.hashCode),
-            brand_product.hashCode),
-        origin_product.hashCode));
+                        $jc(
+                            $jc($jc($jc(0, id.hashCode), nameProduct.hashCode),
+                                imageProduct.hashCode),
+                            lengthProduct.hashCode),
+                        heightProduct.hashCode),
+                    weightProduct.hashCode),
+                unitsBoxProduct.hashCode),
+            brandProduct.hashCode),
+        originProduct.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Product')
-          ..add('name', name)
-          ..add('image_url', image_url)
-          ..add('length', length)
-          ..add('height', height)
-          ..add('weight', weight)
-          ..add('units_box', units_box)
-          ..add('brand_product', brand_product)
-          ..add('origin_product', origin_product))
+          ..add('id', id)
+          ..add('nameProduct', nameProduct)
+          ..add('imageProduct', imageProduct)
+          ..add('lengthProduct', lengthProduct)
+          ..add('heightProduct', heightProduct)
+          ..add('weightProduct', weightProduct)
+          ..add('unitsBoxProduct', unitsBoxProduct)
+          ..add('brandProduct', brandProduct)
+          ..add('originProduct', originProduct))
         .toString();
   }
 }
@@ -374,53 +413,61 @@ class _$Product extends Product {
 class ProductBuilder implements Builder<Product, ProductBuilder> {
   _$Product? _$v;
 
-  String? _name;
-  String? get name => _$this._name;
-  set name(String? name) => _$this._name = name;
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
 
-  String? _image_url;
-  String? get image_url => _$this._image_url;
-  set image_url(String? image_url) => _$this._image_url = image_url;
+  String? _nameProduct;
+  String? get nameProduct => _$this._nameProduct;
+  set nameProduct(String? nameProduct) => _$this._nameProduct = nameProduct;
 
-  String? _length;
-  String? get length => _$this._length;
-  set length(String? length) => _$this._length = length;
+  String? _imageProduct;
+  String? get imageProduct => _$this._imageProduct;
+  set imageProduct(String? imageProduct) => _$this._imageProduct = imageProduct;
 
-  String? _height;
-  String? get height => _$this._height;
-  set height(String? height) => _$this._height = height;
+  String? _lengthProduct;
+  String? get lengthProduct => _$this._lengthProduct;
+  set lengthProduct(String? lengthProduct) =>
+      _$this._lengthProduct = lengthProduct;
 
-  String? _weight;
-  String? get weight => _$this._weight;
-  set weight(String? weight) => _$this._weight = weight;
+  String? _heightProduct;
+  String? get heightProduct => _$this._heightProduct;
+  set heightProduct(String? heightProduct) =>
+      _$this._heightProduct = heightProduct;
 
-  int? _units_box;
-  int? get units_box => _$this._units_box;
-  set units_box(int? units_box) => _$this._units_box = units_box;
+  String? _weightProduct;
+  String? get weightProduct => _$this._weightProduct;
+  set weightProduct(String? weightProduct) =>
+      _$this._weightProduct = weightProduct;
 
-  String? _brand_product;
-  String? get brand_product => _$this._brand_product;
-  set brand_product(String? brand_product) =>
-      _$this._brand_product = brand_product;
+  int? _unitsBoxProduct;
+  int? get unitsBoxProduct => _$this._unitsBoxProduct;
+  set unitsBoxProduct(int? unitsBoxProduct) =>
+      _$this._unitsBoxProduct = unitsBoxProduct;
 
-  String? _origin_product;
-  String? get origin_product => _$this._origin_product;
-  set origin_product(String? origin_product) =>
-      _$this._origin_product = origin_product;
+  String? _brandProduct;
+  String? get brandProduct => _$this._brandProduct;
+  set brandProduct(String? brandProduct) => _$this._brandProduct = brandProduct;
+
+  String? _originProduct;
+  String? get originProduct => _$this._originProduct;
+  set originProduct(String? originProduct) =>
+      _$this._originProduct = originProduct;
 
   ProductBuilder();
 
   ProductBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _name = $v.name;
-      _image_url = $v.image_url;
-      _length = $v.length;
-      _height = $v.height;
-      _weight = $v.weight;
-      _units_box = $v.units_box;
-      _brand_product = $v.brand_product;
-      _origin_product = $v.origin_product;
+      _id = $v.id;
+      _nameProduct = $v.nameProduct;
+      _imageProduct = $v.imageProduct;
+      _lengthProduct = $v.lengthProduct;
+      _heightProduct = $v.heightProduct;
+      _weightProduct = $v.weightProduct;
+      _unitsBoxProduct = $v.unitsBoxProduct;
+      _brandProduct = $v.brandProduct;
+      _originProduct = $v.originProduct;
       _$v = null;
     }
     return this;
@@ -443,22 +490,17 @@ class ProductBuilder implements Builder<Product, ProductBuilder> {
   _$Product _build() {
     final _$result = _$v ??
         new _$Product._(
-            name:
-                BuiltValueNullFieldError.checkNotNull(name, 'Product', 'name'),
-            image_url: BuiltValueNullFieldError.checkNotNull(
-                image_url, 'Product', 'image_url'),
-            length: BuiltValueNullFieldError.checkNotNull(
-                length, 'Product', 'length'),
-            height: BuiltValueNullFieldError.checkNotNull(
-                height, 'Product', 'height'),
-            weight: BuiltValueNullFieldError.checkNotNull(
-                weight, 'Product', 'weight'),
-            units_box: BuiltValueNullFieldError.checkNotNull(
-                units_box, 'Product', 'units_box'),
-            brand_product: BuiltValueNullFieldError.checkNotNull(
-                brand_product, 'Product', 'brand_product'),
-            origin_product: BuiltValueNullFieldError.checkNotNull(
-                origin_product, 'Product', 'origin_product'));
+            id: id,
+            nameProduct: BuiltValueNullFieldError.checkNotNull(
+                nameProduct, 'Product', 'nameProduct'),
+            imageProduct: imageProduct,
+            lengthProduct: lengthProduct,
+            heightProduct: heightProduct,
+            weightProduct: weightProduct,
+            unitsBoxProduct: unitsBoxProduct,
+            brandProduct: brandProduct,
+            originProduct: BuiltValueNullFieldError.checkNotNull(
+                originProduct, 'Product', 'originProduct'));
     replace(_$result);
     return _$result;
   }

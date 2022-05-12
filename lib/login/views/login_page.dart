@@ -40,7 +40,7 @@ class MainNavigation extends StatelessWidget {
           ),
           if (state.formStatus is SubmissionSuccess)
             const MaterialPage(
-              child: MainPage(),
+              child: MainNavigator(),
             ),
         ],
         onPopPage: (route, result) {
