@@ -45,10 +45,7 @@ class App extends MaterialApp {
   App({Key? key})
       : super(
           key: key,
-          home: Container(
-            child: const ProductDetailPage(),
-            margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-          ),
+          home: const ProductDetailPage(),
           theme: ThemeData(
               focusColor: Colors.red,
               scaffoldBackgroundColor: const Color(0xffe5ffff),
@@ -66,11 +63,6 @@ InputDecorationTheme customTheme = InputDecorationTheme(
     fontSize: 16.0,
   ),
   labelStyle: const TextStyle(wordSpacing: 2.0, fontSize: 12.0),
-  constraints: const BoxConstraints(
-    minWidth: 180.0,
-    maxWidth: 200.0,
-    maxHeight: 32.0,
-  ),
   //fillColor: const Color(0xffd0d8ff),
   /*filled: true,
   fillColor: const Color(0xffb6ffff),*/
@@ -83,10 +75,9 @@ InputDecorationTheme customTheme = InputDecorationTheme(
   disabledBorder: const OutlineInputBorder(
     borderSide: BorderSide(color: Colors.transparent),
   ),
-  contentPadding: const EdgeInsets.all(8.0),
+  //contentPadding: const EdgeInsets.all(8.0),
 );
 
-TextTheme customTextTheme = const TextTheme(
-  caption: TextStyle(wordSpacing: 4.0),
-  overline: TextStyle(wordSpacing: 4.0),
+TextTheme customTextTheme = TextTheme(
+  headline1: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
 );

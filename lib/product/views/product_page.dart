@@ -27,7 +27,7 @@ class ProductPageNavigator extends StatelessWidget {
               ),
               if (state is ProductStateShowProduct)
                 const MaterialPage(
-                  fullscreenDialog: false,
+                  fullscreenDialog: true,
                   child: ProductDetailPage(),
                 )
             ],
