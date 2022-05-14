@@ -12,6 +12,7 @@ import 'package:built_value/serializer.dart';
 import 'package:erp_fronted/branch/models/branch_model.dart';
 import 'package:erp_fronted/employee/models/user_model.dart';
 import 'package:erp_fronted/module/models/module_model.dart';
+import 'package:erp_fronted/product/models/product_model.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
 import 'package:erp_fronted/src/models/product_model.dart';
 import 'package:erp_fronted/src/models/serializers.dart';
@@ -282,5 +283,11 @@ void main() {
     Uri url = Uri(port: 8000, host: '127.0.0.1', path: 'api/products/', queryParameters: {'':''}, scheme: 'http');
     print(url);
   });
+  test('product', () async {
+    final _repository = Repository();
+    final String productString = await _repository.fetchData(UnEncodePath.products);
+    final Products products = parseObject(productString, Products.serializer);
 
+    print(products);
+  });
 }

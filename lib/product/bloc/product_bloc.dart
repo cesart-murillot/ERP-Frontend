@@ -20,7 +20,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     //on<ProductEventSuggestProduct>(_getProductSuggestions);
 
     on<ProductEventCloseProductDetails>((event, emit) => emit(const ProductStateInitial()));
-    on<ProductEventGetProductDetails>((event, emit) => emit(const ProductStateShowProduct()),);
+    on<ProductEventGetProductDetails>((event, emit) => emit(ProductStateShowProduct(event.product)),);
   }
 
   Future<void> _getProductList(ProductEventGetProductList event, Emitter<ProductState> emitter) async {

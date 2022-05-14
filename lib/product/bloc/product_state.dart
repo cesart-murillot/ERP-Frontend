@@ -35,7 +35,8 @@ class ProductStateSuggestedProducts extends ProductState {
 }
 
 class ProductStateShowProduct extends ProductState {
-  const ProductStateShowProduct();
+  const ProductStateShowProduct(this.product);
+  final Product product;
 }
 
 class ProductStateDebug extends ProductState {

@@ -25,29 +25,60 @@ abstract class Product implements Built<Product, ProductBuilder> {
 
   int? get id;
 
-  @BuiltValueField(wireName: 'name_product')
-  String get nameProduct;
+  @BuiltValueField(wireName: 'model_product')
+  String get modelProduct;
 
-  @BuiltValueField(wireName: 'image_product')
-  String? get imageProduct;
+  @BuiltValueField(wireName: 'description_product')
+  String? get descriptionProduct;
 
-  @BuiltValueField(wireName: 'length_product')
-  String? get lengthProduct;
+  @BuiltValueField(wireName: 'url_image_product')
+  String? get urlImageProduct;
 
-  @BuiltValueField(wireName: 'height_product')
-  String? get heightProduct;
+  @BuiltValueField(wireName: 'format_product')
+  String get formatProduct;
 
-  @BuiltValueField(wireName: 'weight_product')
-  String? get weightProduct;
+  @BuiltValueField(wireName: 'code_product')
+  String? get codeProduct;
 
-  @BuiltValueField(wireName: 'units_box_product')
-  int? get unitsBoxProduct;
+  @BuiltValueField(wireName: 'family_product')
+  String? get familyProduct;
+
+  @BuiltValueField(wireName: 'finish_product')
+  String? get finishProduct;
 
   @BuiltValueField(wireName: 'brand_product')
   String? get brandProduct;
 
   @BuiltValueField(wireName: 'origin_product')
-  String get originProduct;
+  String? get originProduct;
+
+  @BuiltValueField(wireName: 'unit_measure_product')
+  String? get unitMeasureProduct;
+
+  @BuiltValueField(wireName: 'units_box_product')
+  int? get unitsBoxProduct;
+
+  @BuiltValueField(wireName: 'area_box_product')
+  double? get areaBoxProduct;
+
+
+  @BuiltValueField(wireName: 'boxes_pallet_product')
+  int? get boxesPalletProduct;
+
+  @BuiltValueField(wireName: 'area_pallet_product')
+  double? get areaPalletProduct;
+
+  @BuiltValueField(wireName: 'weight_box_product')
+  double? get weightBoxProduct;
+
+  @BuiltValueField(wireName: 'weight_pallet_product')
+  double? get weightPalletProduct;
+
+  @BuiltValueField(wireName: 'created_at')
+  String? get createdAt;
+
+  @BuiltValueField(wireName: 'updated_at')
+  String? get updatedAt;
 
   Product._();
   factory Product([void Function(ProductBuilder) updates]) = _$Product;

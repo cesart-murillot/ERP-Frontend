@@ -84,11 +84,11 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
   Iterable<Object?> serialize(Serializers serializers, Product object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'name_product',
-      serializers.serialize(object.nameProduct,
+      'model_product',
+      serializers.serialize(object.modelProduct,
           specifiedType: const FullType(String)),
-      'origin_product',
-      serializers.serialize(object.originProduct,
+      'format_product',
+      serializers.serialize(object.formatProduct,
           specifiedType: const FullType(String)),
     ];
     Object? value;
@@ -98,31 +98,59 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
         ..add('id')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    value = object.imageProduct;
+    value = object.descriptionProduct;
     if (value != null) {
       result
-        ..add('image_product')
+        ..add('description_product')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.lengthProduct;
+    value = object.urlImageProduct;
     if (value != null) {
       result
-        ..add('length_product')
+        ..add('url_image_product')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.heightProduct;
+    value = object.codeProduct;
     if (value != null) {
       result
-        ..add('height_product')
+        ..add('code_product')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.weightProduct;
+    value = object.familyProduct;
     if (value != null) {
       result
-        ..add('weight_product')
+        ..add('family_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.finishProduct;
+    if (value != null) {
+      result
+        ..add('finish_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.brandProduct;
+    if (value != null) {
+      result
+        ..add('brand_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.originProduct;
+    if (value != null) {
+      result
+        ..add('origin_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.unitMeasureProduct;
+    if (value != null) {
+      result
+        ..add('unit_measure_product')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -132,10 +160,51 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
         ..add('units_box_product')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    value = object.brandProduct;
+    value = object.areaBoxProduct;
     if (value != null) {
       result
-        ..add('brand_product')
+        ..add('area_box_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.boxesPalletProduct;
+    if (value != null) {
+      result
+        ..add('boxes_pallet_product')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.areaPalletProduct;
+    if (value != null) {
+      result
+        ..add('area_pallet_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.weightBoxProduct;
+    if (value != null) {
+      result
+        ..add('weight_box_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.weightPalletProduct;
+    if (value != null) {
+      result
+        ..add('weight_pallet_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.createdAt;
+    if (value != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.updatedAt;
+    if (value != null) {
+      result
+        ..add('updated_at')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -157,29 +226,33 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
-        case 'name_product':
-          result.nameProduct = serializers.deserialize(value,
+        case 'model_product':
+          result.modelProduct = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'image_product':
-          result.imageProduct = serializers.deserialize(value,
+        case 'description_product':
+          result.descriptionProduct = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'length_product':
-          result.lengthProduct = serializers.deserialize(value,
+        case 'url_image_product':
+          result.urlImageProduct = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'height_product':
-          result.heightProduct = serializers.deserialize(value,
+        case 'format_product':
+          result.formatProduct = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'code_product':
+          result.codeProduct = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'weight_product':
-          result.weightProduct = serializers.deserialize(value,
+        case 'family_product':
+          result.familyProduct = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'units_box_product':
-          result.unitsBoxProduct = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+        case 'finish_product':
+          result.finishProduct = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'brand_product':
           result.brandProduct = serializers.deserialize(value,
@@ -187,7 +260,43 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
           break;
         case 'origin_product':
           result.originProduct = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'unit_measure_product':
+          result.unitMeasureProduct = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'units_box_product':
+          result.unitsBoxProduct = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'area_box_product':
+          result.areaBoxProduct = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'boxes_pallet_product':
+          result.boxesPalletProduct = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'area_pallet_product':
+          result.areaPalletProduct = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'weight_box_product':
+          result.weightBoxProduct = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'weight_pallet_product':
+          result.weightPalletProduct = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'updated_at':
+          result.updatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
       }
     }
@@ -318,40 +427,70 @@ class _$Product extends Product {
   @override
   final int? id;
   @override
-  final String nameProduct;
+  final String modelProduct;
   @override
-  final String? imageProduct;
+  final String? descriptionProduct;
   @override
-  final String? lengthProduct;
+  final String? urlImageProduct;
   @override
-  final String? heightProduct;
+  final String formatProduct;
   @override
-  final String? weightProduct;
+  final String? codeProduct;
   @override
-  final int? unitsBoxProduct;
+  final String? familyProduct;
+  @override
+  final String? finishProduct;
   @override
   final String? brandProduct;
   @override
-  final String originProduct;
+  final String? originProduct;
+  @override
+  final String? unitMeasureProduct;
+  @override
+  final int? unitsBoxProduct;
+  @override
+  final double? areaBoxProduct;
+  @override
+  final int? boxesPalletProduct;
+  @override
+  final double? areaPalletProduct;
+  @override
+  final double? weightBoxProduct;
+  @override
+  final double? weightPalletProduct;
+  @override
+  final String? createdAt;
+  @override
+  final String? updatedAt;
 
   factory _$Product([void Function(ProductBuilder)? updates]) =>
       (new ProductBuilder()..update(updates))._build();
 
   _$Product._(
       {this.id,
-      required this.nameProduct,
-      this.imageProduct,
-      this.lengthProduct,
-      this.heightProduct,
-      this.weightProduct,
-      this.unitsBoxProduct,
+      required this.modelProduct,
+      this.descriptionProduct,
+      this.urlImageProduct,
+      required this.formatProduct,
+      this.codeProduct,
+      this.familyProduct,
+      this.finishProduct,
       this.brandProduct,
-      required this.originProduct})
+      this.originProduct,
+      this.unitMeasureProduct,
+      this.unitsBoxProduct,
+      this.areaBoxProduct,
+      this.boxesPalletProduct,
+      this.areaPalletProduct,
+      this.weightBoxProduct,
+      this.weightPalletProduct,
+      this.createdAt,
+      this.updatedAt})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        nameProduct, 'Product', 'nameProduct');
+        modelProduct, 'Product', 'modelProduct');
     BuiltValueNullFieldError.checkNotNull(
-        originProduct, 'Product', 'originProduct');
+        formatProduct, 'Product', 'formatProduct');
   }
 
   @override
@@ -366,14 +505,24 @@ class _$Product extends Product {
     if (identical(other, this)) return true;
     return other is Product &&
         id == other.id &&
-        nameProduct == other.nameProduct &&
-        imageProduct == other.imageProduct &&
-        lengthProduct == other.lengthProduct &&
-        heightProduct == other.heightProduct &&
-        weightProduct == other.weightProduct &&
-        unitsBoxProduct == other.unitsBoxProduct &&
+        modelProduct == other.modelProduct &&
+        descriptionProduct == other.descriptionProduct &&
+        urlImageProduct == other.urlImageProduct &&
+        formatProduct == other.formatProduct &&
+        codeProduct == other.codeProduct &&
+        familyProduct == other.familyProduct &&
+        finishProduct == other.finishProduct &&
         brandProduct == other.brandProduct &&
-        originProduct == other.originProduct;
+        originProduct == other.originProduct &&
+        unitMeasureProduct == other.unitMeasureProduct &&
+        unitsBoxProduct == other.unitsBoxProduct &&
+        areaBoxProduct == other.areaBoxProduct &&
+        boxesPalletProduct == other.boxesPalletProduct &&
+        areaPalletProduct == other.areaPalletProduct &&
+        weightBoxProduct == other.weightBoxProduct &&
+        weightPalletProduct == other.weightPalletProduct &&
+        createdAt == other.createdAt &&
+        updatedAt == other.updatedAt;
   }
 
   @override
@@ -384,28 +533,69 @@ class _$Product extends Product {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, id.hashCode), nameProduct.hashCode),
-                                imageProduct.hashCode),
-                            lengthProduct.hashCode),
-                        heightProduct.hashCode),
-                    weightProduct.hashCode),
-                unitsBoxProduct.hashCode),
-            brandProduct.hashCode),
-        originProduct.hashCode));
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        $jc(
+                                                                            $jc(
+                                                                                0,
+                                                                                id
+                                                                                    .hashCode),
+                                                                            modelProduct
+                                                                                .hashCode),
+                                                                        descriptionProduct
+                                                                            .hashCode),
+                                                                    urlImageProduct
+                                                                        .hashCode),
+                                                                formatProduct
+                                                                    .hashCode),
+                                                            codeProduct
+                                                                .hashCode),
+                                                        familyProduct.hashCode),
+                                                    finishProduct.hashCode),
+                                                brandProduct.hashCode),
+                                            originProduct.hashCode),
+                                        unitMeasureProduct.hashCode),
+                                    unitsBoxProduct.hashCode),
+                                areaBoxProduct.hashCode),
+                            boxesPalletProduct.hashCode),
+                        areaPalletProduct.hashCode),
+                    weightBoxProduct.hashCode),
+                weightPalletProduct.hashCode),
+            createdAt.hashCode),
+        updatedAt.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Product')
           ..add('id', id)
-          ..add('nameProduct', nameProduct)
-          ..add('imageProduct', imageProduct)
-          ..add('lengthProduct', lengthProduct)
-          ..add('heightProduct', heightProduct)
-          ..add('weightProduct', weightProduct)
-          ..add('unitsBoxProduct', unitsBoxProduct)
+          ..add('modelProduct', modelProduct)
+          ..add('descriptionProduct', descriptionProduct)
+          ..add('urlImageProduct', urlImageProduct)
+          ..add('formatProduct', formatProduct)
+          ..add('codeProduct', codeProduct)
+          ..add('familyProduct', familyProduct)
+          ..add('finishProduct', finishProduct)
           ..add('brandProduct', brandProduct)
-          ..add('originProduct', originProduct))
+          ..add('originProduct', originProduct)
+          ..add('unitMeasureProduct', unitMeasureProduct)
+          ..add('unitsBoxProduct', unitsBoxProduct)
+          ..add('areaBoxProduct', areaBoxProduct)
+          ..add('boxesPalletProduct', boxesPalletProduct)
+          ..add('areaPalletProduct', areaPalletProduct)
+          ..add('weightBoxProduct', weightBoxProduct)
+          ..add('weightPalletProduct', weightPalletProduct)
+          ..add('createdAt', createdAt)
+          ..add('updatedAt', updatedAt))
         .toString();
   }
 }
@@ -417,33 +607,38 @@ class ProductBuilder implements Builder<Product, ProductBuilder> {
   int? get id => _$this._id;
   set id(int? id) => _$this._id = id;
 
-  String? _nameProduct;
-  String? get nameProduct => _$this._nameProduct;
-  set nameProduct(String? nameProduct) => _$this._nameProduct = nameProduct;
+  String? _modelProduct;
+  String? get modelProduct => _$this._modelProduct;
+  set modelProduct(String? modelProduct) => _$this._modelProduct = modelProduct;
 
-  String? _imageProduct;
-  String? get imageProduct => _$this._imageProduct;
-  set imageProduct(String? imageProduct) => _$this._imageProduct = imageProduct;
+  String? _descriptionProduct;
+  String? get descriptionProduct => _$this._descriptionProduct;
+  set descriptionProduct(String? descriptionProduct) =>
+      _$this._descriptionProduct = descriptionProduct;
 
-  String? _lengthProduct;
-  String? get lengthProduct => _$this._lengthProduct;
-  set lengthProduct(String? lengthProduct) =>
-      _$this._lengthProduct = lengthProduct;
+  String? _urlImageProduct;
+  String? get urlImageProduct => _$this._urlImageProduct;
+  set urlImageProduct(String? urlImageProduct) =>
+      _$this._urlImageProduct = urlImageProduct;
 
-  String? _heightProduct;
-  String? get heightProduct => _$this._heightProduct;
-  set heightProduct(String? heightProduct) =>
-      _$this._heightProduct = heightProduct;
+  String? _formatProduct;
+  String? get formatProduct => _$this._formatProduct;
+  set formatProduct(String? formatProduct) =>
+      _$this._formatProduct = formatProduct;
 
-  String? _weightProduct;
-  String? get weightProduct => _$this._weightProduct;
-  set weightProduct(String? weightProduct) =>
-      _$this._weightProduct = weightProduct;
+  String? _codeProduct;
+  String? get codeProduct => _$this._codeProduct;
+  set codeProduct(String? codeProduct) => _$this._codeProduct = codeProduct;
 
-  int? _unitsBoxProduct;
-  int? get unitsBoxProduct => _$this._unitsBoxProduct;
-  set unitsBoxProduct(int? unitsBoxProduct) =>
-      _$this._unitsBoxProduct = unitsBoxProduct;
+  String? _familyProduct;
+  String? get familyProduct => _$this._familyProduct;
+  set familyProduct(String? familyProduct) =>
+      _$this._familyProduct = familyProduct;
+
+  String? _finishProduct;
+  String? get finishProduct => _$this._finishProduct;
+  set finishProduct(String? finishProduct) =>
+      _$this._finishProduct = finishProduct;
 
   String? _brandProduct;
   String? get brandProduct => _$this._brandProduct;
@@ -454,20 +649,73 @@ class ProductBuilder implements Builder<Product, ProductBuilder> {
   set originProduct(String? originProduct) =>
       _$this._originProduct = originProduct;
 
+  String? _unitMeasureProduct;
+  String? get unitMeasureProduct => _$this._unitMeasureProduct;
+  set unitMeasureProduct(String? unitMeasureProduct) =>
+      _$this._unitMeasureProduct = unitMeasureProduct;
+
+  int? _unitsBoxProduct;
+  int? get unitsBoxProduct => _$this._unitsBoxProduct;
+  set unitsBoxProduct(int? unitsBoxProduct) =>
+      _$this._unitsBoxProduct = unitsBoxProduct;
+
+  double? _areaBoxProduct;
+  double? get areaBoxProduct => _$this._areaBoxProduct;
+  set areaBoxProduct(double? areaBoxProduct) =>
+      _$this._areaBoxProduct = areaBoxProduct;
+
+  int? _boxesPalletProduct;
+  int? get boxesPalletProduct => _$this._boxesPalletProduct;
+  set boxesPalletProduct(int? boxesPalletProduct) =>
+      _$this._boxesPalletProduct = boxesPalletProduct;
+
+  double? _areaPalletProduct;
+  double? get areaPalletProduct => _$this._areaPalletProduct;
+  set areaPalletProduct(double? areaPalletProduct) =>
+      _$this._areaPalletProduct = areaPalletProduct;
+
+  double? _weightBoxProduct;
+  double? get weightBoxProduct => _$this._weightBoxProduct;
+  set weightBoxProduct(double? weightBoxProduct) =>
+      _$this._weightBoxProduct = weightBoxProduct;
+
+  double? _weightPalletProduct;
+  double? get weightPalletProduct => _$this._weightPalletProduct;
+  set weightPalletProduct(double? weightPalletProduct) =>
+      _$this._weightPalletProduct = weightPalletProduct;
+
+  String? _createdAt;
+  String? get createdAt => _$this._createdAt;
+  set createdAt(String? createdAt) => _$this._createdAt = createdAt;
+
+  String? _updatedAt;
+  String? get updatedAt => _$this._updatedAt;
+  set updatedAt(String? updatedAt) => _$this._updatedAt = updatedAt;
+
   ProductBuilder();
 
   ProductBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _id = $v.id;
-      _nameProduct = $v.nameProduct;
-      _imageProduct = $v.imageProduct;
-      _lengthProduct = $v.lengthProduct;
-      _heightProduct = $v.heightProduct;
-      _weightProduct = $v.weightProduct;
-      _unitsBoxProduct = $v.unitsBoxProduct;
+      _modelProduct = $v.modelProduct;
+      _descriptionProduct = $v.descriptionProduct;
+      _urlImageProduct = $v.urlImageProduct;
+      _formatProduct = $v.formatProduct;
+      _codeProduct = $v.codeProduct;
+      _familyProduct = $v.familyProduct;
+      _finishProduct = $v.finishProduct;
       _brandProduct = $v.brandProduct;
       _originProduct = $v.originProduct;
+      _unitMeasureProduct = $v.unitMeasureProduct;
+      _unitsBoxProduct = $v.unitsBoxProduct;
+      _areaBoxProduct = $v.areaBoxProduct;
+      _boxesPalletProduct = $v.boxesPalletProduct;
+      _areaPalletProduct = $v.areaPalletProduct;
+      _weightBoxProduct = $v.weightBoxProduct;
+      _weightPalletProduct = $v.weightPalletProduct;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
       _$v = null;
     }
     return this;
@@ -491,16 +739,26 @@ class ProductBuilder implements Builder<Product, ProductBuilder> {
     final _$result = _$v ??
         new _$Product._(
             id: id,
-            nameProduct: BuiltValueNullFieldError.checkNotNull(
-                nameProduct, 'Product', 'nameProduct'),
-            imageProduct: imageProduct,
-            lengthProduct: lengthProduct,
-            heightProduct: heightProduct,
-            weightProduct: weightProduct,
-            unitsBoxProduct: unitsBoxProduct,
+            modelProduct: BuiltValueNullFieldError.checkNotNull(
+                modelProduct, 'Product', 'modelProduct'),
+            descriptionProduct: descriptionProduct,
+            urlImageProduct: urlImageProduct,
+            formatProduct: BuiltValueNullFieldError.checkNotNull(
+                formatProduct, 'Product', 'formatProduct'),
+            codeProduct: codeProduct,
+            familyProduct: familyProduct,
+            finishProduct: finishProduct,
             brandProduct: brandProduct,
-            originProduct: BuiltValueNullFieldError.checkNotNull(
-                originProduct, 'Product', 'originProduct'));
+            originProduct: originProduct,
+            unitMeasureProduct: unitMeasureProduct,
+            unitsBoxProduct: unitsBoxProduct,
+            areaBoxProduct: areaBoxProduct,
+            boxesPalletProduct: boxesPalletProduct,
+            areaPalletProduct: areaPalletProduct,
+            weightBoxProduct: weightBoxProduct,
+            weightPalletProduct: weightPalletProduct,
+            createdAt: createdAt,
+            updatedAt: updatedAt);
     replace(_$result);
     return _$result;
   }

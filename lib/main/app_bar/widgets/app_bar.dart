@@ -148,7 +148,7 @@ class ProductSearch extends SearchDelegate<Product?> {
             itemCount: state.products.products.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(state.products.products[index].nameProduct),
+                title: Text(state.products.products[index].modelProduct),
                 onTap: () {},
               );
             },

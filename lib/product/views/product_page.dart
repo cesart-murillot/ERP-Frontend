@@ -13,7 +13,7 @@ class ProductPageNavigator extends StatelessWidget {
     //context.read<ProductBloc>().add(ProductEventGetProductList());
     return MultiBlocProvider(
       providers: [
-         BlocProvider(
+        BlocProvider(
           create: (_) =>
               ProductBloc(Repository())..add(ProductEventGetProductList()),
         ),
@@ -26,9 +26,11 @@ class ProductPageNavigator extends StatelessWidget {
                 child: ProductPage(),
               ),
               if (state is ProductStateShowProduct)
-                const MaterialPage(
+                MaterialPage(
                   fullscreenDialog: true,
-                  child: ProductDetailPage(),
+                  child: ProductDetailPage(
+                    product: state.product,
+                  ),
                 )
             ],
             onPopPage: (route, result) {
@@ -45,10 +47,10 @@ class ProductPageNavigator extends StatelessWidget {
             MaterialPage(
               child: ProductPage(),
             ),
-*//*            if (state is ProductStateShowProduct)
+*/ /*            if (state is ProductStateShowProduct)
               const MaterialPage(
                 child: ProductDetailPage(),
-              ),*//*
+              ),*/ /*
           ],
           onPopPage: (route, result) {
             return route.didPop(result);
@@ -86,10 +88,11 @@ class ProductList extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
               contentPadding: const EdgeInsets.all(8.0),
-              title: Text(state.products.products[index].nameProduct),
+              title: Text(state.products.products[index].modelProduct),
               leading: const FlutterLogo(),
               onTap: () {
-                context.read<ProductBloc>().add(ProductEventGetProductDetails());
+                context.read<ProductBloc>().add(ProductEventGetProductDetails(
+                    state.products.products[index]));
               },
             );
           },
@@ -108,5 +111,3 @@ class ProductList extends StatelessWidget {
     });
   }
 }
-
-

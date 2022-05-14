@@ -1,5 +1,7 @@
+import 'package:erp_fronted/login/views/login_page.dart';
 import 'package:erp_fronted/product/views/product_detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /*
 class App extends MaterialApp {
@@ -45,24 +47,25 @@ class App extends MaterialApp {
   App({Key? key})
       : super(
           key: key,
-          home: const ProductDetailPage(),
+          home: const MainLoginPage(),
           theme: ThemeData(
               focusColor: Colors.red,
               scaffoldBackgroundColor: const Color(0xffe5ffff),
-              textTheme: customTextTheme,
+              textTheme: GoogleFonts.latoTextTheme(),
               primaryColor: const Color(0xffb2ebf2),
               backgroundColor: Colors.black,
               hintColor: Colors.black,
-              inputDecorationTheme: customTheme),
+              //inputDecorationTheme: customTheme
+          ),
         );
 }
 
 InputDecorationTheme customTheme = InputDecorationTheme(
-  floatingLabelStyle: const TextStyle(
+/*  floatingLabelStyle: const TextStyle(
     color: Colors.black,
     fontSize: 16.0,
-  ),
-  labelStyle: const TextStyle(wordSpacing: 2.0, fontSize: 12.0),
+  ),*/
+  //labelStyle: const TextStyle(wordSpacing: 2.0, fontSize: 12.0),
   //fillColor: const Color(0xffd0d8ff),
   /*filled: true,
   fillColor: const Color(0xffb6ffff),*/
@@ -78,6 +81,39 @@ InputDecorationTheme customTheme = InputDecorationTheme(
   //contentPadding: const EdgeInsets.all(8.0),
 );
 
-TextTheme customTextTheme = TextTheme(
-  headline1: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+TextTheme customTextTheme = const TextTheme(
+  headline1: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, ),
+  headline2: TextStyle(fontSize: 12.0, fontWeight: FontWeight.normal),
+  headline3: TextStyle(fontSize: 32.0, fontWeight: FontWeight.normal),
+  headline4: TextStyle(fontSize: 32.0, fontWeight: FontWeight.normal),
+  headline5: TextStyle(fontSize: 32.0, fontWeight: FontWeight.normal),
+  headline6: TextStyle(fontSize: 32.0, fontWeight: FontWeight.normal),
+
+/*  headlineLarge: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+  headlineMedium: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+  headlineSmall: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),*/
+
+ /* labelLarge: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+  labelMedium: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+  labelSmall: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+
+  bodyLarge: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+  bodyMedium: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+  bodySmall: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+
+  bodyText1: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+  bodyText2: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+
+  titleLarge: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+  titleMedium: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+  titleSmall: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+
+  displayLarge: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+  displayMedium: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+  displaySmall: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+
+  subtitle1: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+  subtitle2: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),*/
+
+
 );

@@ -33,6 +33,7 @@ dependencies:
   built_collection: any
   built_value: ^8.2.3
   rxdart: ^0.27.3
+  google_fonts: ^2.3.2
 
 dev_dependencies:
   flutter_test:

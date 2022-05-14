@@ -17,8 +17,11 @@ class ProductEventSuggestProduct extends ProductEvent {
 }
 
 class ProductEventGetProductDetails extends ProductEvent {
+  final Product product;
   @override
   List<Object?> get props => throw UnimplementedError();
+
+  ProductEventGetProductDetails(this.product);
 }
 
 class ProductEventCloseProductDetails extends ProductEvent {
