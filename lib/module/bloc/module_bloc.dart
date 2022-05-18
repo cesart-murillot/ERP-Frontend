@@ -1,16 +1,16 @@
+/*
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:equatable/equatable.dart';
 import '../../src/resources/repository.dart';
 
 part 'module_event.dart';
-
 part 'module_state.dart';
 
 class ModuleBloc extends Bloc<ModuleEvent, ModuleState> {
+*/
 /*  final Repository repository;
   ModuleBloc({required this.repository}) : super(const ModuleState()){
     on<ModuleFetch>(_onModuleFetch);
@@ -27,7 +27,8 @@ class ModuleBloc extends Bloc<ModuleEvent, ModuleState> {
    } catch (e) {
      emitter(state.copyWith(status: ModuleStatus.failure, models: null));
    }
-  }*/
+  }*//*
+
   final Repository repository;
 
   ModuleBloc(this.repository) : super(const ModuleState()) {
@@ -53,3 +54,4 @@ class ModuleBloc extends Bloc<ModuleEvent, ModuleState> {
     }
   }
 }
+*/

@@ -44,6 +44,7 @@ class ProductAppBar extends StatelessWidget {
 class InventoryAppBar extends StatelessWidget {
   const InventoryAppBar({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -51,7 +52,6 @@ class InventoryAppBar extends StatelessWidget {
     );
   }
 }
-
 class BillingAppBar extends StatelessWidget {
   const BillingAppBar({Key? key}) : super(key: key);
 
@@ -139,7 +139,9 @@ class ProductSearch extends SearchDelegate<Product?> {
         return const Text('error');
       },
     );*/
-    context.read<ProductSearchBarBloc>().add(ProductSearchBarEventGetProductSuggestions(query));
+    context
+        .read<ProductSearchBarBloc>()
+        .add(ProductSearchBarEventGetProductSuggestions(query));
     return BlocBuilder<ProductSearchBarBloc, ProductSearchBarState>(
       builder: (context, state) {
         if (state is ProductSearchBarStateProductSuggestions) {
@@ -160,7 +162,9 @@ class ProductSearch extends SearchDelegate<Product?> {
           );
         }
         if (state is ProductSearchBarStateInitial) {
-          return const Center(child: Text('Presione en Search para buscar'),);
+          return const Center(
+            child: Text('Presione en Search para buscar'),
+          );
         }
         return Text('error');
       },

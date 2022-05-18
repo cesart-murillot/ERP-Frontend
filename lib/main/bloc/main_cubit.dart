@@ -1,18 +1,21 @@
 import 'package:bloc/bloc.dart';
+import 'package:erp_fronted/inventory/views/inventory_page.dart';
 import 'package:erp_fronted/product/views/product_page.dart';
 import 'package:flutter/material.dart';
 
 class MainCubit extends Cubit<Widget> {
   MainCubit() : super(const Text('Adios'));
 
-  void productPage(String page) {
+  void switchPage(String page) {
+
     if (page == 'product') {
-      print('Son iguales!!!');
+      return emit(const ProductPage());
     }
-    print(page);
-    if (page == 'product') {
-      return emit(const ProductPageNavigator());
+
+    if (page == 'inventory') {
+      return emit(const InventoryPage());
     }
+
     return emit(const Text('No page'));
   }
 

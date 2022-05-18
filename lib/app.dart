@@ -1,7 +1,15 @@
+import 'package:erp_fronted/entry_order/list_entry_order/list_entry_order_view.dart';
+import 'package:erp_fronted/inventory/views/entry/entry_page.dart';
+import 'package:erp_fronted/inventory/views/entry/entry_register.dart';
+import 'package:erp_fronted/inventory/views/inventory_page.dart';
 import 'package:erp_fronted/login/views/login_page.dart';
+import 'package:erp_fronted/main/views/main_page.dart';
+import 'package:erp_fronted/product/views/product_create.dart';
 import 'package:erp_fronted/product/views/product_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'inventory/views/entry/entry_verification.dart';
 
 /*
 class App extends MaterialApp {
@@ -46,10 +54,10 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
 class App extends MaterialApp {
   App({Key? key})
       : super(
+    debugShowCheckedModeBanner: false,
           key: key,
-          home: const MainLoginPage(),
+          home: const ListEntryOrderPage(),
           theme: ThemeData(
-              focusColor: Colors.red,
               scaffoldBackgroundColor: const Color(0xffe5ffff),
               textTheme: GoogleFonts.latoTextTheme(),
               primaryColor: const Color(0xffb2ebf2),

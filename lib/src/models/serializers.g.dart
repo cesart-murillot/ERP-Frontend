@@ -10,6 +10,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Branch.serializer)
       ..add(Branches.serializer)
       ..add(Employee.serializer)
+      ..add(Entries.serializer)
+      ..add(Entry.serializer)
+      ..add(EntryOrder.serializer)
+      ..add(EntryOrderProduct.serializer)
+      ..add(EntryOrders.serializer)
       ..add(LinkData.serializer)
       ..add(MetaData.serializer)
       ..add(Module.serializer)
@@ -23,6 +28,15 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Branch)]),
           () => new ListBuilder<Branch>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Entry)]),
+          () => new ListBuilder<Entry>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(EntryOrder)]),
+          () => new ListBuilder<EntryOrder>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(EntryOrderProduct)]),
+          () => new ListBuilder<EntryOrderProduct>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Module)]),
           () => new ListBuilder<Module>())

@@ -1,3 +1,4 @@
+/*
 part of 'module_bloc.dart';
 
 abstract class ModuleEvent extends Equatable {
@@ -6,3 +7,4 @@ abstract class ModuleEvent extends Equatable {
 }
 
 class ModuleFetch extends ModuleEvent{}
+*/

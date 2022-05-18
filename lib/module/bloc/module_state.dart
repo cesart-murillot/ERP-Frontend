@@ -1,7 +1,9 @@
+/*
 part of 'module_bloc.dart';
 
 enum ModuleStatus { initial, success, failure }
 
+*/
 /*
 class ModuleState extends Equatable {
   const ModuleState({
@@ -28,7 +30,8 @@ class ModuleState extends Equatable {
   }
 
   List<Object?> get props => [status, models];
-}*/
+}*//*
+
 
 class ModuleState extends Equatable {
   const ModuleState({this.status = ModuleStatus.initial, this.modules});
@@ -49,3 +52,4 @@ class ModuleState extends Equatable {
   @override
   List<Object?> get props => [status, modules];
 }
+*/

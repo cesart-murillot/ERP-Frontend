@@ -13,8 +13,9 @@ class ProductDetailPage extends StatelessWidget {
       create: (_) => GetFieldInfoToUpdateCubit(),
       child: BlocBuilder<GetFieldInfoToUpdateCubit, ProductDetailState>(
         builder: (context, state) {
-          return Material(
-            child: Padding(
+          return Scaffold(
+            appBar: AppBar(),
+            body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: SingleChildScrollView(
                 child: Column(

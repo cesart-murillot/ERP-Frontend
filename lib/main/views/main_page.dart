@@ -1,7 +1,12 @@
+import 'package:erp_fronted/inventory/views/entry/entry_verification.dart';
 import 'package:erp_fronted/main/app_bar/bloc/app_bar_bloc.dart';
 import 'package:erp_fronted/main/bloc/main_bloc.dart';
 import 'package:erp_fronted/main/bloc/main_cubit.dart';
+import 'package:erp_fronted/main/navigator/bloc/navigator_bloc.dart'
+    as nav_bloc;
 import 'package:erp_fronted/product/bloc/product_bloc.dart';
+import 'package:erp_fronted/product/views/product_create.dart';
+import 'package:erp_fronted/product/views/product_detail_page.dart';
 import 'package:erp_fronted/src/resources/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,33 +21,72 @@ class MainNavigator extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => MainBloc(Repository())..add(GetEmployeeInfoEvent()),
+          create: (_) => MainBloc(Repository())
+            ..add(
+              GetEmployeeInfoEvent(),
+            ),
         ),
         BlocProvider(
           create: (_) => MainCubit(),
         ),
         BlocProvider(
-          create: (_) => AppBarBloc()..add(AppBarEventMain()),
+          create: (_) => AppBarBloc()
+            ..add(
+              AppBarEventMain(),
+            ),
         ),
         BlocProvider(
-          create: (_) => ProductSearchBarBloc(Repository()),
+          create: (_) => ProductSearchBarBloc(
+            Repository(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => nav_bloc.NavigatorBloc(),
         ),
       ],
-      child: BlocBuilder<MainBloc, MainState>(
+/*      child: BlocBuilder<MainBloc, MainState>(
         builder: (context, state) {
           return Navigator(
             pages: const [
               MaterialPage(
                 child: MainPage(),
               ),
-/*              if (BlocProvider.of<ProductBloc>(context, listen: true).state is ProductStateShowProduct)
-                const MaterialPage(
-                  child: ProductDetailPage(),
-                ),*/
             ],
             onPopPage: (route, result) {
-              context.read<MainBloc>().add(GetEmployeeInfoEvent());
+              //context.read<NavigatorBloc>().add(NavigatorEventInitial());
+              //context.read<MainBloc>().add(GetEmployeeInfoEvent());
               //context.read<ProductBloc>().add(ProductEventGetProductList());
+              return route.didPop(result);
+            },
+          );
+        },
+      ),*/
+      child: BlocBuilder<nav_bloc.NavigatorBloc, nav_bloc.NavigatorState>(
+        builder: (context, state) {
+          return Navigator(
+            pages: [
+              const MaterialPage(
+                child: MainPage(),
+              ),
+              if (state is nav_bloc.NavigatorStateProductCreate)
+                MaterialPage(
+                  child: ProductCreatePage(),
+                ),
+              if (state is nav_bloc.NavigatorStateProductDetail)
+                MaterialPage(
+                  child: ProductDetailPage(product: state.product),
+                ),
+              if (state is nav_bloc.NavigatorStateEntryVerification)
+                MaterialPage(
+                  child: EntryVerification(
+                    entry: state.entry,
+                  ),
+                )
+            ],
+            onPopPage: (route, result) {
+              context
+                  .read<nav_bloc.NavigatorBloc>()
+                  .add(nav_bloc.NavigatorEventInitial());
               return route.didPop(result);
             },
           );
@@ -96,7 +140,7 @@ class EmployeeModules extends StatelessWidget {
                     .productPage(state.modules.modules[index].routeModule!);*/
                 context
                     .read<MainCubit>()
-                    .productPage(state.modules.modules[index].routeModule!);
+                    .switchPage(state.modules.modules[index].routeModule!);
 
                 context.read<AppBarBloc>().add(AppBarEventGeneric(
                     state.modules.modules[index].routeModule!));
@@ -166,6 +210,7 @@ class PageTitle extends StatelessWidget {
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const AppBarWidget({Key? key}) : super(key: key);
+  static final _appBar = AppBar();
 
   @override
   Widget build(BuildContext context) {
@@ -193,8 +238,6 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       },
     );
   }
-
-  static final _appBar = AppBar();
 
   @override
   Size get preferredSize => Size.fromHeight(_appBar.preferredSize.height);
