@@ -1,3 +1,11 @@
+import 'dart:html';
+
+import 'package:erp_fronted/entry_order/register_entry_order/add_new_product/add_new_product_cubit.dart';
+import 'package:erp_fronted/entry_order/register_entry_order/add_new_product/add_new_product_view.dart';
+import 'package:erp_fronted/entry_order/register_entry_order/get_product_list/get_product_list_cubit.dart';
+import 'package:erp_fronted/entry_order/register_entry_order/register_entry/register_entry_cubit.dart';
+import 'package:erp_fronted/entry_order/register_entry_order/register_entry/register_entry_view.dart';
+import 'package:erp_fronted/src/resources/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,16 +14,33 @@ import 'register_entry_order_event.dart';
 import 'register_entry_order_state.dart';
 
 class RegisterEntryOrderPage extends StatelessWidget {
-  const RegisterEntryOrderPage({Key? key}) : super(key: key);
-
+  RegisterEntryOrderPage({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) =>
-          RegisterEntryOrderBloc()..add(const InitEvent()),
-      child: Scaffold(
-        appBar: AppBar(),
-        body: const EntryOrderForm(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => RegisterEntryOrderBloc()),
+        BlocProvider(
+          create: (_) => RegisterEntryCubit(),
+        ),
+        BlocProvider(create: (_) => AddNewProductCubit()),
+        BlocProvider(create: (_) => GetProductListCubit()),
+      ],
+      child: Form(
+        key: _formKey,
+        child: Scaffold(
+          appBar: AppBar(
+            actions: [IconButton(onPressed: () {
+              _formKey.currentState?.save();
+              //_createFormKey.currentState?.save();
+/*
+              context.read<ProductCreateSaveData>().printData();
+*/
+            }, icon: const Icon(Icons.save))],
+          ),
+          body: const EntryOrderForm(),
+        ),
       ),
     );
   }
@@ -31,11 +56,36 @@ class EntryOrderForm extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Código de Orden'),
+              Row(
+                children: [
+                  Flexible(
+                    flex: 2,
+                    child: Container(),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: TextButton(
+                      onPressed: () {
+                        context.read<GetProductListCubit>().getProduct();
+                        context.read<AddNewProductCubit>().addInputField();
+                      },
+                      child: const Text('Añadir Producto'),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: TextButton(
+                      onPressed: () {
+                        context.read<AddNewProductCubit>().removeInputField();
+                      },
+                      child: const Text('Remover Producto'),
+                    ),
+                  )
+                ],
               ),
-              const ProductList()
+              const EntryOrderInformation(),
             ],
           ),
         );
@@ -44,42 +94,23 @@ class EntryOrderForm extends StatelessWidget {
   }
 }
 
-class ProductList extends StatelessWidget {
-  final int example = 5;
-
-  const ProductList({Key? key}) : super(key: key);
-
+class EntryOrderInformation extends StatelessWidget {
+  const EntryOrderInformation({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-        itemCount: example,
-        itemBuilder: (context, index) {
-          return const ProductInformation();
-        });
-  }
-}
-
-class ProductInformation extends StatelessWidget {
-  const ProductInformation({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Flexible(
-          flex: 4,
-          child: TextFormField(
-            decoration: const InputDecoration(labelText: 'Producto'),
+        TextFormField(
+          onSaved: (value) {
+            print(value);
+          },
+          decoration: const InputDecoration(
+            label: Text('Código - Orden de Ingreso')
           ),
         ),
-        Flexible(
-          flex: 1,
-          child: TextFormField(
-            decoration: const InputDecoration(labelText: 'Cantidad'),
-          ),
-        )
+        const ProductList(),
       ],
     );
   }
 }
+

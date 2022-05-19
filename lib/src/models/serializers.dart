@@ -8,6 +8,7 @@ import 'package:erp_fronted/entry_order/models/entry_order_model.dart';
 import 'package:erp_fronted/entry_order/models/entry_order_product_model.dart';
 import 'package:erp_fronted/inventory/models/entry_model.dart';
 import 'package:erp_fronted/module/models/module_model.dart';
+import 'package:erp_fronted/product_entry/models/product_entry_model.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
 import 'package:erp_fronted/product/models/product_model.dart';
 
@@ -32,7 +33,9 @@ part 'serializers.g.dart';
   Entries,
   EntryOrderProduct,
   EntryOrder,
-  EntryOrders
+  EntryOrders,
+  ProductEntry,
+  ProductEntries
 ])
 
 Serializers serializers = _$serializers;

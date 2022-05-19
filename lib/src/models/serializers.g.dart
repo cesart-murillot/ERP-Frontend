@@ -21,6 +21,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Modules.serializer)
       ..add(NavigationData.serializer)
       ..add(Product.serializer)
+      ..add(ProductEntries.serializer)
+      ..add(ProductEntry.serializer)
       ..add(Products.serializer)
       ..add(User.serializer)
       ..add(Warehouse.serializer)
@@ -46,6 +48,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Product)]),
           () => new ListBuilder<Product>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ProductEntry)]),
+          () => new ListBuilder<ProductEntry>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(dynamic)]),
           () => new ListBuilder<dynamic>()))

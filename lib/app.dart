@@ -6,6 +6,7 @@ import 'package:erp_fronted/login/views/login_page.dart';
 import 'package:erp_fronted/main/views/main_page.dart';
 import 'package:erp_fronted/product/views/product_create.dart';
 import 'package:erp_fronted/product/views/product_detail_page.dart';
+import 'package:erp_fronted/product_entry/product_entry_list/product_entry_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -56,7 +57,7 @@ class App extends MaterialApp {
       : super(
     debugShowCheckedModeBanner: false,
           key: key,
-          home: const ListEntryOrderPage(),
+          home: ProductEntryListPage(),
           theme: ThemeData(
               scaffoldBackgroundColor: const Color(0xffe5ffff),
               textTheme: GoogleFonts.latoTextTheme(),

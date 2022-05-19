@@ -7,7 +7,7 @@ import 'package:erp_fronted/src/resources/generic_serializer.dart';
 import 'package:erp_fronted/src/resources/repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../src/resources/product_api_provider.dart';
+import '../../../src/resources/api_provider.dart';
 
 part 'entry_event.dart';
 part 'entry_state.dart';

@@ -86,7 +86,7 @@ class EntryOrderInformation extends StatelessWidget {
                             const Text('Formato: ', style: TextStyle(fontSize: 16.0)),
                             Text(
                               entryOrder.entryOrderProduct![index].product!
-                                  .formatProduct,
+                                  .formatProduct!,
                                 style: const TextStyle(fontSize: 16.0),
                             )
                           ],

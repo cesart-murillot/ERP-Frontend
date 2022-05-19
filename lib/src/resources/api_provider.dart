@@ -9,7 +9,7 @@ const String scheme = 'http';
 const String host = '127.0.0.1';
 const int port = 8000;
 
-class ProductApiProvider {
+class ApiProvider {
   Future<String> getDataModel(UnEncodePath unEncodePath, [String id = '', Map<String, dynamic> query = const {'':''}]) async {
     http.Response response;
     final Uri url;

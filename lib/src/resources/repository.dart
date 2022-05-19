@@ -1,10 +1,10 @@
 import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/product/models/product_model.dart';
-import 'package:erp_fronted/src/resources/product_api_provider.dart';
+import 'package:erp_fronted/src/resources/api_provider.dart';
 import 'package:http/http.dart' as http;
 
 class Repository {
-  final productApiProvider = ProductApiProvider();
+  final productApiProvider = ApiProvider();
 
   Future<String> fetchData(UnEncodePath unEncodePath, [String? id, Map<String, dynamic> query = const {}]) =>
       productApiProvider.getDataModel(unEncodePath, id ?? '', query);

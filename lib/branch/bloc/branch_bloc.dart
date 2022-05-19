@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:erp_fronted/branch/views/branch_create_page.dart';
 import 'package:erp_fronted/src/resources/generic_serializer.dart';
-import 'package:erp_fronted/src/resources/product_api_provider.dart';
+import 'package:erp_fronted/src/resources/api_provider.dart';
 import 'package:erp_fronted/src/resources/repository.dart';
 
 import '../models/branch_model.dart';

@@ -87,9 +87,6 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
       'model_product',
       serializers.serialize(object.modelProduct,
           specifiedType: const FullType(String)),
-      'format_product',
-      serializers.serialize(object.formatProduct,
-          specifiedType: const FullType(String)),
     ];
     Object? value;
     value = object.id;
@@ -109,6 +106,13 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
     if (value != null) {
       result
         ..add('url_image_product')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.formatProduct;
+    if (value != null) {
+      result
+        ..add('format_product')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -240,7 +244,7 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
           break;
         case 'format_product':
           result.formatProduct = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'code_product':
           result.codeProduct = serializers.deserialize(value,
@@ -433,7 +437,7 @@ class _$Product extends Product {
   @override
   final String? urlImageProduct;
   @override
-  final String formatProduct;
+  final String? formatProduct;
   @override
   final String? codeProduct;
   @override
@@ -471,7 +475,7 @@ class _$Product extends Product {
       required this.modelProduct,
       this.descriptionProduct,
       this.urlImageProduct,
-      required this.formatProduct,
+      this.formatProduct,
       this.codeProduct,
       this.familyProduct,
       this.finishProduct,
@@ -489,8 +493,6 @@ class _$Product extends Product {
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         modelProduct, 'Product', 'modelProduct');
-    BuiltValueNullFieldError.checkNotNull(
-        formatProduct, 'Product', 'formatProduct');
   }
 
   @override
@@ -743,8 +745,7 @@ class ProductBuilder implements Builder<Product, ProductBuilder> {
                 modelProduct, 'Product', 'modelProduct'),
             descriptionProduct: descriptionProduct,
             urlImageProduct: urlImageProduct,
-            formatProduct: BuiltValueNullFieldError.checkNotNull(
-                formatProduct, 'Product', 'formatProduct'),
+            formatProduct: formatProduct,
             codeProduct: codeProduct,
             familyProduct: familyProduct,
             finishProduct: finishProduct,

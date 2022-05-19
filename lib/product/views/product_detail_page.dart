@@ -56,7 +56,7 @@ class ProductDetailPage extends StatelessWidget {
                           Flexible(
                             child: GenericFormField(
                               label: 'Formato',
-                              initialValue: product.formatProduct,
+                              initialValue: product.formatProduct!,
                               textStyle: Theme.of(context).textTheme.subtitle1!,
                               labelWidget: 'Formato',
                             ),

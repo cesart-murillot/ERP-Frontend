@@ -22,7 +22,7 @@ class ListEntryOrderPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const RegisterEntryOrderPage(),
+                builder: (context) => RegisterEntryOrderPage(),
               ),
             );
           },
@@ -46,76 +46,83 @@ class ListEntryOrder extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         if (state is LoadedListState) {
-          return ListView.builder(
-            itemCount: state.entryOrders.entryOrders.length,
-            itemBuilder: (context, index) {
-              return Card(
-                margin: const EdgeInsets.only(
-                    left: 16.0, top: 8.0, right: 16.0, bottom: 8.0),
-                child: ListTile(
-                  trailing: Column(
-                    children: [
-                      if (state.entryOrders.entryOrders[index]
-                              .verifiedEntryOrder! &&
-                          !state
-                              .entryOrders.entryOrders[index].errorEntryOrder!)
-                        const Icon(
-                          Icons.verified,
-                          color: Colors.green,
+          return Column(
+            children: [
+              const FilterChips(),
+              Flexible(
+                child: ListView.builder(
+                  itemCount: state.entryOrders.entryOrders.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      margin: const EdgeInsets.only(
+                          left: 16.0, top: 8.0, right: 16.0, bottom: 8.0),
+                      child: ListTile(
+                        trailing: Column(
+                          children: [
+                            if (state.entryOrders.entryOrders[index]
+                                    .verifiedEntryOrder! &&
+                                !state
+                                    .entryOrders.entryOrders[index].errorEntryOrder!)
+                              const Icon(
+                                Icons.verified,
+                                color: Colors.green,
+                              ),
+                            if (state.entryOrders.entryOrders[index]
+                                    .errorEntryOrder! &&
+                                state.entryOrders.entryOrders[index]
+                                    .verifiedEntryOrder!)
+                              const Icon(
+                                Icons.error,
+                                color: Colors.red,
+                              ),
+                            if (!state
+                                .entryOrders.entryOrders[index].verifiedEntryOrder!)
+                              const Icon(
+                                Icons.hourglass_bottom,
+                                color: Colors.lightBlueAccent,
+                              )
+                          ],
                         ),
-                      if (state.entryOrders.entryOrders[index]
-                              .errorEntryOrder! &&
-                          state.entryOrders.entryOrders[index]
-                              .verifiedEntryOrder!)
-                        const Icon(
-                          Icons.error,
-                          color: Colors.red,
+                        contentPadding: const EdgeInsets.all(8.0),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VerifyEntryOrderPage(
+                                id: state.entryOrders.entryOrders[index].id!,
+                              ),
+                            ),
+                          );
+                        },
+                        title: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Wrap(
+                            children: [
+                              const Text('Código de Orden: '),
+                              Text(
+                                state.entryOrders.entryOrders[index].codeEntryOrder,
+                              ),
+                            ],
+                          ),
                         ),
-                      if (!state
-                          .entryOrders.entryOrders[index].verifiedEntryOrder!)
-                        const Icon(
-                          Icons.hourglass_bottom,
-                          color: Colors.lightBlueAccent,
-                        )
-                    ],
-                  ),
-                  contentPadding: const EdgeInsets.all(8.0),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VerifyEntryOrderPage(
-                          id: state.entryOrders.entryOrders[index].id!,
+                        subtitle: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Wrap(
+                            children: [
+                              const Text('Fecha de Registro: '),
+                              Text(
+                                state.entryOrders.entryOrders[index].createdAt ??
+                                    'Fecha no disponible',
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );
                   },
-                  title: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Wrap(
-                      children: [
-                        const Text('Código de Orden: '),
-                        Text(
-                          state.entryOrders.entryOrders[index].codeEntryOrder,
-                        ),
-                      ],
-                    ),
-                  ),
-                  subtitle: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Wrap(
-                      children: [
-                        const Text('Fecha de Registro: '),
-                        Text(
-                          state.entryOrders.entryOrders[index].createdAt ??
-                              'Fecha no disponible',
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
-              );
-            },
+              ),
+            ],
           );
         }
         if (state is ErrorState) {
@@ -125,4 +132,18 @@ class ListEntryOrder extends StatelessWidget {
       },
     );
   }
+}class FilterChips extends StatelessWidget {
+  const FilterChips({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: [
+        const ChoiceChip(label: Text('Verificados'), selected: true),
+        const ChoiceChip(label: Text('Pendientes'), selected: false),
+        const ChoiceChip(label: Text('Reportados'), selected: false),
+      ],
+    );
+  }
 }
+

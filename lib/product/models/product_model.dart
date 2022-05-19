@@ -35,7 +35,7 @@ abstract class Product implements Built<Product, ProductBuilder> {
   String? get urlImageProduct;
 
   @BuiltValueField(wireName: 'format_product')
-  String get formatProduct;
+  String? get formatProduct;
 
   @BuiltValueField(wireName: 'code_product')
   String? get codeProduct;
