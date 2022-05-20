@@ -48,7 +48,8 @@ class ProductEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ProductEntryVerifyBloc, ProductEntryVerifyState>(
       buildWhen: (prevState, state) {
-        if (prevState is LoadedProductEntryState || state is InitialState ||
+        if (prevState is LoadedProductEntryState ||
+            state is InitialState ||
             state is ShowVerifyDialogState) {
           return false;
         }
@@ -158,30 +159,26 @@ class VerificationDialog extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return BlocProvider(
-      create: (_) => ProductEntryVerifyBloc(),
-      child: Builder(
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Verificar Entrada de Productos'),
-            actions: [
-              TextButton(
-                onPressed: () {
-
-                },
-                child: const Text('Cancerl'),
-              ),
-              TextButton(
-                onPressed: () {
-                  BlocProvider.of<ProductEntryVerifyBloc>(context).add(
-                      const ConfirmProductEntryEvent());
-                },
-                child: const Text('Ok'),
-              ),
-            ],
-          );
-        },
-      ),
+    return BlocBuilder<ProductEntryVerifyBloc, ProductEntryVerifyState>(
+      bloc: ProductEntryVerifyBloc(),
+      builder: (context, state) {
+        return AlertDialog(
+          title: const Text('Verificar Entrada de Productos'),
+          actions: [
+            TextButton(
+              onPressed: () {},
+              child: const Text('Cancerl'),
+            ),
+            TextButton(
+              onPressed: () {
+                BlocProvider.of<ProductEntryVerifyBloc>(context)
+                    .add(const ConfirmProductEntryEvent());
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
