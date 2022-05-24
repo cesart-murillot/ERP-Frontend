@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:built_value/serializer.dart';
 import 'package:erp_fronted/src/resources/generic_serializer.dart';

@@ -1,16 +1,7 @@
-import 'package:erp_fronted/entry_order/list_entry_order/list_entry_order_view.dart';
-import 'package:erp_fronted/inventory/views/entry/entry_page.dart';
-import 'package:erp_fronted/inventory/views/entry/entry_register.dart';
-import 'package:erp_fronted/inventory/views/inventory_page.dart';
-import 'package:erp_fronted/login/views/login_page.dart';
-import 'package:erp_fronted/main/views/main_page.dart';
-import 'package:erp_fronted/product/views/product_create.dart';
-import 'package:erp_fronted/product/views/product_detail_page.dart';
-import 'package:erp_fronted/product_entry/product_entry_list/product_entry_list_view.dart';
+import 'package:erp_fronted/employee/add_employee/add_employee_view.dart';
+import 'package:erp_fronted/employee/list_employee/list_employee_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'inventory/views/entry/entry_verification.dart';
 
 /*
 class App extends MaterialApp {
@@ -53,31 +44,22 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
 }*/
 
 class App extends MaterialApp {
-  App({Key? key})
+  const App({Key? key})
       : super(
-    debugShowCheckedModeBanner: false,
+          debugShowCheckedModeBanner: false,
           key: key,
-          home: ProductEntryListPage(),
-          theme: ThemeData(
-              scaffoldBackgroundColor: const Color(0xffe5ffff),
-              textTheme: GoogleFonts.latoTextTheme(),
-              primaryColor: const Color(0xffb2ebf2),
-              backgroundColor: Colors.black,
-              hintColor: Colors.black,
-              //inputDecorationTheme: customTheme
-          ),
+          home: const ListEmployeePage(),
         );
 }
 
 InputDecorationTheme customTheme = InputDecorationTheme(
-/*  floatingLabelStyle: const TextStyle(
+  isCollapsed: true,
+  floatingLabelStyle: const TextStyle(
     color: Colors.black,
-    fontSize: 16.0,
-  ),*/
-  //labelStyle: const TextStyle(wordSpacing: 2.0, fontSize: 12.0),
-  //fillColor: const Color(0xffd0d8ff),
-  /*filled: true,
-  fillColor: const Color(0xffb6ffff),*/
+    fontSize: 24.0,
+  ),
+  labelStyle: const TextStyle(wordSpacing: 2.0, fontSize: 12.0),
+  filled: true,
   focusedBorder: OutlineInputBorder(
     borderRadius: BorderRadius.circular(8.0),
   ),
@@ -87,11 +69,14 @@ InputDecorationTheme customTheme = InputDecorationTheme(
   disabledBorder: const OutlineInputBorder(
     borderSide: BorderSide(color: Colors.transparent),
   ),
-  //contentPadding: const EdgeInsets.all(8.0),
+  contentPadding: const EdgeInsets.all(8.0),
 );
 
 TextTheme customTextTheme = const TextTheme(
-  headline1: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, ),
+  headline1: TextStyle(
+    fontSize: 16.0,
+    fontWeight: FontWeight.bold,
+  ),
   headline2: TextStyle(fontSize: 12.0, fontWeight: FontWeight.normal),
   headline3: TextStyle(fontSize: 32.0, fontWeight: FontWeight.normal),
   headline4: TextStyle(fontSize: 32.0, fontWeight: FontWeight.normal),
@@ -102,7 +87,7 @@ TextTheme customTextTheme = const TextTheme(
   headlineMedium: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
   headlineSmall: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),*/
 
- /* labelLarge: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
+  /* labelLarge: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
   labelMedium: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
   labelSmall: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
 
@@ -123,6 +108,4 @@ TextTheme customTextTheme = const TextTheme(
 
   subtitle1: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),
   subtitle2: TextStyle(fontSize: 8.0, fontWeight: FontWeight.normal),*/
-
-
 );

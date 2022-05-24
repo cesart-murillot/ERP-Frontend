@@ -48,19 +48,20 @@ class ProductEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ProductEntryVerifyBloc, ProductEntryVerifyState>(
       buildWhen: (prevState, state) {
-        if (prevState is LoadedProductEntryState ||
-            state is InitialState ||
-            state is ShowVerifyDialogState) {
-          return false;
+        if (state is LoadedProductEntryState) {
+          return true;
         }
-        return true;
+        return false;
       },
       listener: (context, state) {
-        print(state);
         if (state is ShowVerifyDialogState) {
           showDialog(
             context: context,
-            builder: (BuildContext context) => const VerificationDialog(),
+            builder: (_) =>
+                BlocProvider.value(
+                  value: BlocProvider.of<ProductEntryVerifyBloc>(context),
+                  child: const VerificationDialog(),
+                ),
           );
         }
       },
@@ -148,7 +149,7 @@ class ProductEntry extends StatelessWidget {
             ),
           );
         }
-        return const Text('error');
+        return const Center(child: CircularProgressIndicator(),);
       },
     );
   }
@@ -160,14 +161,15 @@ class VerificationDialog extends StatelessWidget {
   @override
   Widget build(context) {
     return BlocBuilder<ProductEntryVerifyBloc, ProductEntryVerifyState>(
-      bloc: ProductEntryVerifyBloc(),
       builder: (context, state) {
         return AlertDialog(
           title: const Text('Verificar Entrada de Productos'),
           actions: [
             TextButton(
-              onPressed: () {},
-              child: const Text('Cancerl'),
+              onPressed: () {
+                Navigator.pop(context, 'Cancelar');
+              },
+              child: const Text('Cancelar'),
             ),
             TextButton(
               onPressed: () {

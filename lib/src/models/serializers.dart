@@ -9,6 +9,7 @@ import 'package:erp_fronted/entry_order/models/entry_order_product_model.dart';
 import 'package:erp_fronted/inventory/models/entry_model.dart';
 import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/product_entry/models/product_entry_model.dart';
+import 'package:erp_fronted/role/models/role_model.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
 import 'package:erp_fronted/product/models/product_model.dart';
 
@@ -24,6 +25,7 @@ part 'serializers.g.dart';
   Modules,
   Module,
   User,
+  Users,
   Branch,
   Branches,
   Warehouse,
@@ -35,7 +37,10 @@ part 'serializers.g.dart';
   EntryOrder,
   EntryOrders,
   ProductEntry,
-  ProductEntries
+  ProductEntries,
+  Employees,
+  Role,
+  Roles,
 ])
 
 Serializers serializers = _$serializers;

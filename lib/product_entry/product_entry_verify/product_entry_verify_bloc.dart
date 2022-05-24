@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:erp_fronted/product_entry/models/product_entry_model.dart';
-import 'package:erp_fronted/src/resources/object_getter.dart';
+import 'package:erp_fronted/src/resources/get_object.dart';
 
 import 'product_entry_verify_event.dart';
 import 'product_entry_verify_state.dart';
@@ -32,5 +32,6 @@ class ProductEntryVerifyBloc extends Bloc<ProductEntryVerifyEvent, ProductEntryV
 
   FutureOr<void> _confirmProductEntry(ConfirmProductEntryEvent event, Emitter<ProductEntryVerifyState> emit) {
     print('hello from bloc');
+    emit(const ConfirmDialogState());
   }
 }

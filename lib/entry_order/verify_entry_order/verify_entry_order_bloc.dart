@@ -15,6 +15,7 @@ class VerifyEntryOrderBloc extends Bloc<VerifyEntryOrderEvent, VerifyEntryOrderS
   VerifyEntryOrderBloc(this.repository) : super(const InitState()) {
     on<InitEvent>(_init);
     on<GetEntryOrderEvent>(_getEntryOrderEvent);
+
   }
 
   void _init(InitEvent event, Emitter<VerifyEntryOrderState> emit) async {

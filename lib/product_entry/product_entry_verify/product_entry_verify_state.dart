@@ -33,3 +33,11 @@ class ShowVerifyDialogState extends ProductEntryVerifyState {
   @override
   List<Object> get props => [];
 }
+
+class ConfirmDialogState extends ProductEntryVerifyState {
+
+  @override
+  List<Object> get props => [];
+
+  const ConfirmDialogState();
+}

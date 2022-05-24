@@ -6,7 +6,51 @@ part of 'user_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+Serializer<Users> _$usersSerializer = new _$UsersSerializer();
 Serializer<User> _$userSerializer = new _$UserSerializer();
+
+class _$UsersSerializer implements StructuredSerializer<Users> {
+  @override
+  final Iterable<Type> types = const [Users, _$Users];
+  @override
+  final String wireName = 'Users';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, Users object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'users',
+      serializers.serialize(object.users,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(User)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  Users deserialize(Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new UsersBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'users':
+          result.users.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(User)]))!
+              as BuiltList<Object?>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
 
 class _$UserSerializer implements StructuredSerializer<User> {
   @override
@@ -32,7 +76,7 @@ class _$UserSerializer implements StructuredSerializer<User> {
     value = object.password;
     if (value != null) {
       result
-        ..add('password')
+        ..add('password_user')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -70,7 +114,7 @@ class _$UserSerializer implements StructuredSerializer<User> {
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'password':
+        case 'password_user':
           result.password = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
@@ -86,6 +130,94 @@ class _$UserSerializer implements StructuredSerializer<User> {
     }
 
     return result.build();
+  }
+}
+
+class _$Users extends Users {
+  @override
+  final BuiltList<User> users;
+
+  factory _$Users([void Function(UsersBuilder)? updates]) =>
+      (new UsersBuilder()..update(updates))._build();
+
+  _$Users._({required this.users}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(users, 'Users', 'users');
+  }
+
+  @override
+  Users rebuild(void Function(UsersBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  UsersBuilder toBuilder() => new UsersBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is Users && users == other.users;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, users.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('Users')..add('users', users))
+        .toString();
+  }
+}
+
+class UsersBuilder implements Builder<Users, UsersBuilder> {
+  _$Users? _$v;
+
+  ListBuilder<User>? _users;
+  ListBuilder<User> get users => _$this._users ??= new ListBuilder<User>();
+  set users(ListBuilder<User>? users) => _$this._users = users;
+
+  UsersBuilder();
+
+  UsersBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _users = $v.users.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(Users other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$Users;
+  }
+
+  @override
+  void update(void Function(UsersBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  Users build() => _build();
+
+  _$Users _build() {
+    _$Users _$result;
+    try {
+      _$result = _$v ?? new _$Users._(users: users.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'users';
+        users.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Users', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
   }
 }
 

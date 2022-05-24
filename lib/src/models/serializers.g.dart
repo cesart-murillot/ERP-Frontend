@@ -10,6 +10,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Branch.serializer)
       ..add(Branches.serializer)
       ..add(Employee.serializer)
+      ..add(Employees.serializer)
       ..add(Entries.serializer)
       ..add(Entry.serializer)
       ..add(EntryOrder.serializer)
@@ -24,12 +25,18 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ProductEntries.serializer)
       ..add(ProductEntry.serializer)
       ..add(Products.serializer)
+      ..add(Role.serializer)
+      ..add(Roles.serializer)
       ..add(User.serializer)
+      ..add(Users.serializer)
       ..add(Warehouse.serializer)
       ..add(Warehouses.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Branch)]),
           () => new ListBuilder<Branch>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Employee)]),
+          () => new ListBuilder<Employee>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Entry)]),
           () => new ListBuilder<Entry>())
@@ -51,6 +58,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ProductEntry)]),
           () => new ListBuilder<ProductEntry>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Role)]),
+          () => new ListBuilder<Role>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(User)]),
+          () => new ListBuilder<User>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(dynamic)]),
           () => new ListBuilder<dynamic>()))

@@ -7,6 +7,15 @@ import 'package:built_collection/built_collection.dart';
 
 part 'user_model.g.dart';
 
+abstract class Users implements Built<Users, UsersBuilder> {
+  static Serializer<Users> get serializer => _$usersSerializer;
+
+  BuiltList<User> get users;
+
+  Users._();
+  factory Users([void Function(UsersBuilder) updates]) = _$Users;
+}
+
 abstract class User implements Built<User, UserBuilder> {
   static Serializer<User> get serializer => _$userSerializer;
 
@@ -14,6 +23,7 @@ abstract class User implements Built<User, UserBuilder> {
 
   String get email;
 
+  @BuiltValueField(wireName: 'password_user')
   String? get password;
 
   @BuiltValueField(wireName: 'role_id')

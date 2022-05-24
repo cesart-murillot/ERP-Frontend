@@ -175,7 +175,7 @@ class EmployeeInfo extends StatelessWidget {
                       alignment: Alignment.bottomLeft,
                     ),
                     Align(
-                      child: Text(state.employee.user.email),
+                      child: Text(state.employee.user!.email),
                       alignment: Alignment.bottomLeft,
                     ),
                   ],

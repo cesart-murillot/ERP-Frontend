@@ -6,7 +6,51 @@ part of 'employee_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+Serializer<Employees> _$employeesSerializer = new _$EmployeesSerializer();
 Serializer<Employee> _$employeeSerializer = new _$EmployeeSerializer();
+
+class _$EmployeesSerializer implements StructuredSerializer<Employees> {
+  @override
+  final Iterable<Type> types = const [Employees, _$Employees];
+  @override
+  final String wireName = 'Employees';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, Employees object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'employees',
+      serializers.serialize(object.employees,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(Employee)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  Employees deserialize(Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new EmployeesBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'employees':
+          result.employees.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(Employee)]))!
+              as BuiltList<Object?>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
 
 class _$EmployeeSerializer implements StructuredSerializer<Employee> {
   @override
@@ -24,11 +68,6 @@ class _$EmployeeSerializer implements StructuredSerializer<Employee> {
       'last_name_employee',
       serializers.serialize(object.lastNameEmployee,
           specifiedType: const FullType(String)),
-      'birth_date_employee',
-      serializers.serialize(object.birthDateEmployee,
-          specifiedType: const FullType(String)),
-      'user',
-      serializers.serialize(object.user, specifiedType: const FullType(User)),
     ];
     Object? value;
     value = object.id;
@@ -43,6 +82,26 @@ class _$EmployeeSerializer implements StructuredSerializer<Employee> {
         ..add('CI_employee')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
+    }
+    value = object.birthDateEmployee;
+    if (value != null) {
+      result
+        ..add('birth_date_employee')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.branchID;
+    if (value != null) {
+      result
+        ..add('branch_id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.user;
+    if (value != null) {
+      result
+        ..add('user')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(User)));
     }
     return result;
   }
@@ -76,7 +135,11 @@ class _$EmployeeSerializer implements StructuredSerializer<Employee> {
           break;
         case 'birth_date_employee':
           result.birthDateEmployee = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'branch_id':
+          result.branchID = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'user':
           result.user.replace(serializers.deserialize(value,
@@ -86,6 +149,97 @@ class _$EmployeeSerializer implements StructuredSerializer<Employee> {
     }
 
     return result.build();
+  }
+}
+
+class _$Employees extends Employees {
+  @override
+  final BuiltList<Employee> employees;
+
+  factory _$Employees([void Function(EmployeesBuilder)? updates]) =>
+      (new EmployeesBuilder()..update(updates))._build();
+
+  _$Employees._({required this.employees}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(employees, 'Employees', 'employees');
+  }
+
+  @override
+  Employees rebuild(void Function(EmployeesBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  EmployeesBuilder toBuilder() => new EmployeesBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is Employees && employees == other.employees;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, employees.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('Employees')
+          ..add('employees', employees))
+        .toString();
+  }
+}
+
+class EmployeesBuilder implements Builder<Employees, EmployeesBuilder> {
+  _$Employees? _$v;
+
+  ListBuilder<Employee>? _employees;
+  ListBuilder<Employee> get employees =>
+      _$this._employees ??= new ListBuilder<Employee>();
+  set employees(ListBuilder<Employee>? employees) =>
+      _$this._employees = employees;
+
+  EmployeesBuilder();
+
+  EmployeesBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _employees = $v.employees.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(Employees other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$Employees;
+  }
+
+  @override
+  void update(void Function(EmployeesBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  Employees build() => _build();
+
+  _$Employees _build() {
+    _$Employees _$result;
+    try {
+      _$result = _$v ?? new _$Employees._(employees: employees.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'employees';
+        employees.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Employees', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
   }
 }
 
@@ -99,9 +253,11 @@ class _$Employee extends Employee {
   @override
   final String? ciEmployee;
   @override
-  final String birthDateEmployee;
+  final String? birthDateEmployee;
   @override
-  final User user;
+  final int? branchID;
+  @override
+  final User? user;
 
   factory _$Employee([void Function(EmployeeBuilder)? updates]) =>
       (new EmployeeBuilder()..update(updates))._build();
@@ -111,16 +267,14 @@ class _$Employee extends Employee {
       required this.namesEmployee,
       required this.lastNameEmployee,
       this.ciEmployee,
-      required this.birthDateEmployee,
-      required this.user})
+      this.birthDateEmployee,
+      this.branchID,
+      this.user})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         namesEmployee, 'Employee', 'namesEmployee');
     BuiltValueNullFieldError.checkNotNull(
         lastNameEmployee, 'Employee', 'lastNameEmployee');
-    BuiltValueNullFieldError.checkNotNull(
-        birthDateEmployee, 'Employee', 'birthDateEmployee');
-    BuiltValueNullFieldError.checkNotNull(user, 'Employee', 'user');
   }
 
   @override
@@ -139,6 +293,7 @@ class _$Employee extends Employee {
         lastNameEmployee == other.lastNameEmployee &&
         ciEmployee == other.ciEmployee &&
         birthDateEmployee == other.birthDateEmployee &&
+        branchID == other.branchID &&
         user == other.user;
   }
 
@@ -147,10 +302,12 @@ class _$Employee extends Employee {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, id.hashCode), namesEmployee.hashCode),
-                    lastNameEmployee.hashCode),
-                ciEmployee.hashCode),
-            birthDateEmployee.hashCode),
+                $jc(
+                    $jc($jc($jc(0, id.hashCode), namesEmployee.hashCode),
+                        lastNameEmployee.hashCode),
+                    ciEmployee.hashCode),
+                birthDateEmployee.hashCode),
+            branchID.hashCode),
         user.hashCode));
   }
 
@@ -162,6 +319,7 @@ class _$Employee extends Employee {
           ..add('lastNameEmployee', lastNameEmployee)
           ..add('ciEmployee', ciEmployee)
           ..add('birthDateEmployee', birthDateEmployee)
+          ..add('branchID', branchID)
           ..add('user', user))
         .toString();
   }
@@ -193,6 +351,10 @@ class EmployeeBuilder implements Builder<Employee, EmployeeBuilder> {
   set birthDateEmployee(String? birthDateEmployee) =>
       _$this._birthDateEmployee = birthDateEmployee;
 
+  int? _branchID;
+  int? get branchID => _$this._branchID;
+  set branchID(int? branchID) => _$this._branchID = branchID;
+
   UserBuilder? _user;
   UserBuilder get user => _$this._user ??= new UserBuilder();
   set user(UserBuilder? user) => _$this._user = user;
@@ -207,7 +369,8 @@ class EmployeeBuilder implements Builder<Employee, EmployeeBuilder> {
       _lastNameEmployee = $v.lastNameEmployee;
       _ciEmployee = $v.ciEmployee;
       _birthDateEmployee = $v.birthDateEmployee;
-      _user = $v.user.toBuilder();
+      _branchID = $v.branchID;
+      _user = $v.user?.toBuilder();
       _$v = null;
     }
     return this;
@@ -238,14 +401,14 @@ class EmployeeBuilder implements Builder<Employee, EmployeeBuilder> {
               lastNameEmployee: BuiltValueNullFieldError.checkNotNull(
                   lastNameEmployee, 'Employee', 'lastNameEmployee'),
               ciEmployee: ciEmployee,
-              birthDateEmployee: BuiltValueNullFieldError.checkNotNull(
-                  birthDateEmployee, 'Employee', 'birthDateEmployee'),
-              user: user.build());
+              birthDateEmployee: birthDateEmployee,
+              branchID: branchID,
+              user: _user?.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'user';
-        user.build();
+        _user?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'Employee', _$failedField, e.toString());

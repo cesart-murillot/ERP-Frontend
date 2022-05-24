@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:erp_fronted/product_entry/models/product_entry_model.dart';
 
-import '../../src/resources/object_getter.dart';
+import '../../src/resources/get_object.dart';
 import 'product_entry_list_event.dart';
 import 'product_entry_list_state.dart';
 

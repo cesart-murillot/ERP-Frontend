@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:erp_fronted/product/models/product_model.dart';
 import 'package:erp_fronted/src/resources/generic_serializer.dart';
 import 'package:erp_fronted/src/resources/api_provider.dart';
-import 'package:erp_fronted/src/resources/object_getter.dart';
+import 'package:erp_fronted/src/resources/get_object.dart';
 import 'package:erp_fronted/src/resources/repository.dart';
 import 'package:flutter/material.dart';
 
