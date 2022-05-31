@@ -48,7 +48,6 @@ class ListEntryOrder extends StatelessWidget {
         if (state is LoadedListState) {
           return Column(
             children: [
-              const FilterChips(),
               Flexible(
                 child: ListView.builder(
                   itemCount: state.entryOrders.entryOrders.length,

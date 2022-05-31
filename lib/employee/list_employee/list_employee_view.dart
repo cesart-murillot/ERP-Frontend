@@ -18,7 +18,6 @@ class ListEmployeePage extends StatelessWidget {
           ListEmployeeBloc()..add(const InitEvent()),
       child: Scaffold(
         body: const ListEmployee(),
-        appBar: AppBar(),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             Navigator.push(

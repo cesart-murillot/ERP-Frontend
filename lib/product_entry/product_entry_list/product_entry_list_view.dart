@@ -14,9 +14,8 @@ class ProductEntryListPage extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           ProductEntryListBloc()..add(const GetProductEntryEvent()),
-      child: Scaffold(
-        appBar: AppBar(),
-        body: const ProductEntryList(),
+      child: const Scaffold(
+        body: ProductEntryList(),
       ),
     );
   }

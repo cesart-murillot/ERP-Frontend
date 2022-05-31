@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:erp_fronted/employee/models/employee_model.dart';
+import 'package:erp_fronted/role/models/role_model.dart';
 import 'package:erp_fronted/src/models/serializers.dart';
 import 'package:built_collection/built_collection.dart';
 
@@ -23,7 +25,6 @@ abstract class User implements Built<User, UserBuilder> {
 
   String get email;
 
-  @BuiltValueField(wireName: 'password_user')
   String? get password;
 
   @BuiltValueField(wireName: 'role_id')
@@ -31,6 +32,10 @@ abstract class User implements Built<User, UserBuilder> {
 
   @BuiltValueField(wireName: 'employee_id')
   int? get employeeId;
+
+  Role? get role;
+
+  Employee? get employee;
 
   User._();
   factory User([void Function(UserBuilder) updates]) = _$User;

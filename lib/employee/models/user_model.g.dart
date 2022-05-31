@@ -76,7 +76,7 @@ class _$UserSerializer implements StructuredSerializer<User> {
     value = object.password;
     if (value != null) {
       result
-        ..add('password_user')
+        ..add('password')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -91,6 +91,20 @@ class _$UserSerializer implements StructuredSerializer<User> {
       result
         ..add('employee_id')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.role;
+    if (value != null) {
+      result
+        ..add('role')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(Role)));
+    }
+    value = object.employee;
+    if (value != null) {
+      result
+        ..add('employee')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(Employee)));
     }
     return result;
   }
@@ -114,7 +128,7 @@ class _$UserSerializer implements StructuredSerializer<User> {
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'password_user':
+        case 'password':
           result.password = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
@@ -125,6 +139,14 @@ class _$UserSerializer implements StructuredSerializer<User> {
         case 'employee_id':
           result.employeeId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
+          break;
+        case 'role':
+          result.role.replace(serializers.deserialize(value,
+              specifiedType: const FullType(Role))! as Role);
+          break;
+        case 'employee':
+          result.employee.replace(serializers.deserialize(value,
+              specifiedType: const FullType(Employee))! as Employee);
           break;
       }
     }
@@ -232,6 +254,10 @@ class _$User extends User {
   final int? roleId;
   @override
   final int? employeeId;
+  @override
+  final Role? role;
+  @override
+  final Employee? employee;
 
   factory _$User([void Function(UserBuilder)? updates]) =>
       (new UserBuilder()..update(updates))._build();
@@ -241,7 +267,9 @@ class _$User extends User {
       required this.email,
       this.password,
       this.roleId,
-      this.employeeId})
+      this.employeeId,
+      this.role,
+      this.employee})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(email, 'User', 'email');
   }
@@ -261,15 +289,23 @@ class _$User extends User {
         email == other.email &&
         password == other.password &&
         roleId == other.roleId &&
-        employeeId == other.employeeId;
+        employeeId == other.employeeId &&
+        role == other.role &&
+        employee == other.employee;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, id.hashCode), email.hashCode), password.hashCode),
-            roleId.hashCode),
-        employeeId.hashCode));
+        $jc(
+            $jc(
+                $jc(
+                    $jc($jc($jc(0, id.hashCode), email.hashCode),
+                        password.hashCode),
+                    roleId.hashCode),
+                employeeId.hashCode),
+            role.hashCode),
+        employee.hashCode));
   }
 
   @override
@@ -279,7 +315,9 @@ class _$User extends User {
           ..add('email', email)
           ..add('password', password)
           ..add('roleId', roleId)
-          ..add('employeeId', employeeId))
+          ..add('employeeId', employeeId)
+          ..add('role', role)
+          ..add('employee', employee))
         .toString();
   }
 }
@@ -307,6 +345,14 @@ class UserBuilder implements Builder<User, UserBuilder> {
   int? get employeeId => _$this._employeeId;
   set employeeId(int? employeeId) => _$this._employeeId = employeeId;
 
+  RoleBuilder? _role;
+  RoleBuilder get role => _$this._role ??= new RoleBuilder();
+  set role(RoleBuilder? role) => _$this._role = role;
+
+  EmployeeBuilder? _employee;
+  EmployeeBuilder get employee => _$this._employee ??= new EmployeeBuilder();
+  set employee(EmployeeBuilder? employee) => _$this._employee = employee;
+
   UserBuilder();
 
   UserBuilder get _$this {
@@ -317,6 +363,8 @@ class UserBuilder implements Builder<User, UserBuilder> {
       _password = $v.password;
       _roleId = $v.roleId;
       _employeeId = $v.employeeId;
+      _role = $v.role?.toBuilder();
+      _employee = $v.employee?.toBuilder();
       _$v = null;
     }
     return this;
@@ -337,14 +385,31 @@ class UserBuilder implements Builder<User, UserBuilder> {
   User build() => _build();
 
   _$User _build() {
-    final _$result = _$v ??
-        new _$User._(
-            id: id,
-            email:
-                BuiltValueNullFieldError.checkNotNull(email, 'User', 'email'),
-            password: password,
-            roleId: roleId,
-            employeeId: employeeId);
+    _$User _$result;
+    try {
+      _$result = _$v ??
+          new _$User._(
+              id: id,
+              email:
+                  BuiltValueNullFieldError.checkNotNull(email, 'User', 'email'),
+              password: password,
+              roleId: roleId,
+              employeeId: employeeId,
+              role: _role?.build(),
+              employee: _employee?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'role';
+        _role?.build();
+        _$failedField = 'employee';
+        _employee?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'User', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

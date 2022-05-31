@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:erp_fronted/module/models/module_model.dart';
 
 part 'role_model.g.dart';
 
@@ -23,6 +24,8 @@ abstract class Role implements Built<Role, RoleBuilder> {
 
   @BuiltValueField(wireName: 'description_role')
   String? get descriptionRole;
+
+  BuiltList<Module>? get modules;
 
   Role._();
   factory Role([void Function(RoleBuilder) updates]) = _$Role;

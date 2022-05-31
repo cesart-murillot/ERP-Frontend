@@ -13,8 +13,6 @@ abstract class Modules implements Built<Modules, ModulesBuilder> {
   static Serializer<Modules> get serializer => _$modulesSerializer;
 
   BuiltList<Module> get modules;
-  LinkData get links;
-  MetaData get meta;
 
   Modules._();
   factory Modules([void Function(ModulesBuilder) updates]) = _$Modules;

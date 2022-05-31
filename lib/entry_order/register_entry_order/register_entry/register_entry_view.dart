@@ -24,10 +24,10 @@ class RegisterEntryPage extends StatelessWidget {
               flex: 1,
               child: TextFormField(
                 onSaved: (value) {
-                  BlocProvider.of<RegisterEntryOrderBloc>(context).add(StoreQuantity({'quantity': value}));
+                  BlocProvider.of<RegisterEntryOrderBloc>(context).add(StoreQuantity(int.parse(value!)));
                 },
                 onChanged: (value){
-                  context.read<RegisterEntryCubit>().printFromCubit(value);
+                  //context.read<RegisterEntryCubit>().printFromCubit(value);
                 },
                 decoration: const InputDecoration(labelText: 'Cantidad'),
               ),

@@ -23,12 +23,6 @@ class _$ModulesSerializer implements StructuredSerializer<Modules> {
       serializers.serialize(object.modules,
           specifiedType:
               const FullType(BuiltList, const [const FullType(Module)])),
-      'links',
-      serializers.serialize(object.links,
-          specifiedType: const FullType(LinkData)),
-      'meta',
-      serializers.serialize(object.meta,
-          specifiedType: const FullType(MetaData)),
     ];
 
     return result;
@@ -50,14 +44,6 @@ class _$ModulesSerializer implements StructuredSerializer<Modules> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(Module)]))!
               as BuiltList<Object?>);
-          break;
-        case 'links':
-          result.links.replace(serializers.deserialize(value,
-              specifiedType: const FullType(LinkData))! as LinkData);
-          break;
-        case 'meta':
-          result.meta.replace(serializers.deserialize(value,
-              specifiedType: const FullType(MetaData))! as MetaData);
           break;
       }
     }
@@ -141,19 +127,12 @@ class _$ModuleSerializer implements StructuredSerializer<Module> {
 class _$Modules extends Modules {
   @override
   final BuiltList<Module> modules;
-  @override
-  final LinkData links;
-  @override
-  final MetaData meta;
 
   factory _$Modules([void Function(ModulesBuilder)? updates]) =>
       (new ModulesBuilder()..update(updates))._build();
 
-  _$Modules._({required this.modules, required this.links, required this.meta})
-      : super._() {
+  _$Modules._({required this.modules}) : super._() {
     BuiltValueNullFieldError.checkNotNull(modules, 'Modules', 'modules');
-    BuiltValueNullFieldError.checkNotNull(links, 'Modules', 'links');
-    BuiltValueNullFieldError.checkNotNull(meta, 'Modules', 'meta');
   }
 
   @override
@@ -166,24 +145,17 @@ class _$Modules extends Modules {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Modules &&
-        modules == other.modules &&
-        links == other.links &&
-        meta == other.meta;
+    return other is Modules && modules == other.modules;
   }
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, modules.hashCode), links.hashCode), meta.hashCode));
+    return $jf($jc(0, modules.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Modules')
-          ..add('modules', modules)
-          ..add('links', links)
-          ..add('meta', meta))
+    return (newBuiltValueToStringHelper('Modules')..add('modules', modules))
         .toString();
   }
 }
@@ -196,22 +168,12 @@ class ModulesBuilder implements Builder<Modules, ModulesBuilder> {
       _$this._modules ??= new ListBuilder<Module>();
   set modules(ListBuilder<Module>? modules) => _$this._modules = modules;
 
-  LinkDataBuilder? _links;
-  LinkDataBuilder get links => _$this._links ??= new LinkDataBuilder();
-  set links(LinkDataBuilder? links) => _$this._links = links;
-
-  MetaDataBuilder? _meta;
-  MetaDataBuilder get meta => _$this._meta ??= new MetaDataBuilder();
-  set meta(MetaDataBuilder? meta) => _$this._meta = meta;
-
   ModulesBuilder();
 
   ModulesBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _modules = $v.modules.toBuilder();
-      _links = $v.links.toBuilder();
-      _meta = $v.meta.toBuilder();
       _$v = null;
     }
     return this;
@@ -234,20 +196,12 @@ class ModulesBuilder implements Builder<Modules, ModulesBuilder> {
   _$Modules _build() {
     _$Modules _$result;
     try {
-      _$result = _$v ??
-          new _$Modules._(
-              modules: modules.build(),
-              links: links.build(),
-              meta: meta.build());
+      _$result = _$v ?? new _$Modules._(modules: modules.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'modules';
         modules.build();
-        _$failedField = 'links';
-        links.build();
-        _$failedField = 'meta';
-        meta.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'Modules', _$failedField, e.toString());

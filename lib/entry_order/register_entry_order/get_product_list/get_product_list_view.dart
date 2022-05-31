@@ -9,7 +9,6 @@ import 'get_product_list_state.dart';
 
 class GetProductListPage extends StatelessWidget {
   const GetProductListPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -29,7 +28,7 @@ class GetProductListPage extends StatelessWidget {
             },
             items: state,
             onSaved: (value) {
-              BlocProvider.of<RegisterEntryOrderBloc>(context).add(StoreProduct({'id': value}));
+              BlocProvider.of<RegisterEntryOrderBloc>(context).add(StoreProduct(value!));
             },
           );
         },

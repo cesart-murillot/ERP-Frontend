@@ -72,7 +72,7 @@ class EmployeeInformation extends StatelessWidget {
     return Form(
       key: _formKey,
       child: Card(
-        margin: const EdgeInsets.all(40.0),
+        margin: const EdgeInsets.all(16.0),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
@@ -113,9 +113,8 @@ class EmployeeInformation extends StatelessWidget {
                 BranchDropDownPage(
                   onSavedCallback: (a) => (branchID.text = a.text),
                 ),
-                const Divider(
-                  thickness: 4.0,
-                  height: 48.0,
+                const SizedBox(
+                  height: 16.0,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -128,7 +127,7 @@ class EmployeeInformation extends StatelessWidget {
                           branchID.text,
                         ));
                   },
-                  child: Text('Registrar Empleado'),
+                  child: const Text('Registrar Empleado'),
                 ),
               ],
             ),
@@ -172,7 +171,7 @@ class _DatePickerFormState extends State<DatePickerForm> {
                 birthDateInputForm.text = date.toString();
               });
             },
-            readOnly: true,
+            readOnly: false,
             onSaved: (value) {
               birthDateInputForm.text = value!;
               widget.onSavedCallback(birthDateInputForm);
@@ -205,17 +204,17 @@ class _ImagePickerFormState extends State<ImagePickerForm> {
     return Column(
       children: [
         SizedBox(
-          width: 200,
-          height: 200,
+          width: 128.0,
+          height: 128.0,
           child: image != null
               ? Image.network(
                   image!.path,
-                  width: 200,
-                  height: 200,
+                  width: 128.0,
+                  height: 128.0,
                   fit: BoxFit.scaleDown,
                 )
               : const FlutterLogo(
-                  size: 200,
+                  size: 128.0,
                 ),
         ),
         Wrap(

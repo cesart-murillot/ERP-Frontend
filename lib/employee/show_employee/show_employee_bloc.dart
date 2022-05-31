@@ -54,11 +54,10 @@ class ShowEmployeeBloc extends Bloc<ShowEmployeeEvent, ShowEmployeeState> {
     var users = Users((users){
       users.users.add(user);
     });
-
-
+    final url = preDefinedUri('/api/users/');
+    final userString = objectToString(users, Users.serializer);
+    print(userString);
     try {
-      final url = preDefinedUri('/api/users/');
-      final userString = objectToString(users, Users.serializer);
       final String response = await postDataToApi(url, userString!);
       print(response);
     } catch (e) {

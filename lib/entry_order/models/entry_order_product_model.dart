@@ -9,7 +9,7 @@ abstract class EntryOrderProduct implements Built<EntryOrderProduct, EntryOrderP
   int? get id;
 
   @BuiltValueField(wireName: 'entry_order_id')
-  int get entryOrderId;
+  int? get entryOrderId;
 
   @BuiltValueField(wireName: 'product_id')
   int get productId;

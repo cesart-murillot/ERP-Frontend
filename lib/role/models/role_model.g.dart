@@ -80,6 +80,14 @@ class _$RoleSerializer implements StructuredSerializer<Role> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.modules;
+    if (value != null) {
+      result
+        ..add('modules')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(Module)])));
+    }
     return result;
   }
 
@@ -105,6 +113,12 @@ class _$RoleSerializer implements StructuredSerializer<Role> {
         case 'description_role':
           result.descriptionRole = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'modules':
+          result.modules.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(Module)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -208,11 +222,14 @@ class _$Role extends Role {
   final String nameRole;
   @override
   final String? descriptionRole;
+  @override
+  final BuiltList<Module>? modules;
 
   factory _$Role([void Function(RoleBuilder)? updates]) =>
       (new RoleBuilder()..update(updates))._build();
 
-  _$Role._({this.id, required this.nameRole, this.descriptionRole})
+  _$Role._(
+      {this.id, required this.nameRole, this.descriptionRole, this.modules})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(nameRole, 'Role', 'nameRole');
   }
@@ -230,13 +247,16 @@ class _$Role extends Role {
     return other is Role &&
         id == other.id &&
         nameRole == other.nameRole &&
-        descriptionRole == other.descriptionRole;
+        descriptionRole == other.descriptionRole &&
+        modules == other.modules;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc(0, id.hashCode), nameRole.hashCode), descriptionRole.hashCode));
+        $jc($jc($jc(0, id.hashCode), nameRole.hashCode),
+            descriptionRole.hashCode),
+        modules.hashCode));
   }
 
   @override
@@ -244,7 +264,8 @@ class _$Role extends Role {
     return (newBuiltValueToStringHelper('Role')
           ..add('id', id)
           ..add('nameRole', nameRole)
-          ..add('descriptionRole', descriptionRole))
+          ..add('descriptionRole', descriptionRole)
+          ..add('modules', modules))
         .toString();
   }
 }
@@ -265,6 +286,11 @@ class RoleBuilder implements Builder<Role, RoleBuilder> {
   set descriptionRole(String? descriptionRole) =>
       _$this._descriptionRole = descriptionRole;
 
+  ListBuilder<Module>? _modules;
+  ListBuilder<Module> get modules =>
+      _$this._modules ??= new ListBuilder<Module>();
+  set modules(ListBuilder<Module>? modules) => _$this._modules = modules;
+
   RoleBuilder();
 
   RoleBuilder get _$this {
@@ -273,6 +299,7 @@ class RoleBuilder implements Builder<Role, RoleBuilder> {
       _id = $v.id;
       _nameRole = $v.nameRole;
       _descriptionRole = $v.descriptionRole;
+      _modules = $v.modules?.toBuilder();
       _$v = null;
     }
     return this;
@@ -293,12 +320,26 @@ class RoleBuilder implements Builder<Role, RoleBuilder> {
   Role build() => _build();
 
   _$Role _build() {
-    final _$result = _$v ??
-        new _$Role._(
-            id: id,
-            nameRole: BuiltValueNullFieldError.checkNotNull(
-                nameRole, 'Role', 'nameRole'),
-            descriptionRole: descriptionRole);
+    _$Role _$result;
+    try {
+      _$result = _$v ??
+          new _$Role._(
+              id: id,
+              nameRole: BuiltValueNullFieldError.checkNotNull(
+                  nameRole, 'Role', 'nameRole'),
+              descriptionRole: descriptionRole,
+              modules: _modules?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'modules';
+        _modules?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Role', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

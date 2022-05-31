@@ -16,11 +16,11 @@ class StoreCodeEvent extends RegisterEntryOrderEvent {
   @override
   List<Object> get props => [code];
   const StoreCodeEvent(this.code);
-  final Map<String, dynamic> code;
+  final String code;
 }
 
 class StoreQuantity extends RegisterEntryOrderEvent {
-  final Map<String, dynamic> quantity;
+  final int quantity;
   const StoreQuantity(this.quantity);
 
   @override
@@ -28,10 +28,24 @@ class StoreQuantity extends RegisterEntryOrderEvent {
 }
 
 class StoreProduct extends RegisterEntryOrderEvent {
-  final Map<String, dynamic> product;
+  final int product;
 
   @override
   List<Object> get props => [product];
 
   const StoreProduct(this.product);
+}
+
+class ClearMapList extends RegisterEntryOrderEvent {
+  const ClearMapList();
+  @override
+  List<Object?> get props => [];
+}
+
+class SaveData extends RegisterEntryOrderEvent {
+
+  const SaveData();
+
+  @override
+  List<Object?> get props => [];
 }

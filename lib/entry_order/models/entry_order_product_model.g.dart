@@ -20,9 +20,6 @@ class _$EntryOrderProductSerializer
   Iterable<Object?> serialize(Serializers serializers, EntryOrderProduct object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'entry_order_id',
-      serializers.serialize(object.entryOrderId,
-          specifiedType: const FullType(int)),
       'product_id',
       serializers.serialize(object.productId,
           specifiedType: const FullType(int)),
@@ -35,6 +32,12 @@ class _$EntryOrderProductSerializer
     if (value != null) {
       result
         ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.entryOrderId;
+    if (value != null) {
+      result
+        ..add('entry_order_id')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
     value = object.product;
@@ -65,7 +68,7 @@ class _$EntryOrderProductSerializer
           break;
         case 'entry_order_id':
           result.entryOrderId = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'product_id':
           result.productId = serializers.deserialize(value,
@@ -90,7 +93,7 @@ class _$EntryOrderProduct extends EntryOrderProduct {
   @override
   final int? id;
   @override
-  final int entryOrderId;
+  final int? entryOrderId;
   @override
   final int productId;
   @override
@@ -104,13 +107,11 @@ class _$EntryOrderProduct extends EntryOrderProduct {
 
   _$EntryOrderProduct._(
       {this.id,
-      required this.entryOrderId,
+      this.entryOrderId,
       required this.productId,
       required this.quantity,
       this.product})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        entryOrderId, 'EntryOrderProduct', 'entryOrderId');
     BuiltValueNullFieldError.checkNotNull(
         productId, 'EntryOrderProduct', 'productId');
     BuiltValueNullFieldError.checkNotNull(
@@ -217,8 +218,7 @@ class EntryOrderProductBuilder
       _$result = _$v ??
           new _$EntryOrderProduct._(
               id: id,
-              entryOrderId: BuiltValueNullFieldError.checkNotNull(
-                  entryOrderId, 'EntryOrderProduct', 'entryOrderId'),
+              entryOrderId: entryOrderId,
               productId: BuiltValueNullFieldError.checkNotNull(
                   productId, 'EntryOrderProduct', 'productId'),
               quantity: BuiltValueNullFieldError.checkNotNull(
