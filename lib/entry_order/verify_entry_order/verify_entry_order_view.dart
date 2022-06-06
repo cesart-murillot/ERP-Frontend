@@ -44,10 +44,17 @@ class EntryOrderHold extends StatelessWidget {
   }
 }
 
-class EntryOrderInformation extends StatelessWidget {
+class EntryOrderInformation extends StatefulWidget {
   const EntryOrderInformation({Key? key, required this.entryOrder})
       : super(key: key);
   final EntryOrder entryOrder;
+  @override
+  State<EntryOrderInformation> createState() => _EntryOrderInformationState();
+}
+
+class _EntryOrderInformationState extends State<EntryOrderInformation> {
+
+  List<bool> checkBoxValue = [];
 
   @override
   Widget build(BuildContext context) {
@@ -55,60 +62,80 @@ class EntryOrderInformation extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Text('Código de Ingreso: ', style: TextStyle(fontSize: 18.0), ),
-            Text(entryOrder.codeEntryOrder, style: const TextStyle(fontSize: 18.0),),
+            const Text(
+              'Código de Ingreso: ',
+              style: TextStyle(fontSize: 18.0),
+            ),
+            Text(
+              widget.entryOrder.codeEntryOrder,
+              style: const TextStyle(fontSize: 18.0),
+            ),
           ],
         ),
         Row(
           children: [
-            const Text('Fecha de Ingreso: ', style: TextStyle(fontSize: 18.0),),
-            Expanded(child: Text(entryOrder.createdAt!, style: const TextStyle(fontSize: 12.0),)),
+            const Text(
+              'Fecha de Ingreso: ',
+              style: TextStyle(fontSize: 18.0),
+            ),
+            Expanded(
+                child: Text(
+              widget.entryOrder.createdAt!,
+              style: const TextStyle(fontSize: 12.0),
+            )),
           ],
         ),
         ListView.builder(
           shrinkWrap: true,
-          itemCount: entryOrder.entryOrderProduct!.length,
+          itemCount: widget.entryOrder.entryOrderProduct!.length,
           itemBuilder: (context, index) {
-            return ListTile(
-                title: Text(
-                  entryOrder.entryOrderProduct![index].product!.modelProduct,
-                    style: const TextStyle(fontSize: 16.0)
-                ),
-                subtitle: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
+            checkBoxValue.add(false);
+            return Row(
+              children: [
+                Flexible(
+                  child: ListTile(
+                    title: Text(
+                      widget.entryOrder
+                          .entryOrderProduct![index].product!.modelProduct,
+                      style: const TextStyle(fontSize: 16.0),
+                    ),
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        Column(
                           children: [
-                            const Text('Formato: ', style: TextStyle(fontSize: 16.0)),
-                            Text(
-                              entryOrder.entryOrderProduct![index].product!
-                                  .formatProduct!,
-                                style: const TextStyle(fontSize: 16.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                const Text('Formato: ',
+                                    style: TextStyle(fontSize: 16.0)),
+                                Text(
+                                  widget.entryOrder.entryOrderProduct![index].product!
+                                      .formatProduct!,
+                                  style: const TextStyle(fontSize: 16.0),
+                                )
+                              ],
                             )
                           ],
-                        )
+                        ),
                       ],
                     ),
-                    Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Text('Cantidad: ', style: TextStyle(fontSize: 16.0),),
-                            Text(
-                              entryOrder.entryOrderProduct![index].quantity
-                                  .toString(),
-                              style: const TextStyle(fontSize: 16.0),
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ));
+                  ),
+                ),
+                Flexible(
+                  child: CheckboxListTile(
+                    title: Text('Cantidad: ${widget.entryOrder.entryOrderProduct![index].quantity}'),
+                    value: checkBoxValue[index],
+                    onChanged: (bool? value) {
+                      setState(() {
+                        checkBoxValue[index] = value!;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            );
           },
         ),
       ],

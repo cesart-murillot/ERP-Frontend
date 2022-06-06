@@ -1,10 +1,10 @@
-import 'dart:html';
-
-import 'package:built_collection/src/list.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:erp_fronted/employee/models/user_model.dart';
 import 'package:erp_fronted/product_request/models/product_transfer_model.dart';
 import 'package:erp_fronted/transfer_order/models/transfer_order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import 'check_transfer_order_bloc.dart';
@@ -36,7 +36,45 @@ class StateViews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CheckTransferOrderBloc, CheckTransferOrderState>(
+    return BlocConsumer<CheckTransferOrderBloc, CheckTransferOrderState>(
+      listener: (context, state) {
+        if (state.dialog == Dialogs.sent) {
+          showDialog(
+            useSafeArea: true,
+            context: context,
+            builder: (_) => BlocProvider.value(
+              value: BlocProvider.of<CheckTransferOrderBloc>(context),
+              child: const SentVerificationDialog(),
+            ),
+          ).then((value) {
+            if (value is bool) {
+              if (value) {
+                context
+                    .read<CheckTransferOrderBloc>()
+                    .add(const MarkAsSentEvent());
+              }
+            }
+          });
+        }
+        if (state.dialog == Dialogs.received) {
+          showDialog(
+            useSafeArea: true,
+            context: context,
+            builder: (_) => BlocProvider.value(
+              value: BlocProvider.of<CheckTransferOrderBloc>(context),
+              child: const ReceivedVerificationDialog(),
+            ),
+          ).then((value) {
+            if (value is bool) {
+              if (value) {
+                context
+                    .read<CheckTransferOrderBloc>()
+                    .add(const MarkAsReceivedEvent());
+              }
+            }
+          });
+        }
+      },
       builder: (context, state) {
         switch (state.state) {
           case States.initial:
@@ -98,20 +136,45 @@ class TransferOrderWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Solicitado por $employeeName - $userRole'),
-                Text(userContact),
-                Text(branch),
-                Text(requestDate),
+                Text(
+                  'Solicitado por $employeeName',
+                  style: GoogleFonts.oswald(
+                    textStyle: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ),
+                Text(
+                  '$userContact - $userRole',
+                  style: GoogleFonts.oswald(
+                    textStyle: Theme.of(context).textTheme.subtitle1,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                Text(
+                  requestDate,
+                  style: GoogleFonts.oswald(
+                    textStyle: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ),
+                Text(
+                  branch,
+                  style: GoogleFonts.oswald(
+                    textStyle: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
               ],
             ),
           ),
         ),
         Text('Aprobado $verifiedDate'),
+        TransferControl(
+          sent: transferOrder.sent,
+          received: transferOrder.received,
+        ),
         Flexible(
           child: ProductTransferList(
-              productTransfer: transferOrder.transfer.productTransfers),
+            productTransfer: transferOrder.transfer.productTransfers,
+          ),
         ),
-        TransferControl(sent: transferOrder.sent, received: transferOrder.received),
       ],
     );
   }
@@ -132,10 +195,26 @@ class ProductTransferList extends StatelessWidget {
         final formatProduct =
             '${productTransfer[index].product?.formatProduct}';
         final quantity = productTransfer[index].quantity;
-        return ListTile(
-          title: Text(modelProduct),
-          subtitle: Text(formatProduct),
-          leading: Text(quantity.toString()),
+        return Card(
+          margin: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Flexible(
+                child: ListTile(
+                  title: Text(modelProduct),
+                  subtitle: Text(formatProduct),
+                  trailing: Text(quantity.toString()),
+                ),
+              ),
+              Flexible(
+                child: Checkbox(
+                  value: false,
+                  onChanged: (value) {},
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -143,18 +222,239 @@ class ProductTransferList extends StatelessWidget {
 }
 
 class TransferControl extends StatelessWidget {
-  const TransferControl({Key? key, required this.sent, required this.received}) : super(key: key);
+  const TransferControl({Key? key, required this.sent, required this.received})
+      : super(key: key);
   final bool sent, received;
+
   @override
   Widget build(BuildContext context) {
-    if(!sent && !received) {
-      return ElevatedButton(onPressed: () {}, child: const Text('Marcar como Enviado'),);
+    if (!sent && !received) {
+      return ElevatedButton(
+        onPressed: () {
+          context
+              .read<CheckTransferOrderBloc>()
+              .add(const ShowSentDialogEvent());
+        },
+        child: const Text('Marcar como Enviado'),
+      );
     }
-    if(sent && !received) {
-      return ElevatedButton(onPressed: () {}, child: const Text('Marcar como Recibido'),);
+    if (sent && !received) {
+      return Column(
+        children: [
+          const SentInformation(),
+          ElevatedButton(
+            onPressed: () {
+              context
+                  .read<CheckTransferOrderBloc>()
+                  .add(const ShowReceivedDialogEvent());
+            },
+            child: const Text('Marcar como Recibido'),
+          ),
+        ],
+      );
+    }
+    if (sent && received) {
+      return Column(
+        children: const [
+          SentInformation(),
+          ReceivedInformation(),
+          Text('Se ha completado el traspaso correctamente'),
+        ],
+      );
     }
     return const Text('Error');
   }
 }
 
+class SentInformation extends StatelessWidget {
+  const SentInformation({Key? key}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    final User user = context
+        .watch<CheckTransferOrderBloc>()
+        .state
+        .transferOrder!
+        .sentByUser!;
+    final String sentDate =
+        context.watch<CheckTransferOrderBloc>().state.transferOrder!.sendDate!;
+    final sentDateFormatted = DateFormat('EEEE d MMMM, ' 'yy - HH:mm a')
+        .format(DateTime.parse(sentDate));
+    final String userName =
+        '${user.employee?.namesEmployee} ${user.employee?.lastNameEmployee}';
+    final String email = user.email;
+    final String role = '${user.role?.nameRole}';
+
+    return Card(
+      child: Column(
+        children: [
+          Text(
+            'Enviado por: $userName',
+            style: GoogleFonts.oswald(
+                textStyle: Theme.of(context).textTheme.titleSmall),
+          ),
+          Text(
+            '$role - $email',
+            style: GoogleFonts.oswald(
+                textStyle: Theme.of(context).textTheme.subtitle1),
+          ),
+          Text(
+            sentDateFormatted,
+            style: GoogleFonts.oswald(
+                textStyle: Theme.of(context).textTheme.bodySmall),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ReceivedInformation extends StatelessWidget {
+  const ReceivedInformation({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final User user = context
+        .watch<CheckTransferOrderBloc>()
+        .state
+        .transferOrder!
+        .receivedByUser!;
+    final String sentDate = context
+        .watch<CheckTransferOrderBloc>()
+        .state
+        .transferOrder!
+        .receivedDate!;
+    final sentDateFormatted = DateFormat('EEEE d MMMM, ' 'yy - HH:mm a')
+        .format(DateTime.parse(sentDate));
+    final String userName =
+        '${user.employee?.namesEmployee} ${user.employee?.lastNameEmployee}';
+    final String email = user.email;
+    final String role = '${user.role?.nameRole}';
+
+    return Card(
+      child: Column(
+        children: [
+          Text('Recibido por: $userName - $role\n$email'),
+          Text(sentDateFormatted),
+        ],
+      ),
+    );
+  }
+}
+
+class SentVerificationDialog extends StatelessWidget {
+  const SentVerificationDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(context) {
+    return BlocBuilder<CheckTransferOrderBloc, CheckTransferOrderState>(
+      builder: (context, state) {
+        return AlertDialog(
+          title: const Text('Verificar Envio de Productos'),
+          content: const ProductCheckList(),
+          actions: [
+            TextButton(
+              onPressed: () {
+                context
+                    .read<CheckTransferOrderBloc>()
+                    .add(const HideDialogEvent());
+                Navigator.pop(context);
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                context
+                    .read<CheckTransferOrderBloc>()
+                    .add(const HideDialogEvent());
+                Navigator.pop(context, true);
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class ReceivedVerificationDialog extends StatelessWidget {
+  const ReceivedVerificationDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(context) {
+    return BlocBuilder<CheckTransferOrderBloc, CheckTransferOrderState>(
+      builder: (context, state) {
+        return AlertDialog(
+          scrollable: true,
+          title: const Text('Verificar Recepción de Productos'),
+          content: const ProductCheckList(),
+          actions: [
+            TextButton(
+              onPressed: () {
+                context
+                    .read<CheckTransferOrderBloc>()
+                    .add(const HideDialogEvent());
+                Navigator.pop(context);
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                context
+                    .read<CheckTransferOrderBloc>()
+                    .add(const HideDialogEvent());
+                Navigator.pop(context, true);
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class ProductCheckList extends StatelessWidget {
+  const ProductCheckList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final products = BlocProvider.of<CheckTransferOrderBloc>(context)
+        .state
+        .transferOrder
+        ?.transfer
+        .productTransfers;
+
+/*    final products = context
+        .watch<CheckTransferOrderBloc>()
+        .state
+        .transferOrder
+        ?.transfer
+        .productTransfers;*/
+    return ConstrainedBox(
+        constraints: const BoxConstraints(
+            maxHeight: double.maxFinite, maxWidth: double.maxFinite),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+            child: SizedBox(
+              width: 512.0,
+              height: 512.0,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: products?.length,
+                itemBuilder: (context, index) {
+                  final product = products![index];
+                  return ListTile(
+                    title: Text(
+                        '${product.product?.modelProduct} - ${product.product?.formatProduct}'),
+                    subtitle: Text('Cantidad: ${product.quantity}'),
+                  );
+                },
+              ),
+            ),
+          ),
+        ));
+  }
+}

@@ -90,6 +90,20 @@ class _$TransferOrderSerializer implements StructuredSerializer<TransferOrder> {
         ..add('send_by')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.sendDate;
+    if (value != null) {
+      result
+        ..add('send_date')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.receivedDate;
+    if (value != null) {
+      result
+        ..add('received_date')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.transferId;
     if (value != null) {
       result
@@ -109,6 +123,20 @@ class _$TransferOrderSerializer implements StructuredSerializer<TransferOrder> {
         ..add('updated_at')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
+    }
+    value = object.sentByUser;
+    if (value != null) {
+      result
+        ..add('sent_by_user')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(User)));
+    }
+    value = object.receivedByUser;
+    if (value != null) {
+      result
+        ..add('received_by_user')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(User)));
     }
     return result;
   }
@@ -145,6 +173,14 @@ class _$TransferOrderSerializer implements StructuredSerializer<TransferOrder> {
           result.sendBy = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'send_date':
+          result.sendDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'received_date':
+          result.receivedDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'transfer_id':
           result.transferId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
@@ -160,6 +196,14 @@ class _$TransferOrderSerializer implements StructuredSerializer<TransferOrder> {
         case 'transfer':
           result.transfer.replace(serializers.deserialize(value,
               specifiedType: const FullType(Transfer))! as Transfer);
+          break;
+        case 'sent_by_user':
+          result.sentByUser.replace(serializers.deserialize(value,
+              specifiedType: const FullType(User))! as User);
+          break;
+        case 'received_by_user':
+          result.receivedByUser.replace(serializers.deserialize(value,
+              specifiedType: const FullType(User))! as User);
           break;
       }
     }
@@ -275,6 +319,10 @@ class _$TransferOrder extends TransferOrder {
   @override
   final int? sendBy;
   @override
+  final String? sendDate;
+  @override
+  final String? receivedDate;
+  @override
   final int? transferId;
   @override
   final String? createdAt;
@@ -282,6 +330,10 @@ class _$TransferOrder extends TransferOrder {
   final String? updatedAt;
   @override
   final Transfer transfer;
+  @override
+  final User? sentByUser;
+  @override
+  final User? receivedByUser;
 
   factory _$TransferOrder([void Function(TransferOrderBuilder)? updates]) =>
       (new TransferOrderBuilder()..update(updates))._build();
@@ -292,10 +344,14 @@ class _$TransferOrder extends TransferOrder {
       required this.received,
       this.receivedBy,
       this.sendBy,
+      this.sendDate,
+      this.receivedDate,
       this.transferId,
       this.createdAt,
       this.updatedAt,
-      required this.transfer})
+      required this.transfer,
+      this.sentByUser,
+      this.receivedByUser})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'TransferOrder', 'id');
     BuiltValueNullFieldError.checkNotNull(sent, 'TransferOrder', 'sent');
@@ -321,10 +377,14 @@ class _$TransferOrder extends TransferOrder {
         received == other.received &&
         receivedBy == other.receivedBy &&
         sendBy == other.sendBy &&
+        sendDate == other.sendDate &&
+        receivedDate == other.receivedDate &&
         transferId == other.transferId &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
-        transfer == other.transfer;
+        transfer == other.transfer &&
+        sentByUser == other.sentByUser &&
+        receivedByUser == other.receivedByUser;
   }
 
   @override
@@ -335,14 +395,24 @@ class _$TransferOrder extends TransferOrder {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, id.hashCode), sent.hashCode),
-                                received.hashCode),
-                            receivedBy.hashCode),
-                        sendBy.hashCode),
-                    transferId.hashCode),
-                createdAt.hashCode),
-            updatedAt.hashCode),
-        transfer.hashCode));
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc(
+                                                $jc($jc(0, id.hashCode),
+                                                    sent.hashCode),
+                                                received.hashCode),
+                                            receivedBy.hashCode),
+                                        sendBy.hashCode),
+                                    sendDate.hashCode),
+                                receivedDate.hashCode),
+                            transferId.hashCode),
+                        createdAt.hashCode),
+                    updatedAt.hashCode),
+                transfer.hashCode),
+            sentByUser.hashCode),
+        receivedByUser.hashCode));
   }
 
   @override
@@ -353,10 +423,14 @@ class _$TransferOrder extends TransferOrder {
           ..add('received', received)
           ..add('receivedBy', receivedBy)
           ..add('sendBy', sendBy)
+          ..add('sendDate', sendDate)
+          ..add('receivedDate', receivedDate)
           ..add('transferId', transferId)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
-          ..add('transfer', transfer))
+          ..add('transfer', transfer)
+          ..add('sentByUser', sentByUser)
+          ..add('receivedByUser', receivedByUser))
         .toString();
   }
 }
@@ -385,6 +459,14 @@ class TransferOrderBuilder
   int? get sendBy => _$this._sendBy;
   set sendBy(int? sendBy) => _$this._sendBy = sendBy;
 
+  String? _sendDate;
+  String? get sendDate => _$this._sendDate;
+  set sendDate(String? sendDate) => _$this._sendDate = sendDate;
+
+  String? _receivedDate;
+  String? get receivedDate => _$this._receivedDate;
+  set receivedDate(String? receivedDate) => _$this._receivedDate = receivedDate;
+
   int? _transferId;
   int? get transferId => _$this._transferId;
   set transferId(int? transferId) => _$this._transferId = transferId;
@@ -401,6 +483,16 @@ class TransferOrderBuilder
   TransferBuilder get transfer => _$this._transfer ??= new TransferBuilder();
   set transfer(TransferBuilder? transfer) => _$this._transfer = transfer;
 
+  UserBuilder? _sentByUser;
+  UserBuilder get sentByUser => _$this._sentByUser ??= new UserBuilder();
+  set sentByUser(UserBuilder? sentByUser) => _$this._sentByUser = sentByUser;
+
+  UserBuilder? _receivedByUser;
+  UserBuilder get receivedByUser =>
+      _$this._receivedByUser ??= new UserBuilder();
+  set receivedByUser(UserBuilder? receivedByUser) =>
+      _$this._receivedByUser = receivedByUser;
+
   TransferOrderBuilder();
 
   TransferOrderBuilder get _$this {
@@ -411,10 +503,14 @@ class TransferOrderBuilder
       _received = $v.received;
       _receivedBy = $v.receivedBy;
       _sendBy = $v.sendBy;
+      _sendDate = $v.sendDate;
+      _receivedDate = $v.receivedDate;
       _transferId = $v.transferId;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
       _transfer = $v.transfer.toBuilder();
+      _sentByUser = $v.sentByUser?.toBuilder();
+      _receivedByUser = $v.receivedByUser?.toBuilder();
       _$v = null;
     }
     return this;
@@ -447,15 +543,23 @@ class TransferOrderBuilder
                   received, 'TransferOrder', 'received'),
               receivedBy: receivedBy,
               sendBy: sendBy,
+              sendDate: sendDate,
+              receivedDate: receivedDate,
               transferId: transferId,
               createdAt: createdAt,
               updatedAt: updatedAt,
-              transfer: transfer.build());
+              transfer: transfer.build(),
+              sentByUser: _sentByUser?.build(),
+              receivedByUser: _receivedByUser?.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'transfer';
         transfer.build();
+        _$failedField = 'sentByUser';
+        _sentByUser?.build();
+        _$failedField = 'receivedByUser';
+        _receivedByUser?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'TransferOrder', _$failedField, e.toString());
