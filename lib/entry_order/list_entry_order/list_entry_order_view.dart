@@ -1,3 +1,4 @@
+import 'package:erp_fronted/entry_order/check_entry_order/check_entry_order_view.dart';
 import 'package:erp_fronted/entry_order/register_entry_order/register_entry_order_view.dart';
 import 'package:erp_fronted/entry_order/verify_entry_order/verify_entry_order_view.dart';
 import 'package:erp_fronted/src/resources/repository.dart';
@@ -60,8 +61,8 @@ class ListEntryOrder extends StatelessWidget {
                           children: [
                             if (state.entryOrders.entryOrders[index]
                                     .verifiedEntryOrder! &&
-                                !state
-                                    .entryOrders.entryOrders[index].errorEntryOrder!)
+                                !state.entryOrders.entryOrders[index]
+                                    .errorEntryOrder!)
                               const Icon(
                                 Icons.verified,
                                 color: Colors.green,
@@ -74,8 +75,8 @@ class ListEntryOrder extends StatelessWidget {
                                 Icons.error,
                                 color: Colors.red,
                               ),
-                            if (!state
-                                .entryOrders.entryOrders[index].verifiedEntryOrder!)
+                            if (!state.entryOrders.entryOrders[index]
+                                .verifiedEntryOrder!)
                               const Icon(
                                 Icons.hourglass_bottom,
                                 color: Colors.lightBlueAccent,
@@ -87,8 +88,9 @@ class ListEntryOrder extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => VerifyEntryOrderPage(
-                                id: state.entryOrders.entryOrders[index].id!,
+                              builder: (context) => CheckEntryOrderPage(
+                                entryOrderId:
+                                    state.entryOrders.entryOrders[index].id!,
                               ),
                             ),
                           );
@@ -99,7 +101,8 @@ class ListEntryOrder extends StatelessWidget {
                             children: [
                               const Text('Código de Orden: '),
                               Text(
-                                state.entryOrders.entryOrders[index].codeEntryOrder,
+                                state.entryOrders.entryOrders[index]
+                                    .codeEntryOrder,
                               ),
                             ],
                           ),
@@ -110,7 +113,8 @@ class ListEntryOrder extends StatelessWidget {
                             children: [
                               const Text('Fecha de Registro: '),
                               Text(
-                                state.entryOrders.entryOrders[index].createdAt ??
+                                state.entryOrders.entryOrders[index]
+                                        .createdAt ??
                                     'Fecha no disponible',
                               ),
                             ],
@@ -131,7 +135,9 @@ class ListEntryOrder extends StatelessWidget {
       },
     );
   }
-}class FilterChips extends StatelessWidget {
+}
+
+class FilterChips extends StatelessWidget {
   const FilterChips({Key? key}) : super(key: key);
 
   @override
@@ -145,4 +151,3 @@ class ListEntryOrder extends StatelessWidget {
     );
   }
 }
-

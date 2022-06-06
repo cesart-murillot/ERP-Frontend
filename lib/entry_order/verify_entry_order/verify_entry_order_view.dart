@@ -89,7 +89,6 @@ class _EntryOrderInformationState extends State<EntryOrderInformation> {
           shrinkWrap: true,
           itemCount: widget.entryOrder.entryOrderProduct!.length,
           itemBuilder: (context, index) {
-            checkBoxValue.add(false);
             return Row(
               children: [
                 Flexible(
@@ -128,6 +127,7 @@ class _EntryOrderInformationState extends State<EntryOrderInformation> {
                     title: Text('Cantidad: ${widget.entryOrder.entryOrderProduct![index].quantity}'),
                     value: checkBoxValue[index],
                     onChanged: (bool? value) {
+                      print(checkBoxValue);
                       setState(() {
                         checkBoxValue[index] = value!;
                       });
