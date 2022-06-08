@@ -83,7 +83,12 @@ class _$BranchSerializer implements StructuredSerializer<Branch> {
   @override
   Iterable<Object?> serialize(Serializers serializers, Branch object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[];
+    final result = <Object?>[
+      'warehouses',
+      serializers.serialize(object.warehouses,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(Warehouse)])),
+    ];
     Object? value;
     value = object.id;
     if (value != null) {
@@ -130,6 +135,12 @@ class _$BranchSerializer implements StructuredSerializer<Branch> {
         case 'address_branch':
           result.addressBranch = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'warehouses':
+          result.warehouses.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(Warehouse)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -263,11 +274,17 @@ class _$Branch extends Branch {
   final String? nameBranch;
   @override
   final String? addressBranch;
+  @override
+  final BuiltList<Warehouse> warehouses;
 
   factory _$Branch([void Function(BranchBuilder)? updates]) =>
       (new BranchBuilder()..update(updates))._build();
 
-  _$Branch._({this.id, this.nameBranch, this.addressBranch}) : super._();
+  _$Branch._(
+      {this.id, this.nameBranch, this.addressBranch, required this.warehouses})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(warehouses, 'Branch', 'warehouses');
+  }
 
   @override
   Branch rebuild(void Function(BranchBuilder) updates) =>
@@ -282,13 +299,16 @@ class _$Branch extends Branch {
     return other is Branch &&
         id == other.id &&
         nameBranch == other.nameBranch &&
-        addressBranch == other.addressBranch;
+        addressBranch == other.addressBranch &&
+        warehouses == other.warehouses;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc(0, id.hashCode), nameBranch.hashCode), addressBranch.hashCode));
+        $jc($jc($jc(0, id.hashCode), nameBranch.hashCode),
+            addressBranch.hashCode),
+        warehouses.hashCode));
   }
 
   @override
@@ -296,7 +316,8 @@ class _$Branch extends Branch {
     return (newBuiltValueToStringHelper('Branch')
           ..add('id', id)
           ..add('nameBranch', nameBranch)
-          ..add('addressBranch', addressBranch))
+          ..add('addressBranch', addressBranch)
+          ..add('warehouses', warehouses))
         .toString();
   }
 }
@@ -317,6 +338,12 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
   set addressBranch(String? addressBranch) =>
       _$this._addressBranch = addressBranch;
 
+  ListBuilder<Warehouse>? _warehouses;
+  ListBuilder<Warehouse> get warehouses =>
+      _$this._warehouses ??= new ListBuilder<Warehouse>();
+  set warehouses(ListBuilder<Warehouse>? warehouses) =>
+      _$this._warehouses = warehouses;
+
   BranchBuilder();
 
   BranchBuilder get _$this {
@@ -325,6 +352,7 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
       _id = $v.id;
       _nameBranch = $v.nameBranch;
       _addressBranch = $v.addressBranch;
+      _warehouses = $v.warehouses.toBuilder();
       _$v = null;
     }
     return this;
@@ -345,9 +373,25 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
   Branch build() => _build();
 
   _$Branch _build() {
-    final _$result = _$v ??
-        new _$Branch._(
-            id: id, nameBranch: nameBranch, addressBranch: addressBranch);
+    _$Branch _$result;
+    try {
+      _$result = _$v ??
+          new _$Branch._(
+              id: id,
+              nameBranch: nameBranch,
+              addressBranch: addressBranch,
+              warehouses: warehouses.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'warehouses';
+        warehouses.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Branch', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

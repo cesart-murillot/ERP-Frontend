@@ -65,6 +65,10 @@ class _$WarehouseSerializer implements StructuredSerializer<Warehouse> {
       'name_warehouse',
       serializers.serialize(object.nameWarehouse,
           specifiedType: const FullType(String)),
+      'sections',
+      serializers.serialize(object.sections,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(Section)])),
     ];
     Object? value;
     value = object.id;
@@ -104,6 +108,12 @@ class _$WarehouseSerializer implements StructuredSerializer<Warehouse> {
         case 'branch_id':
           result.branchId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
+          break;
+        case 'sections':
+          result.sections.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(Section)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -211,14 +221,21 @@ class _$Warehouse extends Warehouse {
   final String nameWarehouse;
   @override
   final int? branchId;
+  @override
+  final BuiltList<Section> sections;
 
   factory _$Warehouse([void Function(WarehouseBuilder)? updates]) =>
       (new WarehouseBuilder()..update(updates))._build();
 
-  _$Warehouse._({this.id, required this.nameWarehouse, this.branchId})
+  _$Warehouse._(
+      {this.id,
+      required this.nameWarehouse,
+      this.branchId,
+      required this.sections})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         nameWarehouse, 'Warehouse', 'nameWarehouse');
+    BuiltValueNullFieldError.checkNotNull(sections, 'Warehouse', 'sections');
   }
 
   @override
@@ -234,13 +251,16 @@ class _$Warehouse extends Warehouse {
     return other is Warehouse &&
         id == other.id &&
         nameWarehouse == other.nameWarehouse &&
-        branchId == other.branchId;
+        branchId == other.branchId &&
+        sections == other.sections;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc(0, id.hashCode), nameWarehouse.hashCode), branchId.hashCode));
+        $jc($jc($jc(0, id.hashCode), nameWarehouse.hashCode),
+            branchId.hashCode),
+        sections.hashCode));
   }
 
   @override
@@ -248,7 +268,8 @@ class _$Warehouse extends Warehouse {
     return (newBuiltValueToStringHelper('Warehouse')
           ..add('id', id)
           ..add('nameWarehouse', nameWarehouse)
-          ..add('branchId', branchId))
+          ..add('branchId', branchId)
+          ..add('sections', sections))
         .toString();
   }
 }
@@ -269,6 +290,11 @@ class WarehouseBuilder implements Builder<Warehouse, WarehouseBuilder> {
   int? get branchId => _$this._branchId;
   set branchId(int? branchId) => _$this._branchId = branchId;
 
+  ListBuilder<Section>? _sections;
+  ListBuilder<Section> get sections =>
+      _$this._sections ??= new ListBuilder<Section>();
+  set sections(ListBuilder<Section>? sections) => _$this._sections = sections;
+
   WarehouseBuilder();
 
   WarehouseBuilder get _$this {
@@ -277,6 +303,7 @@ class WarehouseBuilder implements Builder<Warehouse, WarehouseBuilder> {
       _id = $v.id;
       _nameWarehouse = $v.nameWarehouse;
       _branchId = $v.branchId;
+      _sections = $v.sections.toBuilder();
       _$v = null;
     }
     return this;
@@ -297,12 +324,26 @@ class WarehouseBuilder implements Builder<Warehouse, WarehouseBuilder> {
   Warehouse build() => _build();
 
   _$Warehouse _build() {
-    final _$result = _$v ??
-        new _$Warehouse._(
-            id: id,
-            nameWarehouse: BuiltValueNullFieldError.checkNotNull(
-                nameWarehouse, 'Warehouse', 'nameWarehouse'),
-            branchId: branchId);
+    _$Warehouse _$result;
+    try {
+      _$result = _$v ??
+          new _$Warehouse._(
+              id: id,
+              nameWarehouse: BuiltValueNullFieldError.checkNotNull(
+                  nameWarehouse, 'Warehouse', 'nameWarehouse'),
+              branchId: branchId,
+              sections: sections.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'sections';
+        sections.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Warehouse', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

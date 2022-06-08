@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:built_collection/built_collection.dart';
+import 'package:erp_fronted/branch/models/section_model.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
 import 'package:erp_fronted/src/models/serializers.dart';
 import 'package:built_value/built_value.dart';
@@ -27,6 +28,8 @@ abstract class Warehouse implements Built<Warehouse, WarehouseBuilder> {
 
   @BuiltValueField(wireName: 'branch_id')
   int? get branchId;
+
+  BuiltList<Section> get sections;
 
   Warehouse._();
   factory Warehouse([void Function(WarehouseBuilder) updates]) = _$Warehouse;

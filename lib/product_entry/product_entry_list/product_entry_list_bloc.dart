@@ -19,7 +19,7 @@ class ProductEntryListBloc extends Bloc<ProductEntryListEvent, ProductEntryListS
     emit(const LoadingProductEntriesState());
     final url = preDefinedUri('api/product_entries', {'verified': 'true'});
     ProductEntries productEntries = await getObject(url, ProductEntries.serializer);
-    print(productEntries);
+
     emit(LoadedProductEntriesState(productEntries));
   }
 

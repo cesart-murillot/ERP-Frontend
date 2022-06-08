@@ -16,6 +16,7 @@ import 'package:erp_fronted/src/models/meta_model.dart';
 import 'package:erp_fronted/product/models/product_model.dart';
 import 'package:erp_fronted/transfer_order/models/transfer_order_model.dart';
 
+import '../../branch/models/section_model.dart';
 import '../../employee/models/employee_model.dart';
 
 part 'serializers.g.dart';
@@ -29,6 +30,7 @@ part 'serializers.g.dart';
   Module,
   User,
   Users,
+  Section,
   Branch,
   Branches,
   Warehouse,
