@@ -29,7 +29,7 @@ abstract class Warehouse implements Built<Warehouse, WarehouseBuilder> {
   @BuiltValueField(wireName: 'branch_id')
   int? get branchId;
 
-  BuiltList<Section> get sections;
+  BuiltList<Section>? get sections;
 
   Warehouse._();
   factory Warehouse([void Function(WarehouseBuilder) updates]) = _$Warehouse;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import 'check_entry_order_bloc.dart';
@@ -63,33 +64,36 @@ class CheckEntryOrder extends StatelessWidget {
   Widget build(BuildContext context) {
     var showVerifyButton =
         context.watch<CheckEntryOrderBloc>().state.showVerifyButton;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        const Flexible(
-          child: EntryOrderInformation(),
-        ),
-        const ProductList(),
-        showVerifyButton
-            ? Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (_) => BlocProvider.value(
-                        value: BlocProvider.of<CheckEntryOrderBloc>(context),
-                        child: const VerificationDialog(),
-                      ),
-                    );
-                  },
-                  child: const Text('Validar'),
-                ),
-              )
-            : Container(),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const EntryOrderInformation(),
+          const ProductList(),
+          const SizedBox(
+            height: 8.0,
+          ),
+          showVerifyButton
+              ? Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => BlocProvider.value(
+                          value: BlocProvider.of<CheckEntryOrderBloc>(context),
+                          child: const VerificationDialog(),
+                        ),
+                      );
+                    },
+                    child: const Text('Verificar Orden de Ingreso'),
+                  ),
+                )
+              : const SizedBox(),
+        ],
+      ),
     );
   }
 }
@@ -109,13 +113,37 @@ class EntryOrderInformation extends StatelessWidget {
             .entryOrder!
             .createdAt!));
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text('Codigo de Ingreso: $entryOrderCode'),
-        Text('Fecha de Registro: $registerDate}'),
-      ],
+    return Card(
+      margin: const EdgeInsets.all(8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Text(
+                  'Codigo de Ingreso: $entryOrderCode',
+                  style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.bodyLarge,
+                      fontSize: 14.0),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  'Fecha de Registro: $registerDate',
+                  style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.bodyLarge,
+                      fontSize: 14.0),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -133,17 +161,43 @@ class ProductList extends StatelessWidget {
       shrinkWrap: true,
       itemCount: entryOrderProduct?.length,
       itemBuilder: (BuildContext context, int index) {
-        return CheckboxListTile(
-          title: Text(
-              'Modelo: ${entryOrderProduct![index].product?.modelProduct}'),
-          subtitle: Text(
-              'Formato: ${entryOrderProduct[index].product?.formatProduct}'),
-          onChanged: (bool? value) {
-            context
-                .read<CheckEntryOrderBloc>()
-                .add(MarkAsCheckedEvent(index, value!));
-          },
-          value: context.watch<CheckEntryOrderBloc>().state.verified![index],
+        return Card(
+          child: CheckboxListTile(
+            title: Text(
+              'Modelo: ${entryOrderProduct![index].product?.modelProduct}',
+              style: GoogleFonts.roboto(
+                textStyle: Theme.of(context).textTheme.bodyLarge,
+                fontSize: 14.0,
+              ),
+            ),
+            subtitle: Row(
+              children: [
+                Text(
+                  'Formato: ${entryOrderProduct[index].product?.formatProduct}',
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                    fontSize: 14.0,
+                  ),
+                ),
+                const SizedBox(
+                  width: 16.0,
+                ),
+                Text(
+                  'Cantidad: ${entryOrderProduct[index].quantity}',
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                    fontSize: 14.0,
+                  ),
+                ),
+              ],
+            ),
+            onChanged: (bool? value) {
+              context
+                  .read<CheckEntryOrderBloc>()
+                  .add(MarkAsCheckedEvent(index, value!));
+            },
+            value: context.watch<CheckEntryOrderBloc>().state.verified![index],
+          ),
         );
       },
     );
@@ -199,10 +253,30 @@ class CheckedEntryOrder extends StatelessWidget {
           shrinkWrap: true,
           itemCount: entryOrderProduct?.length,
           itemBuilder: (context, index) {
-            return ListTile(
-              title: Text('Modelo: ${entryOrderProduct?[index].product?.modelProduct}'),
-              subtitle: Text('Formato: ${entryOrderProduct?[index].product?.formatProduct}'),
-              trailing: Text('Cantidad: ${entryOrderProduct?[index].quantity}'),
+            return Card(
+              child: ListTile(
+                title: Text(
+                  'Modelo: ${entryOrderProduct?[index].product?.modelProduct}',
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                    fontSize: 14.0,
+                  ),
+                ),
+                subtitle: Text(
+                  'Formato: ${entryOrderProduct?[index].product?.formatProduct}',
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                    fontSize: 14.0,
+                  ),
+                ),
+                trailing: Text(
+                  'Cantidad: ${entryOrderProduct?[index].quantity}',
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                    fontSize: 14.0,
+                  ),
+                ),
+              ),
             );
           },
         ),

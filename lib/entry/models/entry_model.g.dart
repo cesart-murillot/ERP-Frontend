@@ -65,36 +65,22 @@ class _$EntrySerializer implements StructuredSerializer<Entry> {
       'quantity_entry',
       serializers.serialize(object.quantityEntry,
           specifiedType: const FullType(int)),
-      'verified_entry',
-      serializers.serialize(object.verifiedEntry,
-          specifiedType: const FullType(bool)),
-      'error_entry',
-      serializers.serialize(object.errorEntry,
-          specifiedType: const FullType(bool)),
       'product_id',
       serializers.serialize(object.productId,
           specifiedType: const FullType(int)),
+      'section_id',
+      serializers.serialize(object.sectionId,
+          specifiedType: const FullType(int)),
+      'entry_order_products_id',
+      serializers.serialize(object.entryOrderProductId,
+          specifiedType: const FullType(int)),
     ];
     Object? value;
-    value = object.id;
+    value = object.remainEntry;
     if (value != null) {
       result
-        ..add('id')
+        ..add('remain_entry')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
-    value = object.supplierEntry;
-    if (value != null) {
-      result
-        ..add('supplier_entry')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.noteEntry;
-    if (value != null) {
-      result
-        ..add('note_entry')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
     }
     value = object.createdAt;
     if (value != null) {
@@ -103,26 +89,19 @@ class _$EntrySerializer implements StructuredSerializer<Entry> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.updatedAt;
+    value = object.section;
     if (value != null) {
       result
-        ..add('updated_at')
+        ..add('section')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(Section)));
     }
-    value = object.deletedAt;
+    value = object.entryOrderProduct;
     if (value != null) {
       result
-        ..add('deleted_at')
+        ..add('entry_order_products')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.product;
-    if (value != null) {
-      result
-        ..add('product')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(Product)));
+            specifiedType: const FullType(EntryOrderProduct)));
     }
     return result;
   }
@@ -138,49 +117,38 @@ class _$EntrySerializer implements StructuredSerializer<Entry> {
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
         case 'quantity_entry':
           result.quantityEntry = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
           break;
-        case 'supplier_entry':
-          result.supplierEntry = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'note_entry':
-          result.noteEntry = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'verified_entry':
-          result.verifiedEntry = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'error_entry':
-          result.errorEntry = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+        case 'remain_entry':
+          result.remainEntry = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'product_id':
           result.productId = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'section_id':
+          result.sectionId = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+        case 'entry_order_products_id':
+          result.entryOrderProductId = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
           break;
-        case 'deleted_at':
-          result.deletedAt = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+        case 'section':
+          result.section.replace(serializers.deserialize(value,
+              specifiedType: const FullType(Section))! as Section);
           break;
-        case 'product':
-          result.product.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Product))! as Product);
+        case 'entry_order_products':
+          result.entryOrderProduct.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(EntryOrderProduct))!
+              as EntryOrderProduct);
           break;
       }
     }
@@ -280,50 +248,41 @@ class EntriesBuilder implements Builder<Entries, EntriesBuilder> {
 
 class _$Entry extends Entry {
   @override
-  final int? id;
-  @override
   final int quantityEntry;
   @override
-  final String? supplierEntry;
-  @override
-  final String? noteEntry;
-  @override
-  final bool verifiedEntry;
-  @override
-  final bool errorEntry;
+  final int? remainEntry;
   @override
   final int productId;
   @override
+  final int sectionId;
+  @override
   final String? createdAt;
   @override
-  final String? updatedAt;
+  final int entryOrderProductId;
   @override
-  final String? deletedAt;
+  final Section? section;
   @override
-  final Product? product;
+  final EntryOrderProduct? entryOrderProduct;
 
   factory _$Entry([void Function(EntryBuilder)? updates]) =>
       (new EntryBuilder()..update(updates))._build();
 
   _$Entry._(
-      {this.id,
-      required this.quantityEntry,
-      this.supplierEntry,
-      this.noteEntry,
-      required this.verifiedEntry,
-      required this.errorEntry,
+      {required this.quantityEntry,
+      this.remainEntry,
       required this.productId,
+      required this.sectionId,
       this.createdAt,
-      this.updatedAt,
-      this.deletedAt,
-      this.product})
+      required this.entryOrderProductId,
+      this.section,
+      this.entryOrderProduct})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         quantityEntry, 'Entry', 'quantityEntry');
-    BuiltValueNullFieldError.checkNotNull(
-        verifiedEntry, 'Entry', 'verifiedEntry');
-    BuiltValueNullFieldError.checkNotNull(errorEntry, 'Entry', 'errorEntry');
     BuiltValueNullFieldError.checkNotNull(productId, 'Entry', 'productId');
+    BuiltValueNullFieldError.checkNotNull(sectionId, 'Entry', 'sectionId');
+    BuiltValueNullFieldError.checkNotNull(
+        entryOrderProductId, 'Entry', 'entryOrderProductId');
   }
 
   @override
@@ -337,17 +296,14 @@ class _$Entry extends Entry {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Entry &&
-        id == other.id &&
         quantityEntry == other.quantityEntry &&
-        supplierEntry == other.supplierEntry &&
-        noteEntry == other.noteEntry &&
-        verifiedEntry == other.verifiedEntry &&
-        errorEntry == other.errorEntry &&
+        remainEntry == other.remainEntry &&
         productId == other.productId &&
+        sectionId == other.sectionId &&
         createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        deletedAt == other.deletedAt &&
-        product == other.product;
+        entryOrderProductId == other.entryOrderProductId &&
+        section == other.section &&
+        entryOrderProduct == other.entryOrderProduct;
   }
 
   @override
@@ -358,36 +314,27 @@ class _$Entry extends Entry {
                 $jc(
                     $jc(
                         $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc($jc(0, id.hashCode),
-                                            quantityEntry.hashCode),
-                                        supplierEntry.hashCode),
-                                    noteEntry.hashCode),
-                                verifiedEntry.hashCode),
-                            errorEntry.hashCode),
-                        productId.hashCode),
+                            $jc($jc(0, quantityEntry.hashCode),
+                                remainEntry.hashCode),
+                            productId.hashCode),
+                        sectionId.hashCode),
                     createdAt.hashCode),
-                updatedAt.hashCode),
-            deletedAt.hashCode),
-        product.hashCode));
+                entryOrderProductId.hashCode),
+            section.hashCode),
+        entryOrderProduct.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Entry')
-          ..add('id', id)
           ..add('quantityEntry', quantityEntry)
-          ..add('supplierEntry', supplierEntry)
-          ..add('noteEntry', noteEntry)
-          ..add('verifiedEntry', verifiedEntry)
-          ..add('errorEntry', errorEntry)
+          ..add('remainEntry', remainEntry)
           ..add('productId', productId)
+          ..add('sectionId', sectionId)
           ..add('createdAt', createdAt)
-          ..add('updatedAt', updatedAt)
-          ..add('deletedAt', deletedAt)
-          ..add('product', product))
+          ..add('entryOrderProductId', entryOrderProductId)
+          ..add('section', section)
+          ..add('entryOrderProduct', entryOrderProduct))
         .toString();
   }
 }
@@ -395,69 +342,55 @@ class _$Entry extends Entry {
 class EntryBuilder implements Builder<Entry, EntryBuilder> {
   _$Entry? _$v;
 
-  int? _id;
-  int? get id => _$this._id;
-  set id(int? id) => _$this._id = id;
-
   int? _quantityEntry;
   int? get quantityEntry => _$this._quantityEntry;
   set quantityEntry(int? quantityEntry) =>
       _$this._quantityEntry = quantityEntry;
 
-  String? _supplierEntry;
-  String? get supplierEntry => _$this._supplierEntry;
-  set supplierEntry(String? supplierEntry) =>
-      _$this._supplierEntry = supplierEntry;
-
-  String? _noteEntry;
-  String? get noteEntry => _$this._noteEntry;
-  set noteEntry(String? noteEntry) => _$this._noteEntry = noteEntry;
-
-  bool? _verifiedEntry;
-  bool? get verifiedEntry => _$this._verifiedEntry;
-  set verifiedEntry(bool? verifiedEntry) =>
-      _$this._verifiedEntry = verifiedEntry;
-
-  bool? _errorEntry;
-  bool? get errorEntry => _$this._errorEntry;
-  set errorEntry(bool? errorEntry) => _$this._errorEntry = errorEntry;
+  int? _remainEntry;
+  int? get remainEntry => _$this._remainEntry;
+  set remainEntry(int? remainEntry) => _$this._remainEntry = remainEntry;
 
   int? _productId;
   int? get productId => _$this._productId;
   set productId(int? productId) => _$this._productId = productId;
 
+  int? _sectionId;
+  int? get sectionId => _$this._sectionId;
+  set sectionId(int? sectionId) => _$this._sectionId = sectionId;
+
   String? _createdAt;
   String? get createdAt => _$this._createdAt;
   set createdAt(String? createdAt) => _$this._createdAt = createdAt;
 
-  String? _updatedAt;
-  String? get updatedAt => _$this._updatedAt;
-  set updatedAt(String? updatedAt) => _$this._updatedAt = updatedAt;
+  int? _entryOrderProductId;
+  int? get entryOrderProductId => _$this._entryOrderProductId;
+  set entryOrderProductId(int? entryOrderProductId) =>
+      _$this._entryOrderProductId = entryOrderProductId;
 
-  String? _deletedAt;
-  String? get deletedAt => _$this._deletedAt;
-  set deletedAt(String? deletedAt) => _$this._deletedAt = deletedAt;
+  SectionBuilder? _section;
+  SectionBuilder get section => _$this._section ??= new SectionBuilder();
+  set section(SectionBuilder? section) => _$this._section = section;
 
-  ProductBuilder? _product;
-  ProductBuilder get product => _$this._product ??= new ProductBuilder();
-  set product(ProductBuilder? product) => _$this._product = product;
+  EntryOrderProductBuilder? _entryOrderProduct;
+  EntryOrderProductBuilder get entryOrderProduct =>
+      _$this._entryOrderProduct ??= new EntryOrderProductBuilder();
+  set entryOrderProduct(EntryOrderProductBuilder? entryOrderProduct) =>
+      _$this._entryOrderProduct = entryOrderProduct;
 
   EntryBuilder();
 
   EntryBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _id = $v.id;
       _quantityEntry = $v.quantityEntry;
-      _supplierEntry = $v.supplierEntry;
-      _noteEntry = $v.noteEntry;
-      _verifiedEntry = $v.verifiedEntry;
-      _errorEntry = $v.errorEntry;
+      _remainEntry = $v.remainEntry;
       _productId = $v.productId;
+      _sectionId = $v.sectionId;
       _createdAt = $v.createdAt;
-      _updatedAt = $v.updatedAt;
-      _deletedAt = $v.deletedAt;
-      _product = $v.product?.toBuilder();
+      _entryOrderProductId = $v.entryOrderProductId;
+      _section = $v.section?.toBuilder();
+      _entryOrderProduct = $v.entryOrderProduct?.toBuilder();
       _$v = null;
     }
     return this;
@@ -482,26 +415,25 @@ class EntryBuilder implements Builder<Entry, EntryBuilder> {
     try {
       _$result = _$v ??
           new _$Entry._(
-              id: id,
               quantityEntry: BuiltValueNullFieldError.checkNotNull(
                   quantityEntry, 'Entry', 'quantityEntry'),
-              supplierEntry: supplierEntry,
-              noteEntry: noteEntry,
-              verifiedEntry: BuiltValueNullFieldError.checkNotNull(
-                  verifiedEntry, 'Entry', 'verifiedEntry'),
-              errorEntry: BuiltValueNullFieldError.checkNotNull(
-                  errorEntry, 'Entry', 'errorEntry'),
+              remainEntry: remainEntry,
               productId: BuiltValueNullFieldError.checkNotNull(
                   productId, 'Entry', 'productId'),
+              sectionId: BuiltValueNullFieldError.checkNotNull(
+                  sectionId, 'Entry', 'sectionId'),
               createdAt: createdAt,
-              updatedAt: updatedAt,
-              deletedAt: deletedAt,
-              product: _product?.build());
+              entryOrderProductId: BuiltValueNullFieldError.checkNotNull(
+                  entryOrderProductId, 'Entry', 'entryOrderProductId'),
+              section: _section?.build(),
+              entryOrderProduct: _entryOrderProduct?.build());
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'product';
-        _product?.build();
+        _$failedField = 'section';
+        _section?.build();
+        _$failedField = 'entryOrderProduct';
+        _entryOrderProduct?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'Entry', _$failedField, e.toString());

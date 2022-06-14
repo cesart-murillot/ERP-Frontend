@@ -1,7 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:erp_fronted/product/models/product_model.dart';
+import 'package:erp_fronted/branch/models/section_model.dart';
+import 'package:erp_fronted/entry_order/models/entry_order_product_model.dart';
 
 part 'entry_model.g.dart';
 
@@ -17,36 +18,29 @@ abstract class Entries implements Built<Entries, EntriesBuilder> {
 abstract class Entry implements Built<Entry, EntryBuilder> {
   static Serializer<Entry> get serializer => _$entrySerializer;
 
-  int? get id;
-
   @BuiltValueField(wireName: 'quantity_entry')
   int get quantityEntry;
 
-  @BuiltValueField(wireName: 'supplier_entry')
-  String? get supplierEntry;
-
-  @BuiltValueField(wireName: 'note_entry')
-  String? get noteEntry;
-
-  @BuiltValueField(wireName: 'verified_entry')
-  bool get verifiedEntry;
-
-  @BuiltValueField(wireName: 'error_entry')
-  bool get errorEntry;
+  @BuiltValueField(wireName: 'remain_entry')
+  int? get remainEntry;
 
   @BuiltValueField(wireName: 'product_id')
   int get productId;
 
+  @BuiltValueField(wireName: 'section_id')
+  int get sectionId;
+
   @BuiltValueField(wireName: 'created_at')
   String? get createdAt;
 
-  @BuiltValueField(wireName: 'updated_at')
-  String? get updatedAt;
+  @BuiltValueField(wireName: 'entry_order_products_id')
+  int get entryOrderProductId;
 
-  @BuiltValueField(wireName: 'deleted_at')
-  String? get deletedAt;
+  Section? get section;
 
-  Product? get product;
+  @BuiltValueField(wireName: 'entry_order_products')
+  EntryOrderProduct? get entryOrderProduct;
+
 
   Entry._();
   factory Entry([void Function(EntryBuilder) updates]) = _$Entry;

@@ -14,28 +14,41 @@ class RegisterEntryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RegisterEntryCubit, RegisterEntryState>(
       builder: (context, state) {
-        return Row(
+        return Column(
           children: [
-            const Flexible(
-              flex: 4,
-              child: GetProductListPage(),
+            Row(
+              children: [
+                const Flexible(
+                  flex: 4,
+                  child: GetProductListPage(),
+                ),
+                const SizedBox(
+                  width: 16.0,
+                ),
+                Flexible(
+                  flex: 1,
+                  child: TextFormField(
+                    onSaved: (value) {
+                      BlocProvider.of<RegisterEntryOrderBloc>(context)
+                          .add(StoreQuantity(int.parse(value!)));
+                    },
+                    onChanged: (value) {
+                      //context.read<RegisterEntryCubit>().printFromCubit(value);
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Cantidad',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                )
+              ],
             ),
-            Flexible(
-              flex: 1,
-              child: TextFormField(
-                onSaved: (value) {
-                  BlocProvider.of<RegisterEntryOrderBloc>(context).add(StoreQuantity(int.parse(value!)));
-                },
-                onChanged: (value){
-                  //context.read<RegisterEntryCubit>().printFromCubit(value);
-                },
-                decoration: const InputDecoration(labelText: 'Cantidad'),
-              ),
-            )
+            const SizedBox(
+              height: 16.0,
+            ),
           ],
         );
       },
     );
   }
 }
-

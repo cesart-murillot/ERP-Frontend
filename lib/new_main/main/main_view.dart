@@ -1,9 +1,11 @@
 import 'package:erp_fronted/dash_board/dash_board/dash_board_view.dart';
 import 'package:erp_fronted/employee/list_employee/list_employee_view.dart';
 import 'package:erp_fronted/entry_order/list_entry_order/list_entry_order_view.dart';
+import 'package:erp_fronted/inventory/product_inventory/product_inventory_view.dart';
 import 'package:erp_fronted/new_main/main/main_state.dart';
 import 'package:erp_fronted/new_product/product_list/product_list_view.dart';
 import 'package:erp_fronted/product/views/product_page.dart';
+import 'package:erp_fronted/product_entry/index_product_entry/index_product_entry_view.dart';
 import 'package:erp_fronted/product_entry/product_entry_list/product_entry_list_view.dart';
 import 'package:erp_fronted/product_request/list_product_request/list_product_request_view.dart';
 import 'package:erp_fronted/product_request/request_product/request_product_view.dart';
@@ -11,6 +13,7 @@ import 'package:erp_fronted/transfer_order/transfer_order_list/transfer_order_li
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../entry_order/index_entry_order/index_entry_order_view.dart';
 import 'main_bloc.dart';
 import 'main_event.dart';
 
@@ -107,7 +110,7 @@ class BodyPage extends StatelessWidget {
           case AppPage.product:
             return const ProductListPage();
           case AppPage.inventory:
-            return const Text('inventory');
+            return const ProductInventoryPage();
           case AppPage.billing:
             return const TransferOrderListPage();
           case AppPage.employee:
@@ -117,9 +120,9 @@ class BodyPage extends StatelessWidget {
           case AppPage.homepage:
             return const DashBoardPage();
           case AppPage.entry:
-            return const ListEntryOrderPage();
+            return const IndexEntryOrderPage();
           case AppPage.productEntry:
-            return const ProductEntryListPage();
+            return const IndexProductEntryPage();
           case AppPage.productRequest:
             return const ListProductRequestPage();
         }

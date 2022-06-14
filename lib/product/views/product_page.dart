@@ -1,4 +1,3 @@
-import 'package:erp_fronted/main/navigator/bloc/navigator_bloc.dart';
 import 'package:erp_fronted/product/bloc/product_bloc.dart';
 import 'package:erp_fronted/product/views/product_detail_page.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +78,6 @@ class ProductPage extends StatelessWidget {
       body: const ProductList(),
       floatingActionButton: FloatingActionButton(onPressed: () {
         print('hola');
-        context.read<NavigatorBloc>().add(const NavigatorEventProductCreate());
       }),
     );
   }
@@ -105,7 +103,6 @@ class ProductList extends StatelessWidget {
                 title: Text(state.products.products[index].modelProduct),
                 leading: const FlutterLogo(),
                 onTap: () {
-                  context.read<NavigatorBloc>().add(NavigatorEventProductDetail(state.products.products[index]));
                   /*context.read<ProductBloc>().add(ProductEventGetProductDetails(
                       state.products.products[index]));*/
                 },

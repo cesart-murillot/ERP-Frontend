@@ -5,7 +5,7 @@ import 'package:erp_fronted/new_login/login/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:intl/intl.dart';
 /*
 class App extends MaterialApp {
   const App({Key? key})
@@ -45,7 +45,6 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const MainLoginPage());
   }
 }*/
-
 class App extends MaterialApp {
   const App({Key? key})
       : super(

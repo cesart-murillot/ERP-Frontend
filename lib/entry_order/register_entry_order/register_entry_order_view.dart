@@ -65,13 +65,13 @@ class EntryOrderForm extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Flexible(
+                  const Flexible(
                     flex: 2,
-                    child: Container(),
+                    child: SizedBox(),
                   ),
                   Flexible(
                     flex: 1,
@@ -115,9 +115,14 @@ class EntryOrderInformation extends StatelessWidget {
             BlocProvider.of<RegisterEntryOrderBloc>(context)
                 .add(StoreCodeEvent(value!));
           },
-          decoration:
-              const InputDecoration(label: Text('Código - Orden de Ingreso')),
+          decoration: const InputDecoration(
+            label: Text(
+              'Código - Orden de Ingreso',
+            ),
+            border: OutlineInputBorder()
+          ),
         ),
+        const SizedBox(height: 16.0,),
         const ProductList(),
       ],
     );
@@ -137,7 +142,9 @@ class VerificationDialog extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.pop(context, 'Cancelar');
-                context.read<RegisterEntryOrderBloc>().add(const ClearMapList());
+                context
+                    .read<RegisterEntryOrderBloc>()
+                    .add(const ClearMapList());
               },
               child: const Text('Cancelar'),
             ),

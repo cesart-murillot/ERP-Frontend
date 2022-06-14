@@ -47,6 +47,13 @@ class _$EntryOrderProductSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(Product)));
     }
+    value = object.entryOrder;
+    if (value != null) {
+      result
+        ..add('entry_order')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(EntryOrder)));
+    }
     return result;
   }
 
@@ -82,6 +89,10 @@ class _$EntryOrderProductSerializer
           result.product.replace(serializers.deserialize(value,
               specifiedType: const FullType(Product))! as Product);
           break;
+        case 'entry_order':
+          result.entryOrder.replace(serializers.deserialize(value,
+              specifiedType: const FullType(EntryOrder))! as EntryOrder);
+          break;
       }
     }
 
@@ -100,6 +111,8 @@ class _$EntryOrderProduct extends EntryOrderProduct {
   final int quantity;
   @override
   final Product? product;
+  @override
+  final EntryOrder? entryOrder;
 
   factory _$EntryOrderProduct(
           [void Function(EntryOrderProductBuilder)? updates]) =>
@@ -110,7 +123,8 @@ class _$EntryOrderProduct extends EntryOrderProduct {
       this.entryOrderId,
       required this.productId,
       required this.quantity,
-      this.product})
+      this.product,
+      this.entryOrder})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         productId, 'EntryOrderProduct', 'productId');
@@ -134,17 +148,20 @@ class _$EntryOrderProduct extends EntryOrderProduct {
         entryOrderId == other.entryOrderId &&
         productId == other.productId &&
         quantity == other.quantity &&
-        product == other.product;
+        product == other.product &&
+        entryOrder == other.entryOrder;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, id.hashCode), entryOrderId.hashCode),
-                productId.hashCode),
-            quantity.hashCode),
-        product.hashCode));
+            $jc(
+                $jc($jc($jc(0, id.hashCode), entryOrderId.hashCode),
+                    productId.hashCode),
+                quantity.hashCode),
+            product.hashCode),
+        entryOrder.hashCode));
   }
 
   @override
@@ -154,7 +171,8 @@ class _$EntryOrderProduct extends EntryOrderProduct {
           ..add('entryOrderId', entryOrderId)
           ..add('productId', productId)
           ..add('quantity', quantity)
-          ..add('product', product))
+          ..add('product', product)
+          ..add('entryOrder', entryOrder))
         .toString();
   }
 }
@@ -183,6 +201,12 @@ class EntryOrderProductBuilder
   ProductBuilder get product => _$this._product ??= new ProductBuilder();
   set product(ProductBuilder? product) => _$this._product = product;
 
+  EntryOrderBuilder? _entryOrder;
+  EntryOrderBuilder get entryOrder =>
+      _$this._entryOrder ??= new EntryOrderBuilder();
+  set entryOrder(EntryOrderBuilder? entryOrder) =>
+      _$this._entryOrder = entryOrder;
+
   EntryOrderProductBuilder();
 
   EntryOrderProductBuilder get _$this {
@@ -193,6 +217,7 @@ class EntryOrderProductBuilder
       _productId = $v.productId;
       _quantity = $v.quantity;
       _product = $v.product?.toBuilder();
+      _entryOrder = $v.entryOrder?.toBuilder();
       _$v = null;
     }
     return this;
@@ -223,12 +248,15 @@ class EntryOrderProductBuilder
                   productId, 'EntryOrderProduct', 'productId'),
               quantity: BuiltValueNullFieldError.checkNotNull(
                   quantity, 'EntryOrderProduct', 'quantity'),
-              product: _product?.build());
+              product: _product?.build(),
+              entryOrder: _entryOrder?.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'product';
         _product?.build();
+        _$failedField = 'entryOrder';
+        _entryOrder?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'EntryOrderProduct', _$failedField, e.toString());

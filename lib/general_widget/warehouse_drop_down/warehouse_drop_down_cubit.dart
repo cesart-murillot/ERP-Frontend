@@ -8,7 +8,7 @@ import 'warehouse_drop_down_state.dart';
 class WarehouseDropDownCubit extends Cubit<WarehouseDropDownState> {
   WarehouseDropDownCubit() : super(const WarehouseDropDownState().init());
 
-  Future<void> getWarehouse() async {
+  Future<void> getWarehouse(void Function(int) callbackFunction) async {
     final url = preDefinedUri('/api/branches/1');
     final Branch branch = await getObject(url, Branch.serializer);
 
@@ -25,15 +25,13 @@ class WarehouseDropDownCubit extends Cubit<WarehouseDropDownState> {
       warehouseList: warehouseList,
       state: States.loaded,
       branch: branch,
+      callbackFunction: callbackFunction,
     ));
   }
 
   Future<void> getSections(int warehouseId) async {
     emit(state.sectionDropDownList(
-      warehouseList: state.warehouseList,
       state: States.loading,
-      branch: state.branch,
-      sectionList: null,
     ));
 
     List<DropdownMenuItem<int>> sectionList = [];
@@ -41,7 +39,7 @@ class WarehouseDropDownCubit extends Cubit<WarehouseDropDownState> {
     var warehouse =
         state.branch!.warehouses.firstWhere((p0) => p0.id == warehouseId);
 
-    for (var p0 in warehouse.sections) {
+    for (var p0 in warehouse.sections!) {
       sectionList.add(DropdownMenuItem<int>(
         child: Text(p0.nameSection),
         value: p0.id,
@@ -53,6 +51,7 @@ class WarehouseDropDownCubit extends Cubit<WarehouseDropDownState> {
       state: States.loaded,
       branch: state.branch,
       sectionList: sectionList,
+      callbackFunction: state.callbackFunction,
     ));
   }
 
@@ -64,6 +63,14 @@ class WarehouseDropDownCubit extends Cubit<WarehouseDropDownState> {
       branch: state.branch,
       sectionList: state.sectionList,
       numberOfElements: numberOfElements,
+    ));
+  }
+
+  Future<void> storeData(String quantity, String sectionId) async {
+    emit(state.sectionDropDownList(
+      state: States.loaded,
+      quantity: quantity,
+      sectionId: sectionId,
     ));
   }
 }

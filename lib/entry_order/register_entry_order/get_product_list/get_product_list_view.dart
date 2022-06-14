@@ -19,17 +19,24 @@ class GetProductListPage extends StatelessWidget {
       ],
       child: BlocBuilder<GetProductListCubit, List<DropdownMenuItem<int>>>(
         builder: (context, state) {
-          return DropdownButtonFormField<int>(
-            value: context.watch<ModelProductDropDownCubit>().state,
-            onChanged: (value) {
-              context
-                  .read<ModelProductDropDownCubit>()
-                  .getSelectedModelProduct(value!);
-            },
-            items: state,
-            onSaved: (value) {
-              BlocProvider.of<RegisterEntryOrderBloc>(context).add(StoreProduct(value!));
-            },
+          return SizedBox(
+            height: 51.0,
+            child: DropdownButtonFormField<int>(
+              decoration: const InputDecoration(
+                label: Text('Producto'),
+                border: OutlineInputBorder(),
+              ),
+              value: context.watch<ModelProductDropDownCubit>().state,
+              onChanged: (value) {
+                context
+                    .read<ModelProductDropDownCubit>()
+                    .getSelectedModelProduct(value!);
+              },
+              items: state,
+              onSaved: (value) {
+                BlocProvider.of<RegisterEntryOrderBloc>(context).add(StoreProduct(value!));
+              },
+            ),
           );
         },
       ),

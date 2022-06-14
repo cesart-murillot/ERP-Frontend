@@ -2,7 +2,6 @@ import 'package:erp_fronted/form_submission_status.dart';
 import 'package:erp_fronted/login/bloc/login_bloc.dart';
 import 'package:erp_fronted/login/bloc/login_event.dart';
 import 'package:erp_fronted/login/bloc/login_state.dart';
-import 'package:erp_fronted/main/views/main_page.dart';
 import 'package:erp_fronted/src/resources/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,10 +37,6 @@ class MainNavigation extends StatelessWidget {
               body: _loginForm(),
             ),
           ),
-          if (state.formStatus is SubmissionSuccess)
-            const MaterialPage(
-              child: MainNavigator(),
-            ),
         ],
         onPopPage: (route, result) {
           //context.read<BranchBloc>().add(FetchBranchesEvent());

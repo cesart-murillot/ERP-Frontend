@@ -65,10 +65,6 @@ class _$WarehouseSerializer implements StructuredSerializer<Warehouse> {
       'name_warehouse',
       serializers.serialize(object.nameWarehouse,
           specifiedType: const FullType(String)),
-      'sections',
-      serializers.serialize(object.sections,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(Section)])),
     ];
     Object? value;
     value = object.id;
@@ -82,6 +78,14 @@ class _$WarehouseSerializer implements StructuredSerializer<Warehouse> {
       result
         ..add('branch_id')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.sections;
+    if (value != null) {
+      result
+        ..add('sections')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(Section)])));
     }
     return result;
   }
@@ -222,20 +226,16 @@ class _$Warehouse extends Warehouse {
   @override
   final int? branchId;
   @override
-  final BuiltList<Section> sections;
+  final BuiltList<Section>? sections;
 
   factory _$Warehouse([void Function(WarehouseBuilder)? updates]) =>
       (new WarehouseBuilder()..update(updates))._build();
 
   _$Warehouse._(
-      {this.id,
-      required this.nameWarehouse,
-      this.branchId,
-      required this.sections})
+      {this.id, required this.nameWarehouse, this.branchId, this.sections})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         nameWarehouse, 'Warehouse', 'nameWarehouse');
-    BuiltValueNullFieldError.checkNotNull(sections, 'Warehouse', 'sections');
   }
 
   @override
@@ -303,7 +303,7 @@ class WarehouseBuilder implements Builder<Warehouse, WarehouseBuilder> {
       _id = $v.id;
       _nameWarehouse = $v.nameWarehouse;
       _branchId = $v.branchId;
-      _sections = $v.sections.toBuilder();
+      _sections = $v.sections?.toBuilder();
       _$v = null;
     }
     return this;
@@ -332,12 +332,12 @@ class WarehouseBuilder implements Builder<Warehouse, WarehouseBuilder> {
               nameWarehouse: BuiltValueNullFieldError.checkNotNull(
                   nameWarehouse, 'Warehouse', 'nameWarehouse'),
               branchId: branchId,
-              sections: sections.build());
+              sections: _sections?.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'sections';
-        sections.build();
+        _sections?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'Warehouse', _$failedField, e.toString());

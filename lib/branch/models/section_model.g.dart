@@ -24,7 +24,14 @@ class _$SectionSerializer implements StructuredSerializer<Section> {
       serializers.serialize(object.nameSection,
           specifiedType: const FullType(String)),
     ];
-
+    Object? value;
+    value = object.warehouse;
+    if (value != null) {
+      result
+        ..add('warehouse')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(Warehouse)));
+    }
     return result;
   }
 
@@ -47,6 +54,10 @@ class _$SectionSerializer implements StructuredSerializer<Section> {
           result.nameSection = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
+        case 'warehouse':
+          result.warehouse.replace(serializers.deserialize(value,
+              specifiedType: const FullType(Warehouse))! as Warehouse);
+          break;
       }
     }
 
@@ -59,11 +70,14 @@ class _$Section extends Section {
   final int id;
   @override
   final String nameSection;
+  @override
+  final Warehouse? warehouse;
 
   factory _$Section([void Function(SectionBuilder)? updates]) =>
       (new SectionBuilder()..update(updates))._build();
 
-  _$Section._({required this.id, required this.nameSection}) : super._() {
+  _$Section._({required this.id, required this.nameSection, this.warehouse})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'Section', 'id');
     BuiltValueNullFieldError.checkNotNull(
         nameSection, 'Section', 'nameSection');
@@ -81,19 +95,22 @@ class _$Section extends Section {
     if (identical(other, this)) return true;
     return other is Section &&
         id == other.id &&
-        nameSection == other.nameSection;
+        nameSection == other.nameSection &&
+        warehouse == other.warehouse;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, id.hashCode), nameSection.hashCode));
+    return $jf($jc(
+        $jc($jc(0, id.hashCode), nameSection.hashCode), warehouse.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Section')
           ..add('id', id)
-          ..add('nameSection', nameSection))
+          ..add('nameSection', nameSection)
+          ..add('warehouse', warehouse))
         .toString();
   }
 }
@@ -109,6 +126,11 @@ class SectionBuilder implements Builder<Section, SectionBuilder> {
   String? get nameSection => _$this._nameSection;
   set nameSection(String? nameSection) => _$this._nameSection = nameSection;
 
+  WarehouseBuilder? _warehouse;
+  WarehouseBuilder get warehouse =>
+      _$this._warehouse ??= new WarehouseBuilder();
+  set warehouse(WarehouseBuilder? warehouse) => _$this._warehouse = warehouse;
+
   SectionBuilder();
 
   SectionBuilder get _$this {
@@ -116,6 +138,7 @@ class SectionBuilder implements Builder<Section, SectionBuilder> {
     if ($v != null) {
       _id = $v.id;
       _nameSection = $v.nameSection;
+      _warehouse = $v.warehouse?.toBuilder();
       _$v = null;
     }
     return this;
@@ -136,11 +159,25 @@ class SectionBuilder implements Builder<Section, SectionBuilder> {
   Section build() => _build();
 
   _$Section _build() {
-    final _$result = _$v ??
-        new _$Section._(
-            id: BuiltValueNullFieldError.checkNotNull(id, 'Section', 'id'),
-            nameSection: BuiltValueNullFieldError.checkNotNull(
-                nameSection, 'Section', 'nameSection'));
+    _$Section _$result;
+    try {
+      _$result = _$v ??
+          new _$Section._(
+              id: BuiltValueNullFieldError.checkNotNull(id, 'Section', 'id'),
+              nameSection: BuiltValueNullFieldError.checkNotNull(
+                  nameSection, 'Section', 'nameSection'),
+              warehouse: _warehouse?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'warehouse';
+        _warehouse?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Section', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

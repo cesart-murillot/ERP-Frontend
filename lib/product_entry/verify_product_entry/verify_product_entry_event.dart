@@ -12,3 +12,26 @@ class InitEvent extends VerifyProductEntryEvent {
 
   const InitEvent(this.productEntryId);
 }
+
+class SaveQuantityEvent extends VerifyProductEntryEvent {
+  final int quantity;
+  const SaveQuantityEvent(this.quantity);
+
+  @override
+  List<Object> get props => [quantity];
+}
+
+class SaveSectionIdEvent extends VerifyProductEntryEvent {
+  final int sectionId;
+  const SaveSectionIdEvent(this.sectionId);
+
+  @override
+  List<Object> get props => [sectionId];
+}
+
+class StoreDataEvent extends VerifyProductEntryEvent {
+  const StoreDataEvent();
+
+  @override
+  List<Object> get props => [];
+}

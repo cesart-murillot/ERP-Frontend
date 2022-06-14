@@ -4,9 +4,10 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'package:erp_fronted/branch/models/branch_model.dart';
 import 'package:erp_fronted/branch/models/warehouse_model.dart';
 import 'package:erp_fronted/employee/models/user_model.dart';
+import 'package:erp_fronted/entry/models/entry_model.dart';
 import 'package:erp_fronted/entry_order/models/entry_order_model.dart';
 import 'package:erp_fronted/entry_order/models/entry_order_product_model.dart';
-import 'package:erp_fronted/inventory/models/entry_model.dart';
+
 import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/product_entry/models/product_entry_model.dart';
 import 'package:erp_fronted/product_request/models/product_transfer_model.dart';
@@ -36,8 +37,6 @@ part 'serializers.g.dart';
   Warehouse,
   Warehouses,
   Employee,
-  Entry,
-  Entries,
   EntryOrderProduct,
   EntryOrder,
   EntryOrders,
@@ -51,6 +50,8 @@ part 'serializers.g.dart';
   ProductTransfer,
   TransferOrders,
   TransferOrder,
+  Entry,
+  Entries,
 ])
 
 Serializers serializers = _$serializers;

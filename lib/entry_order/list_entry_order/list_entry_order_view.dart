@@ -1,9 +1,10 @@
 import 'package:erp_fronted/entry_order/check_entry_order/check_entry_order_view.dart';
 import 'package:erp_fronted/entry_order/register_entry_order/register_entry_order_view.dart';
-import 'package:erp_fronted/entry_order/verify_entry_order/verify_entry_order_view.dart';
 import 'package:erp_fronted/src/resources/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import 'list_entry_order_bloc.dart';
 import 'list_entry_order_event.dart';
@@ -25,12 +26,106 @@ class ListEntryOrderPage extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => RegisterEntryOrderPage(),
               ),
-            );
+            ).then((value) {
+              context.read<ListEntryOrderBloc>().add(const FetchList());
+            });
           },
           icon: const Icon(Icons.app_registration, color: Colors.black),
           label: const Text('Registrar'),
         ),
         body: const ListEntryOrder(),
+      ),
+    );
+  }
+}
+
+class TabEntryOrder extends StatelessWidget {
+  const TabEntryOrder({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 4,
+      child: Column(
+        children: [
+          Flexible(
+            flex: 0,
+            child: TabBar(
+              tabs: [
+                Tab(
+                  icon: const Icon(
+                    Icons.hourglass_bottom,
+                    color: Colors.black,
+                  ),
+                  child: Text(
+                    'Pendiente',
+                    style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.labelSmall,
+                      color: Colors.black,
+                    ),
+                  ),
+                  //child: Text('hola'),
+                ),
+                Tab(
+                  icon: const Icon(
+                    Icons.verified,
+                    color: Colors.black,
+                  ),
+                  child: Text(
+                    'Verificado',
+                    style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.labelSmall,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                Tab(
+                  icon: const Icon(
+                    Icons.error,
+                    color: Colors.black,
+                  ),
+                  child: Text(
+                    'Error',
+                    style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.labelSmall,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                Tab(
+                  icon: const Icon(
+                    Icons.all_inbox,
+                    color: Colors.black,
+                  ),
+                  child: Text(
+                    'Todas',
+                    style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.labelSmall,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: TabBarView(
+              children: [
+                const ListEntryOrder(),
+                Container(
+                  color: Colors.black,
+                ),
+                Container(
+                  color: Colors.pink,
+                ),
+                Container(
+                  color: Colors.pink,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -113,9 +208,9 @@ class ListEntryOrder extends StatelessWidget {
                             children: [
                               const Text('Fecha de Registro: '),
                               Text(
-                                state.entryOrders.entryOrders[index]
-                                        .createdAt ??
-                                    'Fecha no disponible',
+                                DateFormat('EEEE d MMMM, ' 'yy - HH:mm a')
+                                    .format(DateTime.parse(state.entryOrders
+                                        .entryOrders[index].createdAt!)),
                               ),
                             ],
                           ),
@@ -143,10 +238,10 @@ class FilterChips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      children: [
-        const ChoiceChip(label: Text('Verificados'), selected: true),
-        const ChoiceChip(label: Text('Pendientes'), selected: false),
-        const ChoiceChip(label: Text('Reportados'), selected: false),
+      children: const [
+        ChoiceChip(label: Text('Verificados'), selected: true),
+        ChoiceChip(label: Text('Pendientes'), selected: false),
+        ChoiceChip(label: Text('Reportados'), selected: false),
       ],
     );
   }
