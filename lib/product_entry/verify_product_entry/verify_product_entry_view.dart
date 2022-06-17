@@ -126,7 +126,7 @@ class ProductEntryInformation extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Fecha de Verificación: $registerDate',
+                        'Fecha de Registro: $registerDate',
                         style: GoogleFonts.roboto(
                             textStyle: Theme.of(context).textTheme.bodyMedium),
                       ),

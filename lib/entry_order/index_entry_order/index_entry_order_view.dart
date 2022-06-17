@@ -17,24 +17,26 @@ class IndexEntryOrderPage extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => IndexEntryOrderBloc()..add(InitEvent()),
       child: Builder(
-          builder: (context) => Scaffold(
-                body: const StateViews(),
-                floatingActionButton: FloatingActionButton.extended(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegisterEntryOrderPage(),
-                      ),
-                    ).then((value) {
-                      context
-                          .read<IndexEntryOrderBloc>()
-                          .add(const ReloadEvent());
-                    });
-                  },
-                  label: const Text('Registar Orden de Ingreso'),
+        builder: (context) => Scaffold(
+          appBar: AppBar(),
+          body: const StateViews(),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RegisterEntryOrderPage(),
                 ),
-              )),
+              ).then(
+                (value) {
+                  context.read<IndexEntryOrderBloc>().add(const ReloadEvent());
+                },
+              );
+            },
+            label: const Text('Registar Orden de Ingreso'),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -15,12 +15,11 @@ class ListEmployeeBloc extends Bloc<ListEmployeeEvent, ListEmployeeState> {
 
   void _init(InitEvent event, Emitter<ListEmployeeState> emit) async {
     emit(const ListEmployeeState().copyWith(currentState: ListEmployeeViewState.loadingState));
-    final url = preDefinedUri('/api/employees', {'only': 'full_name'});
+    final url = preDefinedUri('/api/employees');
     final Employees employees = await getObject(url, Employees.serializer);
     emit(const ListEmployeeState().copyWith(currentState: ListEmployeeViewState.loadedState, employees: employees));
   }
 
   FutureOr<void> _showEmployee(ShowEmployeeEvent event, Emitter<ListEmployeeState> emit) {
-    print(event.employeeID);
   }
 }

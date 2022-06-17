@@ -103,6 +103,13 @@ class _$EmployeeSerializer implements StructuredSerializer<Employee> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(User)));
     }
+    value = object.branch;
+    if (value != null) {
+      result
+        ..add('branch')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(Branch)));
+    }
     return result;
   }
 
@@ -144,6 +151,10 @@ class _$EmployeeSerializer implements StructuredSerializer<Employee> {
         case 'user':
           result.user.replace(serializers.deserialize(value,
               specifiedType: const FullType(User))! as User);
+          break;
+        case 'branch':
+          result.branch.replace(serializers.deserialize(value,
+              specifiedType: const FullType(Branch))! as Branch);
           break;
       }
     }
@@ -258,6 +269,8 @@ class _$Employee extends Employee {
   final int? branchID;
   @override
   final User? user;
+  @override
+  final Branch? branch;
 
   factory _$Employee([void Function(EmployeeBuilder)? updates]) =>
       (new EmployeeBuilder()..update(updates))._build();
@@ -269,7 +282,8 @@ class _$Employee extends Employee {
       this.ciEmployee,
       this.birthDateEmployee,
       this.branchID,
-      this.user})
+      this.user,
+      this.branch})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         namesEmployee, 'Employee', 'namesEmployee');
@@ -294,7 +308,8 @@ class _$Employee extends Employee {
         ciEmployee == other.ciEmployee &&
         birthDateEmployee == other.birthDateEmployee &&
         branchID == other.branchID &&
-        user == other.user;
+        user == other.user &&
+        branch == other.branch;
   }
 
   @override
@@ -303,12 +318,14 @@ class _$Employee extends Employee {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, id.hashCode), namesEmployee.hashCode),
-                        lastNameEmployee.hashCode),
-                    ciEmployee.hashCode),
-                birthDateEmployee.hashCode),
-            branchID.hashCode),
-        user.hashCode));
+                    $jc(
+                        $jc($jc($jc(0, id.hashCode), namesEmployee.hashCode),
+                            lastNameEmployee.hashCode),
+                        ciEmployee.hashCode),
+                    birthDateEmployee.hashCode),
+                branchID.hashCode),
+            user.hashCode),
+        branch.hashCode));
   }
 
   @override
@@ -320,7 +337,8 @@ class _$Employee extends Employee {
           ..add('ciEmployee', ciEmployee)
           ..add('birthDateEmployee', birthDateEmployee)
           ..add('branchID', branchID)
-          ..add('user', user))
+          ..add('user', user)
+          ..add('branch', branch))
         .toString();
   }
 }
@@ -359,6 +377,10 @@ class EmployeeBuilder implements Builder<Employee, EmployeeBuilder> {
   UserBuilder get user => _$this._user ??= new UserBuilder();
   set user(UserBuilder? user) => _$this._user = user;
 
+  BranchBuilder? _branch;
+  BranchBuilder get branch => _$this._branch ??= new BranchBuilder();
+  set branch(BranchBuilder? branch) => _$this._branch = branch;
+
   EmployeeBuilder();
 
   EmployeeBuilder get _$this {
@@ -371,6 +393,7 @@ class EmployeeBuilder implements Builder<Employee, EmployeeBuilder> {
       _birthDateEmployee = $v.birthDateEmployee;
       _branchID = $v.branchID;
       _user = $v.user?.toBuilder();
+      _branch = $v.branch?.toBuilder();
       _$v = null;
     }
     return this;
@@ -403,12 +426,15 @@ class EmployeeBuilder implements Builder<Employee, EmployeeBuilder> {
               ciEmployee: ciEmployee,
               birthDateEmployee: birthDateEmployee,
               branchID: branchID,
-              user: _user?.build());
+              user: _user?.build(),
+              branch: _branch?.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'user';
         _user?.build();
+        _$failedField = 'branch';
+        _branch?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'Employee', _$failedField, e.toString());

@@ -1,3 +1,4 @@
+import 'package:erp_fronted/branch/models/branch_model.dart';
 import 'package:erp_fronted/employee/models/user_model.dart';
 import 'package:erp_fronted/employee/show_employee/show_employee_state.dart';
 import 'package:erp_fronted/general_widget/role_drop_down/role_drop_down_view.dart';
@@ -22,7 +23,7 @@ class ShowEmployeePage extends StatelessWidget {
         builder: (context, state) => Scaffold(
           body: const ShowEmployee(),
           appBar: AppBar(
-            title: const Text('Información de Empleado'),
+            title: const Text('Perfil de Usuario'),
           ),
         ),
         listener: (BuildContext context, state) {
@@ -87,51 +88,135 @@ class EmployeeInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: Card(
-        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const FlutterLogo(
-                size: 200,
-              ),
-              Text('${employee.namesEmployee} ${employee.lastNameEmployee}'),
-              Text('CI: ${employee.ciEmployee}'),
-              Text('Fecha de Nacimeinto: ${employee.birthDateEmployee}'),
-              employee.user != null
-                  ? UserInfo(
-                      user: employee.user!,
-                    )
-                  : TextButton(
-                      onPressed: () {
-                        context
-                            .read<ShowEmployeeBloc>()
-                            .add(const ShowUserFormEvent());
-                      },
-                      child: const Text('Generar Usuario'),
-                    ),
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const FlutterLogo(
+            size: 200,
           ),
-        ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: const [
+                      Text('Información Personal'),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                          '${employee.namesEmployee} ${employee.lastNameEmployee}'),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Row(
+                    children: [
+                      Text('CI: ${employee.ciEmployee}'),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                          'Fecha de Nacimeinto: ${employee.birthDateEmployee}'),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          employee.user != null && employee.branch != null
+              ? UserInfo(
+                  user: employee.user!,
+                  branch: employee.branch!,
+                )
+              : TextButton(
+                  onPressed: () {
+                    context
+                        .read<ShowEmployeeBloc>()
+                        .add(const ShowUserFormEvent());
+                  },
+                  child: const Text('Generar Usuario'),
+                ),
+        ],
       ),
     );
   }
 }
 
 class UserInfo extends StatelessWidget {
-  const UserInfo({Key? key, required this.user}) : super(key: key);
+  const UserInfo({Key? key, required this.user, required this.branch})
+      : super(key: key);
   final User user;
+  final Branch branch;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Email: ${user.email}'),
-      ],
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Row(
+              children: const [
+                Text(
+                  'Información de Usuario',
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            Row(
+              children: [
+                Text(
+                  'Sucursal: ${branch.nameBranch}',
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  '${branch.addressBranch}',
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            Row(
+              children: [
+                Text('Cargo: ${user.role!.nameRole}'),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            Row(
+              children: [
+                Text('Email: ${user.email}'),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -155,8 +240,7 @@ class UserForm extends StatelessWidget {
               children: [
                 Flexible(
                   child: TextFormField(
-                    onSaved: (value) {
-                    },
+                    onSaved: (value) {},
                     controller: emailController,
                     decoration: const InputDecoration(
                       icon: Icon(Icons.alternate_email),

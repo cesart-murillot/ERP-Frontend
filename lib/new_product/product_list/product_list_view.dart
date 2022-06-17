@@ -52,17 +52,25 @@ class ProductList extends StatelessWidget {
               itemCount: state.products!.products.length,
               itemBuilder: (context, index) {
                 return Card(
+                  margin: const EdgeInsets.all(8.0),
                   child: ListTile(
+                    contentPadding: const EdgeInsets.all(8.0),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => ProductDetailPage(productId: state.products!.products[index].id!),
+                          builder: (_) => ProductDetailPage(
+                              productId: state.products!.products[index].id!),
                         ),
                       );
                     },
-                    title:
-                        Text('${state.products?.products[index].modelProduct}'),
+                    leading: const FlutterLogo(),
+                    title: Text(
+                      '${state.products?.products[index].modelProduct}',
+                    ),
+                    subtitle: Text(
+                      'Formato: ${state.products?.products[index].formatProduct}',
+                    ),
                   ),
                 );
               },

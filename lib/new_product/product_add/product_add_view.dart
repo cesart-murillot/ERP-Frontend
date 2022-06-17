@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'product_add_bloc.dart';
 import 'product_add_event.dart';
@@ -83,27 +84,43 @@ class GeneralInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('Información General'),
-        TextFormField(
-          controller: model,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            labelText: 'Modelo del Producto',
-            icon: Icon(Icons.palette_rounded),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Información General',
+            style: GoogleFonts.roboto(
+              textStyle: Theme.of(context).textTheme.titleLarge,
+            ),
           ),
-        ),
-        TextFormField(
-          controller: format,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            labelText: 'Formato',
-            icon: Icon(Icons.horizontal_rule),
+          const SizedBox(
+            height: 8.0,
           ),
-        )
-      ],
+          TextFormField(
+            controller: model,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+              labelText: 'Modelo del Producto',
+              //icon: Icon(Icons.palette_rounded),
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          TextFormField(
+            controller: format,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+              labelText: 'Formato',
+              //icon: Icon(Icons.horizontal_rule),
+              border: OutlineInputBorder(),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -120,68 +137,102 @@ class AdditionalInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Align(
-          child: TextButton(
-            onPressed: () {
-              context.read<ProductAddBloc>().add(ShowAddInfoEvent(false, BlocProvider.of<ProductAddBloc>(context).state.showTechnicalInformation));
-            },
-            child: const Text('Ocultar'),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Align(
+            child: TextButton(
+              onPressed: () {
+                context.read<ProductAddBloc>().add(ShowAddInfoEvent(
+                    false,
+                    BlocProvider.of<ProductAddBloc>(context)
+                        .state
+                        .showTechnicalInformation));
+              },
+              child: const Text('Ocultar'),
+            ),
+            alignment: Alignment.centerRight,
           ),
-          alignment: Alignment.centerRight,
-        ),
-        const Text('Información Adicional'),
-        TextFormField(
-          controller: description,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            labelText: 'Descripción',
-            icon: Icon(Icons.insert_drive_file),
+          Text(
+            'Información Adicional',
+            style: GoogleFonts.roboto(
+              textStyle: Theme.of(context).textTheme.titleLarge,
+            ),
           ),
-        ),
-        TextFormField(
-          controller: code,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            labelText: 'Código',
-            icon: Icon(Icons.code),
+          const SizedBox(
+            height: 8.0,
           ),
-        ),
-        TextFormField(
-          controller: family,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            labelText: 'Familia',
-            icon: Icon(Icons.widgets),
+          TextFormField(
+            controller: description,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+              labelText: 'Descripción',
+              //icon: Icon(Icons.insert_drive_file),
+              border: OutlineInputBorder(),
+            ),
           ),
-        ),
-        TextFormField(
-          controller: finish,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            labelText: 'Acabado',
-            icon: Icon(Icons.fifteen_mp),
+          const SizedBox(
+            height: 8.0,
           ),
-        ),
-        TextFormField(
-          controller: brand,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            labelText: 'Marca',
-            icon: Icon(Icons.branding_watermark),
+          TextFormField(
+            controller: code,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+              labelText: 'Código',
+              //icon: Icon(Icons.code),
+              border: OutlineInputBorder(),
+            ),
           ),
-        ),
-        TextFormField(
-          controller: origin,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            labelText: 'Origen',
-            icon: Icon(Icons.flag),
+          const SizedBox(
+            height: 8.0,
           ),
-        ),
-      ],
+          TextFormField(
+            controller: family,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+              labelText: 'Familia',
+              //icon: Icon(Icons.widgets),
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          TextFormField(
+            controller: finish,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+                labelText: 'Acabado',
+                //icon: Icon(Icons.fifteen_mp),
+                border: OutlineInputBorder()),
+          ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          TextFormField(
+            controller: brand,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+              labelText: 'Marca',
+              //icon: Icon(Icons.branding_watermark),
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          TextFormField(
+            controller: origin,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+                labelText: 'Origen',
+                //icon: Icon(Icons.flag),
+                border: OutlineInputBorder()),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -199,80 +250,120 @@ class TechnicalInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Align(
-          child: TextButton(
-            onPressed: () {
-              context.read<ProductAddBloc>().add(ShowAddInfoEvent(BlocProvider.of<ProductAddBloc>(context, listen: false).state.showAdditionalInformation, false));
-            },
-            child: const Text('Ocultar'),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Align(
+            child: TextButton(
+              onPressed: () {
+                context.read<ProductAddBloc>().add(ShowAddInfoEvent(
+                    BlocProvider.of<ProductAddBloc>(context, listen: false)
+                        .state
+                        .showAdditionalInformation,
+                    false));
+              },
+              child: const Text('Ocultar'),
+            ),
+            alignment: Alignment.centerRight,
           ),
-          alignment: Alignment.centerRight,
-        ),
-        const Text('Información Técnica'),
-        TextFormField(
-          controller: unitMeasure,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            labelText: 'Unidad de Medida',
-            icon: Icon(Icons.compass_calibration),
+          Text(
+            'Información Técnica',
+            style: GoogleFonts.roboto(
+              textStyle: Theme.of(context).textTheme.titleLarge,
+            ),
           ),
-        ),
-        TextFormField(
-          controller: unitBox,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            labelText: 'Unidades por Caja',
-            icon: Icon(Icons.ad_units),
+          const SizedBox(
+            height: 8.0,
           ),
-        ),
-        TextFormField(
-          controller: areaBox,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            suffixText: 'm2.',
-            labelText: 'Area de la Caja',
-            icon: Icon(Icons.area_chart_sharp),
+          TextFormField(
+            controller: unitMeasure,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+              labelText: 'Unidad de Medida',
+              icon: Icon(Icons.compass_calibration),
+              border: OutlineInputBorder(),
+            ),
           ),
-        ),
-        TextFormField(
-          controller: boxesPallet,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            labelText: 'Cajas por Pallet',
-            icon: Icon(Icons.all_inbox_outlined),
+          const SizedBox(
+            height: 8.0,
           ),
-        ),
-        TextFormField(
-          controller: areaPallet,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            suffixText: 'm2.',
-            labelText: 'Area por Pallet',
-            icon: Icon(Icons.area_chart),
+          TextFormField(
+            controller: unitBox,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+              labelText: 'Unidades por Caja',
+              icon: Icon(Icons.ad_units),
+              border: OutlineInputBorder(),
+            ),
           ),
-        ),
-        TextFormField(
-          controller: weightBox,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            suffixText: 'Kg.',
-            labelText: 'Peso por Caja',
-            icon: Icon(Icons.monitor_weight),
+          const SizedBox(
+            height: 8.0,
           ),
-        ),
-        TextFormField(
-          controller: weightPallet,
-          onSaved: (value) {},
-          decoration: const InputDecoration(
-            suffixText: 'Kg.',
-            labelText: 'Peso por Pallet',
-            icon: Icon(Icons.line_weight),
+          TextFormField(
+            controller: areaBox,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+              suffixText: 'm2.',
+              labelText: 'Area de la Caja',
+              icon: Icon(Icons.area_chart_sharp),
+              border: OutlineInputBorder(),
+            ),
           ),
-        ),
-      ],
+          const SizedBox(
+            height: 8.0,
+          ),
+          TextFormField(
+            controller: boxesPallet,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+              labelText: 'Cajas por Pallet',
+              icon: Icon(Icons.all_inbox_outlined),
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          TextFormField(
+            controller: areaPallet,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+              suffixText: 'm2.',
+              labelText: 'Area por Pallet',
+              icon: Icon(Icons.area_chart),
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          TextFormField(
+            controller: weightBox,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+              suffixText: 'Kg.',
+              labelText: 'Peso por Caja',
+              icon: Icon(Icons.monitor_weight),
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          TextFormField(
+            controller: weightPallet,
+            onSaved: (value) {},
+            decoration: const InputDecoration(
+              suffixText: 'Kg.',
+              labelText: 'Peso por Pallet',
+              icon: Icon(Icons.line_weight),
+              border: OutlineInputBorder(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -13,6 +13,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     on<InitEvent>(_init);
     on<TryEvent>(_try);
     on<ShowPageEvent>(_showPage);
+    on<CloseSessionEvent>(_closeSession);
   }
 
   void _init(InitEvent event, Emitter<MainState> emit) async {
@@ -24,7 +25,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     final User user = await getObject(url, User.serializer);
 
     await prefs.setInt('branchId', user.employee!.branchID!);
-
+    await prefs.setInt('roleId', user.roleId!);
     emit(const MainState().loadedInfo(user: user));
   }
 
@@ -37,7 +38,32 @@ class MainBloc extends Bloc<MainEvent, MainState> {
 
   FutureOr<void> _showPage(ShowPageEvent event, Emitter<MainState> emit) {
     switch (event.routePage) {
-      case 'product':
+      case 'dashboard':
+        emit(state.currentPage(page: AppPage.dashboard, user: event.user));
+        break;
+      case 'users':
+        emit(state.currentPage(page: AppPage.users, user: event.user));
+        break;
+      case 'products':
+        emit(state.currentPage(page: AppPage.products, user: event.user));
+        break;
+      case 'inventory':
+        emit(state.currentPage(page: AppPage.inventory, user: event.user));
+        break;
+      case 'warehouses':
+        emit(state.currentPage(page: AppPage.warehouses, user: event.user));
+        break;
+      case 'quotations':
+        emit(state.currentPage(page: AppPage.quotations, user: event.user));
+        break;
+      case 'sales':
+        emit(state.currentPage(page: AppPage.sales, user: event.user));
+        break;
+      case 'invoices':
+        emit(state.currentPage(page: AppPage.invoices, user: event.user));
+        break;
+
+      /*case 'product':
         emit(const MainState().currentPage(page: AppPage.product, user: event.user));
         break;
       case 'inventory':
@@ -63,7 +89,12 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         break;
       default:
         emit(const MainState().currentPage(page: AppPage.homepage, user: event.user));
-        break;
+        break;*/
     }
+  }
+
+  Future<FutureOr<void>> _closeSession(CloseSessionEvent event, Emitter<MainState> emit) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 }

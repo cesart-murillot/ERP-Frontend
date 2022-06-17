@@ -103,7 +103,11 @@ class Login extends StatelessWidget {
                   decoration: const InputDecoration(
                     labelText: 'Correo',
                     icon: Icon(Icons.email),
+                    border: OutlineInputBorder(),
                   ),
+                ),
+                const SizedBox(
+                  height: 8.0,
                 ),
                 TextFormField(
                   obscureText: true,
@@ -115,6 +119,7 @@ class Login extends StatelessWidget {
                   decoration: const InputDecoration(
                     labelText: 'Contraseña',
                     icon: Icon(Icons.password),
+                    border: OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(

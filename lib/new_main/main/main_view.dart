@@ -1,19 +1,14 @@
 import 'package:erp_fronted/dash_board/dash_board/dash_board_view.dart';
 import 'package:erp_fronted/employee/list_employee/list_employee_view.dart';
-import 'package:erp_fronted/entry_order/list_entry_order/list_entry_order_view.dart';
-import 'package:erp_fronted/inventory/product_inventory/product_inventory_view.dart';
+import 'package:erp_fronted/employee/show_employee/show_employee_view.dart';
+import 'package:erp_fronted/new_login/login/login_view.dart';
 import 'package:erp_fronted/new_main/main/main_state.dart';
 import 'package:erp_fronted/new_product/product_list/product_list_view.dart';
-import 'package:erp_fronted/product/views/product_page.dart';
-import 'package:erp_fronted/product_entry/index_product_entry/index_product_entry_view.dart';
-import 'package:erp_fronted/product_entry/product_entry_list/product_entry_list_view.dart';
-import 'package:erp_fronted/product_request/list_product_request/list_product_request_view.dart';
-import 'package:erp_fronted/product_request/request_product/request_product_view.dart';
-import 'package:erp_fronted/transfer_order/transfer_order_list/transfer_order_list_view.dart';
+import 'package:erp_fronted/warehouse/warehouse_list/warehouse_list_view.dart';
+import 'package:erp_fronted/warehouse/warehouse_menu/warehouse_menu_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../entry_order/index_entry_order/index_entry_order_view.dart';
 import 'main_bloc.dart';
 import 'main_event.dart';
 
@@ -29,23 +24,74 @@ class MainPage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(),
             drawer: Drawer(
-              child: ListView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  DrawerHeader(
-                    child: Column(
-                      //mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const FlutterLogo(size: 64.0),
-                        Text('${context.watch<MainBloc>().state.user?.employee?.namesEmployee} ${context.watch<MainBloc>().state.user?.employee?.lastNameEmployee}'),
-                        Text('${context.watch<MainBloc>().state.user?.email}'),
-                        Text('${context.watch<MainBloc>().state.user?.role?.nameRole}')
-                      ],
-                    ),
-                    decoration: const BoxDecoration(color: Colors.white30),
+                  ListView(
+                    shrinkWrap: true,
+                    children: [
+                      DrawerHeader(
+                        child: Column(
+                          //mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const FlutterLogo(size: 64.0),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                final int employeeId = BlocProvider.of<MainBloc>(context).state.user!.employee!.id!;
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        ShowEmployeePage(employeeID: employeeId),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                '${context.watch<MainBloc>().state.user?.employee?.namesEmployee} ${context.watch<MainBloc>().state.user?.employee?.lastNameEmployee}',
+                              ),
+                            ),
+
+                            Text(
+                              '${context.watch<MainBloc>().state.user?.email}',
+                            ),
+
+                            Text(
+                              '${context.watch<MainBloc>().state.user?.role?.nameRole}',
+                            )
+                          ],
+                        ),
+                        decoration:
+                            const BoxDecoration(color: Colors.white30),
+                      ),
+                      const ModuleList(),
+                    ],
                   ),
-                  const ModuleList(),
+                  Wrap(
+                    children: [
+                      const Divider(),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: TextButton(
+                          onPressed: () {
+                            showDialog(
+                              useSafeArea: true,
+                              context: context,
+                              builder: (_) => BlocProvider.value(
+                                value: BlocProvider.of<MainBloc>(context),
+                                child: const VerificationDialog(),
+                              ),
+                            );
+                          },
+                          child: const Text('Cerrar Sesión'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -107,7 +153,7 @@ class BodyPage extends StatelessWidget {
     return BlocBuilder<MainBloc, MainState>(
       builder: (context, state) {
         switch (state.page) {
-          case AppPage.product:
+          /*case AppPage.product:
             return const ProductListPage();
           case AppPage.inventory:
             return const ProductInventoryPage();
@@ -124,8 +170,77 @@ class BodyPage extends StatelessWidget {
           case AppPage.productEntry:
             return const IndexProductEntryPage();
           case AppPage.productRequest:
-            return const ListProductRequestPage();
+            return const ListProductRequestPage();*/
+          case AppPage.dashboard:
+            return const DashBoardPage();
+          case AppPage.users:
+            return const ListEmployeePage();
+          case AppPage.products:
+            return const ProductListPage();
+          case AppPage.inventory:
+            return const Center(
+              child: Text(
+                'Inventarios',
+              ),
+            );
+          case AppPage.warehouses:
+            return const WarehouseMenuPage();
+          case AppPage.quotations:
+            return const Center(
+              child: Text(
+                'Cotizaciones',
+              ),
+            );
+          case AppPage.sales:
+            return const Center(
+              child: Text(
+                'Ventas',
+              ),
+            );
+          case AppPage.invoices:
+            return const Center(
+              child: Text(
+                'Facturas',
+              ),
+            );
         }
+      },
+    );
+  }
+}
+
+class VerificationDialog extends StatelessWidget {
+  const VerificationDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(context) {
+    return BlocBuilder<MainBloc, MainState>(
+      builder: (context, state) {
+        return AlertDialog(
+          title: const Text('¿Cerrar Sesión?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                context.read<MainBloc>().add(const CloseSessionEvent());
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const LoginPage(),
+                  ),
+                );
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        );
       },
     );
   }

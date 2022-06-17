@@ -11,7 +11,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   }
 
   void _init(InitEvent event, Emitter<ProductListState> emit) async {
-    final url = preDefinedUri('api/products/', {'only': 'model'});
+    final url = preDefinedUri('api/products/', {'only': 'basicInfo'});
     final Products products = await getObject(url, Products.serializer);
 
     emit(const ProductListState().productsLoaded(products: products, state: ProductListViewState.loaded));

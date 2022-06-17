@@ -3,15 +3,23 @@ import 'package:erp_fronted/employee/models/user_model.dart';
 
 enum MainViewState { loadedInfo, loadingInfo, initState, pageChanged }
 enum AppPage {
-  product,
+  dashboard,
+  users,
+  products,
   inventory,
+  warehouses,
+  quotations,
+  sales,
+  invoices,
+
+  /*product,
   billing,
   employee,
   branch,
   homepage,
   entry,
   productEntry,
-  productRequest,
+  productRequest,*/
 }
 
 class MainState extends Equatable {
@@ -39,7 +47,7 @@ class MainState extends Equatable {
   const MainState(
       {this.user,
       this.state = MainViewState.initState,
-      this.page = AppPage.homepage});
+      this.page = AppPage.dashboard});
 
   @override
   // TODO: implement props

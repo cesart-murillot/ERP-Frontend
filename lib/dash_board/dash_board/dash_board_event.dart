@@ -1,3 +1,8 @@
-abstract class DashBoardEvent {}
+import 'package:equatable/equatable.dart';
 
-class InitEvent extends DashBoardEvent {}
+abstract class DashBoardEvent extends Equatable {}
+
+class InitEvent extends DashBoardEvent {
+  @override
+  List<Object?> get props => [];
+}

@@ -99,8 +99,9 @@ class RequestForm extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                  'Se realizara la solicitud como:\n${user?.employee?.namesEmployee} ${user?.employee?.lastNameEmployee}',
-                  style: const TextStyle(fontSize: 18.0)),
+                'Se realizara la solicitud como:\n${user?.employee?.namesEmployee} ${user?.employee?.lastNameEmployee}',
+                style: const TextStyle(fontSize: 18.0),
+              ),
               const SizedBox(
                 height: 8.0,
               ),
@@ -163,6 +164,7 @@ class ProductQuantity extends StatelessWidget {
                       .add(AddQuantityEvent(int.parse(value!)));
                 },
                 decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
                   labelText: 'Cantidad',
                 ),
               ),

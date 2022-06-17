@@ -1,3 +1,4 @@
+import 'package:erp_fronted/product_entry/verify_product_entry/verify_product_entry_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -71,7 +72,7 @@ class CheckEntryOrder extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const EntryOrderInformation(),
-          const ProductList(),
+          const ProductEntryList(),
           const SizedBox(
             height: 8.0,
           ),
@@ -197,6 +198,65 @@ class ProductList extends StatelessWidget {
                   .add(MarkAsCheckedEvent(index, value!));
             },
             value: context.watch<CheckEntryOrderBloc>().state.verified![index],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class ProductEntryList extends StatelessWidget {
+  const ProductEntryList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final entryOrderProduct = BlocProvider.of<CheckEntryOrderBloc>(context)
+        .state
+        .entryOrder!
+        .entryOrderProduct!;
+    return ListView.builder(
+      itemCount: entryOrderProduct.length,
+      shrinkWrap: true,
+      itemBuilder: (BuildContext context, int index) {
+        return Card(
+          child: ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => VerifyProductEntryPage(
+                      productEntryId: entryOrderProduct[index].id!),
+                ),
+              );
+            },
+            title: Text(
+              'Modelo: ${entryOrderProduct[index].product?.modelProduct}',
+              style: GoogleFonts.roboto(
+                textStyle: Theme.of(context).textTheme.bodyLarge,
+                fontSize: 14.0,
+              ),
+            ),
+            subtitle: Row(
+              children: [
+                Text(
+                  'Formato: ${entryOrderProduct[index].product?.formatProduct}',
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                    fontSize: 14.0,
+                  ),
+                ),
+                const SizedBox(
+                  width: 16.0,
+                ),
+                Text(
+                  'Cantidad: ${entryOrderProduct[index].quantity}',
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                    fontSize: 14.0,
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

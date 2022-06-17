@@ -1,5 +1,6 @@
 import 'package:erp_fronted/employee/add_employee/add_employee_view.dart';
 import 'package:erp_fronted/employee/models/employee_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -76,7 +77,9 @@ class ListOfEmployees extends StatelessWidget {
       itemCount: employees.employees.length,
       itemBuilder: (context, index) {
         return Card(
+          margin: const EdgeInsets.all(8.0),
           child: ListTile(
+            contentPadding: const EdgeInsets.all(8.0),
             onTap: () {
               Navigator.push(
                   context,
@@ -89,7 +92,34 @@ class ListOfEmployees extends StatelessWidget {
                   .add(ShowEmployeeEvent(employees.employees[index].id!));
             },
             title: Text(
-                '${employees.employees[index].lastNameEmployee}, ${employees.employees[index].namesEmployee}'),
+              '${employees.employees[index].lastNameEmployee}, ${employees.employees[index].namesEmployee}',
+            ),
+            subtitle: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'Sucursal: ${employees.employees[index].branch!.nameBranch}',
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      'Cargo: ${employees.employees[index].user!.role!.nameRole}',
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      'Email: ${employees.employees[index].user!.email}',
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            leading: const FlutterLogo(),
           ),
         );
       },

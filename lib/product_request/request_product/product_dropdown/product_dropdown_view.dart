@@ -34,10 +34,10 @@ class ProductDropdown extends StatelessWidget {
           },
           decoration: const InputDecoration(
             labelText: 'Producto',
+            border: OutlineInputBorder(),
           ),
           items: state.productItems,
           onChanged: (value){
-            print(value);
           },
         );
       },

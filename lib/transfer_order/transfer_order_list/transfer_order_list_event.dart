@@ -6,6 +6,5 @@ abstract class TransferOrderListEvent extends Equatable {
 
 class InitEvent extends TransferOrderListEvent {
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }

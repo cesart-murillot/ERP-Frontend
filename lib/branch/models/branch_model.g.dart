@@ -110,6 +110,13 @@ class _$BranchSerializer implements StructuredSerializer<Branch> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.typeBranch;
+    if (value != null) {
+      result
+        ..add('type_branch')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -134,6 +141,10 @@ class _$BranchSerializer implements StructuredSerializer<Branch> {
           break;
         case 'address_branch':
           result.addressBranch = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'type_branch':
+          result.typeBranch = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'warehouses':
@@ -275,13 +286,19 @@ class _$Branch extends Branch {
   @override
   final String? addressBranch;
   @override
+  final String? typeBranch;
+  @override
   final BuiltList<Warehouse> warehouses;
 
   factory _$Branch([void Function(BranchBuilder)? updates]) =>
       (new BranchBuilder()..update(updates))._build();
 
   _$Branch._(
-      {this.id, this.nameBranch, this.addressBranch, required this.warehouses})
+      {this.id,
+      this.nameBranch,
+      this.addressBranch,
+      this.typeBranch,
+      required this.warehouses})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(warehouses, 'Branch', 'warehouses');
   }
@@ -300,14 +317,17 @@ class _$Branch extends Branch {
         id == other.id &&
         nameBranch == other.nameBranch &&
         addressBranch == other.addressBranch &&
+        typeBranch == other.typeBranch &&
         warehouses == other.warehouses;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, id.hashCode), nameBranch.hashCode),
-            addressBranch.hashCode),
+        $jc(
+            $jc($jc($jc(0, id.hashCode), nameBranch.hashCode),
+                addressBranch.hashCode),
+            typeBranch.hashCode),
         warehouses.hashCode));
   }
 
@@ -317,6 +337,7 @@ class _$Branch extends Branch {
           ..add('id', id)
           ..add('nameBranch', nameBranch)
           ..add('addressBranch', addressBranch)
+          ..add('typeBranch', typeBranch)
           ..add('warehouses', warehouses))
         .toString();
   }
@@ -338,6 +359,10 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
   set addressBranch(String? addressBranch) =>
       _$this._addressBranch = addressBranch;
 
+  String? _typeBranch;
+  String? get typeBranch => _$this._typeBranch;
+  set typeBranch(String? typeBranch) => _$this._typeBranch = typeBranch;
+
   ListBuilder<Warehouse>? _warehouses;
   ListBuilder<Warehouse> get warehouses =>
       _$this._warehouses ??= new ListBuilder<Warehouse>();
@@ -352,6 +377,7 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
       _id = $v.id;
       _nameBranch = $v.nameBranch;
       _addressBranch = $v.addressBranch;
+      _typeBranch = $v.typeBranch;
       _warehouses = $v.warehouses.toBuilder();
       _$v = null;
     }
@@ -380,6 +406,7 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
               id: id,
               nameBranch: nameBranch,
               addressBranch: addressBranch,
+              typeBranch: typeBranch,
               warehouses: warehouses.build());
     } catch (_) {
       late String _$failedField;

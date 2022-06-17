@@ -30,7 +30,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     });
     final url = preDefinedUri('/api/login/');
     final String? userString = objectToString(user, User.serializer);
-    print(userString);
+
     if (userString != null) {
       try {
         final String response = await postDataToApi(url, userString);

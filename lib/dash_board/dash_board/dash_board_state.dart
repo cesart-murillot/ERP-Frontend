@@ -1,4 +1,6 @@
-class DashBoardState {
+import 'package:equatable/equatable.dart';
+
+class DashBoardState extends Equatable {
   DashBoardState init() {
     return DashBoardState();
   }
@@ -6,4 +8,7 @@ class DashBoardState {
   DashBoardState clone() {
     return DashBoardState();
   }
+
+  @override
+  List<Object?> get props => [];
 }

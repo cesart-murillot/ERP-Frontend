@@ -21,6 +21,13 @@ class ShowPageEvent extends MainEvent {
   List<Object> get props => [routePage];
 }
 
+class CloseSessionEvent extends MainEvent {
+  const CloseSessionEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
 class TryEvent extends MainEvent {
   const TryEvent();
 

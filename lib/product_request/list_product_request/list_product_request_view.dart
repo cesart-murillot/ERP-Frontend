@@ -18,6 +18,7 @@ class ListProductRequestPage extends StatelessWidget {
           ListProductRequestBloc()..add(InitEvent()),
       child: Builder(
         builder: (context) => Scaffold(
+          appBar: AppBar(),
           body: const StateViews(),
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () async {
@@ -27,7 +28,6 @@ class ListProductRequestPage extends StatelessWidget {
                   builder: (context) => RequestProductPage(),
                 ),
               );
-
               if (result != null) {
                 result ? context.read<ListProductRequestBloc>().add(InitEvent()) : print('Error from: list_product_request_view.dart');
               }

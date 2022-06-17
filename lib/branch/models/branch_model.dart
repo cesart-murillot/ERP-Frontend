@@ -31,6 +31,9 @@ abstract class Branch implements Built<Branch, BranchBuilder> {
   @BuiltValueField(wireName: 'address_branch')
   String? get addressBranch;
 
+  @BuiltValueField(wireName: 'type_branch')
+  String? get typeBranch;
+
   BuiltList<Warehouse> get warehouses;
 
   Branch._();

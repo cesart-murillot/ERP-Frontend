@@ -21,7 +21,7 @@ class ShowEmployeeBloc extends Bloc<ShowEmployeeEvent, ShowEmployeeState> {
   void _init(InitEvent event, Emitter<ShowEmployeeState> emit) async {
     emit(state.copyWith(currentState: ShowEmployeeViewState.loading));
     final url = preDefinedUri('/api/employees/${event.employeeID}');
-    print(url);
+
     final Employee employee = await getObject(url, Employee.serializer);
     emit(state.copyWith(
         currentState: ShowEmployeeViewState.loaded, employee: employee));

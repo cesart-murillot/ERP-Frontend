@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:erp_fronted/branch/models/branch_model.dart';
 import 'package:erp_fronted/employee/models/user_model.dart';
 
 part 'employee_model.g.dart';
@@ -36,6 +37,7 @@ abstract class Employee implements Built<Employee, EmployeeBuilder> {
 
   User? get user;
 
+  Branch? get branch;
 
   Employee._();
   factory Employee([void Function(EmployeeBuilder) updates]) = _$Employee;
