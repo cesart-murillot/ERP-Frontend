@@ -4,6 +4,7 @@ import 'package:erp_fronted/employee/show_employee/show_employee_view.dart';
 import 'package:erp_fronted/new_login/login/login_view.dart';
 import 'package:erp_fronted/new_main/main/main_state.dart';
 import 'package:erp_fronted/new_product/product_list/product_list_view.dart';
+import 'package:erp_fronted/quotation/list_quotation/list_quotation_view.dart';
 import 'package:erp_fronted/warehouse/warehouse_list/warehouse_list_view.dart';
 import 'package:erp_fronted/warehouse/warehouse_menu/warehouse_menu_view.dart';
 import 'package:flutter/material.dart';
@@ -186,11 +187,7 @@ class BodyPage extends StatelessWidget {
           case AppPage.warehouses:
             return const WarehouseMenuPage();
           case AppPage.quotations:
-            return const Center(
-              child: Text(
-                'Cotizaciones',
-              ),
-            );
+            return const ListQuotationPage();
           case AppPage.sales:
             return const Center(
               child: Text(

@@ -12,6 +12,7 @@ import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/product_entry/models/product_entry_model.dart';
 import 'package:erp_fronted/product_request/models/product_transfer_model.dart';
 import 'package:erp_fronted/product_request/models/transfer_model.dart';
+import 'package:erp_fronted/quotation/models/quotation_model.dart';
 import 'package:erp_fronted/role/models/role_model.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
 import 'package:erp_fronted/product/models/product_model.dart';
@@ -52,6 +53,9 @@ part 'serializers.g.dart';
   TransferOrder,
   Entry,
   Entries,
+  Quotations,
+  Quotation,
+  ProductQuotation,
 ])
 
 Serializers serializers = _$serializers;
