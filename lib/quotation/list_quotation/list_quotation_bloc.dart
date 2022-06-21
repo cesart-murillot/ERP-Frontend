@@ -6,15 +6,19 @@ import 'list_quotation_event.dart';
 import 'list_quotation_state.dart';
 
 class ListQuotationBloc extends Bloc<ListQuotationEvent, ListQuotationState> {
-  ListQuotationBloc() : super(ListQuotationState().init()) {
+  ListQuotationBloc() : super(const ListQuotationState().init()) {
     on<InitEvent>(_init);
   }
 
   void _init(InitEvent event, Emitter<ListQuotationState> emit) async {
-    final url = preDefinedUri('/api/quotations/');
-    print(url);
-    final quotations = await getObject(url, Quotations.serializer);
+    emit(state.loadedInfo(state: States.loading));
 
-    print(quotations);
+    final url = preDefinedUri('/api/quotations/');
+    try {
+      final quotations = await getObject(url, Quotations.serializer);
+      emit(state.loadedInfo(state: States.loaded, quotations: quotations));
+    } catch (e) {
+      emit(state.error(errorMessage: e.toString()));
+    }
   }
 }

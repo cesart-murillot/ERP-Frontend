@@ -1,3 +1,10 @@
-abstract class ListQuotationEvent {}
+import 'package:equatable/equatable.dart';
 
-class InitEvent extends ListQuotationEvent {}
+abstract class ListQuotationEvent extends Equatable {
+  const ListQuotationEvent();
+}
+
+class InitEvent extends ListQuotationEvent {
+  @override
+  List<Object?> get props => [];
+}
