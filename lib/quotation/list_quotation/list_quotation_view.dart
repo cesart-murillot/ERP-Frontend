@@ -122,64 +122,66 @@ class QuotationTable extends StatelessWidget {
         context.read<ListQuotationBloc>().state.quotations?.quotations;
     if (quotations != null) {
       return SingleChildScrollView(
-        child: DataTable(
-          showBottomBorder: true,
-          showCheckboxColumn: false,
-          columns: const <DataColumn>[
-            DataColumn(
-              label: Text(
-                'Fecha',
+        child: Center(
+          child: DataTable(
+            showBottomBorder: true,
+            showCheckboxColumn: false,
+            columns: const <DataColumn>[
+              DataColumn(
+                label: Text(
+                  'Fecha',
+                ),
               ),
-            ),
-            DataColumn(
-              label: Text(
-                'Cliente',
+              DataColumn(
+                label: Text(
+                  'Cliente',
+                ),
               ),
-            ),
-            DataColumn(
-              numeric: true,
-              label: Text(
-                'Monto',
+              DataColumn(
+                numeric: true,
+                label: Text(
+                  'Monto',
+                ),
               ),
-            ),
-          ],
-          rows: List.generate(
-            quotations.length,
-            (index) {
-              final quotation = quotations[index];
-              final dateQuotation = DateFormat('EEEE d MMMM, ' 'yy')
-                  .format(DateTime.parse(quotation.dateQuotation));
-              return DataRow(
-                onSelectChanged: (value) {
-                  if (quotation.id != null) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) =>
-                            ShowQuotationPage(quotationId: quotation.id!),
+            ],
+            rows: List.generate(
+              quotations.length,
+              (index) {
+                final quotation = quotations[index];
+                final dateQuotation = DateFormat('EEEE d MMMM, ' 'yy')
+                    .format(DateTime.parse(quotation.dateQuotation));
+                return DataRow(
+                  onSelectChanged: (value) {
+                    if (quotation.id != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              ShowQuotationPage(quotationId: quotation.id!),
+                        ),
+                      );
+                    }
+                  },
+                  cells: <DataCell>[
+                    DataCell(
+                      Text(
+                        dateQuotation,
                       ),
-                    );
-                  }
-                },
-                cells: <DataCell>[
-                  DataCell(
-                    Text(
-                      dateQuotation,
                     ),
-                  ),
-                  DataCell(
-                    Text(
-                      quotation.nameQuotation,
+                    DataCell(
+                      Text(
+                        quotation.nameQuotation,
+                      ),
                     ),
-                  ),
-                  DataCell(
-                    Text(
-                      '${quotation.priceQuotation}',
+                    DataCell(
+                      Text(
+                        '${quotation.priceQuotation}',
+                      ),
                     ),
-                  ),
-                ],
-              );
-            },
+                  ],
+                );
+              },
+            ),
           ),
         ),
       );
