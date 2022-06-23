@@ -71,48 +71,50 @@ class ShowQuotation extends StatelessWidget {
           .format(DateTime.parse(quotation.expirationDate));
       return Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Fecha de cotización: $quotationDate',
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Fecha de Expiración: $expirationDate',
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Razón Social: ${quotation.nameQuotation}',
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Total Cotizado: ${quotation.priceQuotation}',
-                    )
-                  ],
-                ),
-              ],
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Fecha de cotización: $quotationDate',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Fecha de Expiración: $expirationDate',
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Razón Social: ${quotation.nameQuotation}',
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Total Cotizado: ${quotation.priceQuotation}',
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           ListView.builder(
@@ -120,40 +122,42 @@ class ShowQuotation extends StatelessWidget {
             itemCount: quotation.productQuotations.length,
             itemBuilder: (context, index) {
               final productQuotation = quotation.productQuotations[index];
-              return ListTile(
-                isThreeLine: true,
-                title: Text(
-                  '${productQuotation.product?.modelProduct} - ${productQuotation.product?.formatProduct}',
-                ),
-                subtitle: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Cantidad: ${productQuotation.quantity}',
-                        ),
-                        const SizedBox(
-                          width: 8.0,
-                        ),
-                        Text(
-                          'Precio Unitario: ${productQuotation.unitPrice}',
-                        ),
-                        const SizedBox(
-                          width: 8.0,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          height: 8.0,
-                        ),
-                        Text(
-                          'Precio Total: ${productQuotation.totalPrice}',
-                        ),
-                      ],
-                    ),
-                  ],
+              return Card(
+                child: ListTile(
+                  isThreeLine: true,
+                  title: Text(
+                    '${productQuotation.product?.modelProduct} - ${productQuotation.product?.formatProduct}',
+                  ),
+                  subtitle: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'Cantidad: ${productQuotation.quantity}',
+                          ),
+                          const SizedBox(
+                            width: 8.0,
+                          ),
+                          Text(
+                            'Precio Unitario: ${productQuotation.unitPrice}',
+                          ),
+                          const SizedBox(
+                            width: 8.0,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const SizedBox(
+                            height: 8.0,
+                          ),
+                          Text(
+                            'Precio Total: ${productQuotation.totalPrice}',
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

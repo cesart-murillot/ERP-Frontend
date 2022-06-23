@@ -1,3 +1,4 @@
+import 'package:erp_fronted/quotation/generate_quotation/generate_quotation_view.dart';
 import 'package:erp_fronted/quotation/show_quotation/show_quotation_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,8 +16,21 @@ class ListQuotationPage extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => ListQuotationBloc()..add(InitEvent()),
       child: Builder(
-        builder: (context) => const Scaffold(
-          body: StateViews(),
+        builder: (context) => Scaffold(
+          body: const StateViews(),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                    MaterialPageRoute(
+                      builder: (_) => const GenerateQuotationPage(),
+                    ),
+                  );
+            },
+            label: const Text(
+              'Generar Cotización',
+            ),
+          ),
         ),
       ),
     );
@@ -42,7 +56,7 @@ class StateViews extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           case States.loaded:
-            return const ListQuotation();
+            return const QuotationTable();
           case States.error:
             return Center(
               child: Text(
@@ -96,5 +110,80 @@ class ListQuotation extends StatelessWidget {
       );
     }
     return const SizedBox();
+  }
+}
+
+class QuotationTable extends StatelessWidget {
+  const QuotationTable({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final quotations =
+        context.read<ListQuotationBloc>().state.quotations?.quotations;
+    if (quotations != null) {
+      return SingleChildScrollView(
+        child: DataTable(
+          showBottomBorder: true,
+          showCheckboxColumn: false,
+          columns: const <DataColumn>[
+            DataColumn(
+              label: Text(
+                'Fecha',
+              ),
+            ),
+            DataColumn(
+              label: Text(
+                'Cliente',
+              ),
+            ),
+            DataColumn(
+              numeric: true,
+              label: Text(
+                'Monto',
+              ),
+            ),
+          ],
+          rows: List.generate(
+            quotations.length,
+            (index) {
+              final quotation = quotations[index];
+              final dateQuotation = DateFormat('EEEE d MMMM, ' 'yy')
+                  .format(DateTime.parse(quotation.dateQuotation));
+              return DataRow(
+                onSelectChanged: (value) {
+                  if (quotation.id != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            ShowQuotationPage(quotationId: quotation.id!),
+                      ),
+                    );
+                  }
+                },
+                cells: <DataCell>[
+                  DataCell(
+                    Text(
+                      dateQuotation,
+                    ),
+                  ),
+                  DataCell(
+                    Text(
+                      quotation.nameQuotation,
+                    ),
+                  ),
+                  DataCell(
+                    Text(
+                      '${quotation.priceQuotation}',
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      );
+    }
+    return Container();
   }
 }

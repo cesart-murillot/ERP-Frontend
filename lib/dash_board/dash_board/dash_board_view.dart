@@ -36,9 +36,7 @@ class StateViews extends StatelessWidget {
             return Container();
             break;
           case States.loaded:
-            print('data');
-            print(state.exampleData?.first);
-            return charts.BarChart(state.exampleData!);
+            return const DashBoard();
             break;
           case States.error:
             return Container();
@@ -56,23 +54,23 @@ class DashBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final exampleData = context.watch<DashBoardBloc>().state.exampleData;
     return Row(
       children: [
         Expanded(
           flex: 1,
           child: Column(
-            children: const [
+            children: [
               Expanded(
                 flex: 1,
                 child: SizedBox(
                   width: double.infinity,
                   child: Card(
-                    color: Colors.deepPurpleAccent,
-                    child: Text('1'),
+                    child: charts.BarChart(exampleData!),
                   ),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 flex: 2,
                 child: SizedBox(
                   width: double.infinity,
@@ -82,7 +80,7 @@ class DashBoard extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 flex: 3,
                 child: SizedBox(
                   width: double.infinity,
