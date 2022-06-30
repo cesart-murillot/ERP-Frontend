@@ -97,21 +97,34 @@ class AllEntryOrders extends StatelessWidget {
               children: [
                 if (entryOrders![index].verifiedEntryOrder! &&
                     !entryOrders[index].errorEntryOrder!)
-                  const Icon(
-                    Icons.verified,
-                    color: Colors.green,
+                  const Chip(
+                    label: Text('Verificado'),
+                    avatar: Icon(
+                      Icons.verified,
+                      color: Colors.green,
+                    ),
                   ),
                 if (entryOrders[index].errorEntryOrder! &&
                     entryOrders[index].verifiedEntryOrder!)
-                  const Icon(
-                    Icons.error,
-                    color: Colors.red,
+                  const Chip(
+                    label: Text('Error'),
+                    avatar: Icon(
+                      Icons.error,
+                      color: Colors.red,
+                    ),
                   ),
                 if (!entryOrders[index].verifiedEntryOrder!)
-                  const Icon(
+/*                  const Icon(
                     Icons.hourglass_bottom,
                     color: Colors.lightBlueAccent,
-                  )
+                  ),*/
+                  const Chip(
+                    label: Text('Sin Verificar'),
+                    avatar: Icon(
+                      Icons.hourglass_bottom,
+                      color: Colors.lightBlueAccent,
+                    ),
+                  ),
               ],
             ),
             title: Padding(

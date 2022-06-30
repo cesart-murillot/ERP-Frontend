@@ -14,6 +14,7 @@ class CheckEntryOrderBloc
     on<InitEvent>(_init);
     on<MarkAsCheckedEvent>(_markAsChecked);
     on<VerifyEvent>(_verify);
+    on<ReloadEvent>(_reload);
   }
 
   void _init(InitEvent event, Emitter<CheckEntryOrderState> emit) async {
@@ -78,5 +79,9 @@ class CheckEntryOrderBloc
     } catch (e) {
       print(e);
     }
+  }
+
+  FutureOr<void> _reload(ReloadEvent event, Emitter<CheckEntryOrderState> emit) {
+    add(InitEvent(state.entryOrder!.id!));
   }
 }

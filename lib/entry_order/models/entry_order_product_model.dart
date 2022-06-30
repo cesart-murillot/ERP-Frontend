@@ -17,6 +17,10 @@ abstract class EntryOrderProduct implements Built<EntryOrderProduct, EntryOrderP
 
   int get quantity;
 
+  bool? get verified;
+
+  bool? get error;
+
   Product? get product;
 
   @BuiltValueField(wireName: 'entry_order')

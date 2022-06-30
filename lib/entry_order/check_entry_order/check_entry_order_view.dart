@@ -127,8 +127,9 @@ class EntryOrderInformation extends StatelessWidget {
                 Text(
                   'Codigo de Ingreso: $entryOrderCode',
                   style: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyLarge,
-                      fontSize: 14.0),
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                    fontSize: 14.0,
+                  ),
                 ),
               ],
             ),
@@ -137,8 +138,9 @@ class EntryOrderInformation extends StatelessWidget {
                 Text(
                   'Fecha de Registro: $registerDate',
                   style: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.bodyLarge,
-                      fontSize: 14.0),
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                    fontSize: 14.0,
+                  ),
                 ),
               ],
             ),
@@ -218,6 +220,7 @@ class ProductEntryList extends StatelessWidget {
       itemCount: entryOrderProduct.length,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
+        final bool verified = entryOrderProduct[index].verified!;
         return Card(
           child: ListTile(
             onTap: () {
@@ -227,13 +230,16 @@ class ProductEntryList extends StatelessWidget {
                   builder: (context) => VerifyProductEntryPage(
                       productEntryId: entryOrderProduct[index].id!),
                 ),
+              ).then(
+                (value) {
+                  context.read<CheckEntryOrderBloc>().add(ReloadEvent());
+                },
               );
             },
             title: Text(
               'Modelo: ${entryOrderProduct[index].product?.modelProduct}',
               style: GoogleFonts.roboto(
                 textStyle: Theme.of(context).textTheme.bodyLarge,
-                fontSize: 14.0,
               ),
             ),
             subtitle: Row(
@@ -242,19 +248,39 @@ class ProductEntryList extends StatelessWidget {
                   'Formato: ${entryOrderProduct[index].product?.formatProduct}',
                   style: GoogleFonts.roboto(
                     textStyle: Theme.of(context).textTheme.bodyLarge,
-                    fontSize: 14.0,
                   ),
                 ),
-                const SizedBox(
-                  width: 16.0,
-                ),
+              ],
+            ),
+            trailing: Column(
+              children: [
                 Text(
                   'Cantidad: ${entryOrderProduct[index].quantity}',
                   style: GoogleFonts.roboto(
                     textStyle: Theme.of(context).textTheme.bodyLarge,
-                    fontSize: 14.0,
                   ),
                 ),
+                verified
+                    ? const Chip(
+                        backgroundColor: Colors.transparent,
+                        avatar: Icon(
+                          Icons.check,
+                          color: Colors.green,
+                        ),
+                        label: Text(
+                          'Verificado',
+                        ),
+                      )
+                    : const Chip(
+                        backgroundColor: Colors.transparent,
+                        avatar: Icon(
+                          Icons.hourglass_bottom,
+                          color: Colors.yellow,
+                        ),
+                        label: Text(
+                          'Pendiente',
+                        ),
+                      ),
               ],
             ),
           ),
@@ -319,21 +345,18 @@ class CheckedEntryOrder extends StatelessWidget {
                   'Modelo: ${entryOrderProduct?[index].product?.modelProduct}',
                   style: GoogleFonts.roboto(
                     textStyle: Theme.of(context).textTheme.bodyLarge,
-                    fontSize: 14.0,
                   ),
                 ),
                 subtitle: Text(
                   'Formato: ${entryOrderProduct?[index].product?.formatProduct}',
                   style: GoogleFonts.roboto(
                     textStyle: Theme.of(context).textTheme.bodyLarge,
-                    fontSize: 14.0,
                   ),
                 ),
                 trailing: Text(
                   'Cantidad: ${entryOrderProduct?[index].quantity}',
                   style: GoogleFonts.roboto(
                     textStyle: Theme.of(context).textTheme.bodyLarge,
-                    fontSize: 14.0,
                   ),
                 ),
               ),

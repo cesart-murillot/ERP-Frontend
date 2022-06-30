@@ -8,7 +8,7 @@ class DashBoardState extends Equatable {
   final List<Map<String, String>>? data;
   final List<charts.Series<dynamic, String>>? exampleData;
   final List<charts.Series>? seriesList;
-
+  final Map<dynamic, dynamic>? saleData;
   DashBoardState init() {
     return const DashBoardState();
   }
@@ -22,19 +22,22 @@ class DashBoardState extends Equatable {
     List<Map<String, String>>? data,
     List<charts.Series>? seriesList,
     List<charts.Series<dynamic, String>>? exampleData,
+    Map<dynamic, dynamic>? saleData,
   }) {
     return DashBoardState(
       state: state,
       data: data ?? this.data,
       seriesList: seriesList ?? this.seriesList,
       exampleData: exampleData ?? this.exampleData,
+      saleData: saleData ?? this.saleData
     );
   }
 
   @override
-  List<Object?> get props => [state, data, exampleData, seriesList];
+  List<Object?> get props => [state, data, exampleData, seriesList, saleData];
 
   const DashBoardState({
+    this.saleData,
     this.state = States.initial,
     this.data,
     this.exampleData,

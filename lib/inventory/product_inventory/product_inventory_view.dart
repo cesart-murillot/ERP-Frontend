@@ -15,7 +15,10 @@ class ProductInventoryPage extends StatelessWidget {
       create: (BuildContext context) =>
           ProductInventoryBloc()..add(InitEvent()),
       child: Builder(
-        builder: (context) => const StateViews(),
+        builder: (context) => Scaffold(
+          body: const StateViews(),
+          appBar: AppBar(),
+        ),
       ),
     );
   }

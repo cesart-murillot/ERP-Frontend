@@ -13,6 +13,12 @@ class InitEvent extends CheckEntryOrderEvent {
   const InitEvent(this.entryOrderId);
 }
 
+class ReloadEvent extends CheckEntryOrderEvent {
+  @override
+  List<Object?> get props => [];
+
+}
+
 class MarkAsCheckedEvent extends CheckEntryOrderEvent {
   final int index;
   final bool value;

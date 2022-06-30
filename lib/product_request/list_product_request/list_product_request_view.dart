@@ -85,39 +85,45 @@ class ListProductRequest extends StatelessWidget {
     return ListView.builder(
       itemCount: transfers.transfers.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(
-              'Sucursal: ${transfers.transfers[index].branch?.nameBranch}'),
-          subtitle: Text(
-              'Direccion: ${transfers.transfers[index].branch?.addressBranch}'),
-          isThreeLine: true,
-          trailing: transfers.transfers[index].verified!
-              ? Wrap(
-                  children: const [
-                    Chip(
-                      backgroundColor: Colors.green,
-                      avatar: Icon(Icons.check),
-                      label: Text('Verificado'),
+        return Card(
+          margin: const EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              title: Text(
+                  'Sucursal: ${transfers.transfers[index].branch?.nameBranch}'),
+              subtitle: Text(
+                  'Direccion: ${transfers.transfers[index].branch?.addressBranch}'),
+              isThreeLine: true,
+              trailing: transfers.transfers[index].verified!
+                  ? Wrap(
+                      children: const [
+                        Chip(
+                          backgroundColor: Colors.green,
+                          avatar: Icon(Icons.check),
+                          label: Text('Verificado'),
+                        ),
+                      ],
+                    )
+                  : Wrap(
+                      children: const [
+                        Chip(
+                          backgroundColor: Colors.yellow,
+                          avatar: Icon(Icons.hourglass_bottom),
+                          label: Text('No verificado'),
+                        ),
+                      ],
                     ),
-                  ],
-                )
-              : Wrap(
-                  children: const [
-                    Chip(
-                      backgroundColor: Colors.yellow,
-                      avatar: Icon(Icons.hourglass_bottom),
-                      label: Text('Pendiente'),
-                    ),
-                  ],
-                ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => VerifyProductRequestPage(transferId: transfers.transfers[index].id!),
-              ),
-            );
-          },
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VerifyProductRequestPage(transferId: transfers.transfers[index].id!),
+                  ),
+                );
+              },
+            ),
+          ),
         );
       },
     );

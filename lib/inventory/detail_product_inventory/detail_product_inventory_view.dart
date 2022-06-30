@@ -94,6 +94,9 @@ class ProductDetail extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 8.0,
+              ),
               Row(
                 children: [
                   Text(
@@ -101,7 +104,6 @@ class ProductDetail extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(),
             ],
           ),
         ));
@@ -124,7 +126,8 @@ class EntryDetails extends StatelessWidget {
         final entryDate = DateFormat('EEEE d MMMM, ' 'yy - HH:mm a')
             .format(DateTime.parse(entries[index].createdAt!));
         final entryOrderDate = DateFormat('EEEE d MMMM, ' 'yy - HH:mm a')
-            .format(DateTime.parse(entries[index].entryOrderProduct!.entryOrder!.createdAt!));
+            .format(DateTime.parse(
+                entries[index].entryOrderProduct!.entryOrder!.createdAt!));
         return Card(
           margin: const EdgeInsets.all(8.0),
           child: Padding(
@@ -136,10 +139,16 @@ class EntryDetails extends StatelessWidget {
                     Text('Cantidad: ${entries[index].quantityEntry}'),
                   ],
                 ),
+                const SizedBox(
+                  height: 8.0,
+                ),
                 Row(
                   children: [
                     Text('Fecha de Ingreso: $entryDate'),
                   ],
+                ),
+                const SizedBox(
+                  height: 8.0,
                 ),
                 Row(
                   children: [
@@ -151,7 +160,13 @@ class EntryDetails extends StatelessWidget {
                     Text('Sección: ${entries[index].section?.nameSection}'),
                   ],
                 ),
+                const SizedBox(
+                  height: 8.0,
+                ),
                 const Divider(),
+                const SizedBox(
+                  height: 8.0,
+                ),
                 Row(
                   children: [
                     Text(
@@ -165,12 +180,18 @@ class EntryDetails extends StatelessWidget {
                     ),
                   ],
                 ),
+                const SizedBox(
+                  height: 8.0,
+                ),
                 Row(
                   children: [
                     Text(
                       'Fecha de Registro: $entryOrderDate',
                     ),
                   ],
+                ),
+                const SizedBox(
+                  height: 8.0,
                 ),
                 Row(
                   children: [

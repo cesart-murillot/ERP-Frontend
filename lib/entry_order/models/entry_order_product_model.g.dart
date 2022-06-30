@@ -40,6 +40,20 @@ class _$EntryOrderProductSerializer
         ..add('entry_order_id')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.verified;
+    if (value != null) {
+      result
+        ..add('verified')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.error;
+    if (value != null) {
+      result
+        ..add('error')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.product;
     if (value != null) {
       result
@@ -85,6 +99,14 @@ class _$EntryOrderProductSerializer
           result.quantity = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
           break;
+        case 'verified':
+          result.verified = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'error':
+          result.error = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'product':
           result.product.replace(serializers.deserialize(value,
               specifiedType: const FullType(Product))! as Product);
@@ -110,6 +132,10 @@ class _$EntryOrderProduct extends EntryOrderProduct {
   @override
   final int quantity;
   @override
+  final bool? verified;
+  @override
+  final bool? error;
+  @override
   final Product? product;
   @override
   final EntryOrder? entryOrder;
@@ -123,6 +149,8 @@ class _$EntryOrderProduct extends EntryOrderProduct {
       this.entryOrderId,
       required this.productId,
       required this.quantity,
+      this.verified,
+      this.error,
       this.product,
       this.entryOrder})
       : super._() {
@@ -148,6 +176,8 @@ class _$EntryOrderProduct extends EntryOrderProduct {
         entryOrderId == other.entryOrderId &&
         productId == other.productId &&
         quantity == other.quantity &&
+        verified == other.verified &&
+        error == other.error &&
         product == other.product &&
         entryOrder == other.entryOrder;
   }
@@ -157,9 +187,13 @@ class _$EntryOrderProduct extends EntryOrderProduct {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, id.hashCode), entryOrderId.hashCode),
-                    productId.hashCode),
-                quantity.hashCode),
+                $jc(
+                    $jc(
+                        $jc($jc($jc(0, id.hashCode), entryOrderId.hashCode),
+                            productId.hashCode),
+                        quantity.hashCode),
+                    verified.hashCode),
+                error.hashCode),
             product.hashCode),
         entryOrder.hashCode));
   }
@@ -171,6 +205,8 @@ class _$EntryOrderProduct extends EntryOrderProduct {
           ..add('entryOrderId', entryOrderId)
           ..add('productId', productId)
           ..add('quantity', quantity)
+          ..add('verified', verified)
+          ..add('error', error)
           ..add('product', product)
           ..add('entryOrder', entryOrder))
         .toString();
@@ -197,6 +233,14 @@ class EntryOrderProductBuilder
   int? get quantity => _$this._quantity;
   set quantity(int? quantity) => _$this._quantity = quantity;
 
+  bool? _verified;
+  bool? get verified => _$this._verified;
+  set verified(bool? verified) => _$this._verified = verified;
+
+  bool? _error;
+  bool? get error => _$this._error;
+  set error(bool? error) => _$this._error = error;
+
   ProductBuilder? _product;
   ProductBuilder get product => _$this._product ??= new ProductBuilder();
   set product(ProductBuilder? product) => _$this._product = product;
@@ -216,6 +260,8 @@ class EntryOrderProductBuilder
       _entryOrderId = $v.entryOrderId;
       _productId = $v.productId;
       _quantity = $v.quantity;
+      _verified = $v.verified;
+      _error = $v.error;
       _product = $v.product?.toBuilder();
       _entryOrder = $v.entryOrder?.toBuilder();
       _$v = null;
@@ -248,6 +294,8 @@ class EntryOrderProductBuilder
                   productId, 'EntryOrderProduct', 'productId'),
               quantity: BuiltValueNullFieldError.checkNotNull(
                   quantity, 'EntryOrderProduct', 'quantity'),
+              verified: verified,
+              error: error,
               product: _product?.build(),
               entryOrder: _entryOrder?.build());
     } catch (_) {

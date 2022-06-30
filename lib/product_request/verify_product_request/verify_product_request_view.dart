@@ -68,7 +68,7 @@ class ProductRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return Column(
       children: [
         UserInformation(
           user: transfer.user!,
@@ -92,7 +92,9 @@ class ProductRequest extends StatelessWidget {
                     (value) {
                       if (value is bool) {
                         if (value) {
-                          context.read<VerifyProductRequestBloc>().add(InitEvent(transfer.id!));
+                          context
+                              .read<VerifyProductRequestBloc>()
+                              .add(InitEvent(transfer.id!));
                         }
                       }
                     },
@@ -112,13 +114,30 @@ class UserInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-            'Solicitado por:\n${user.employee?.namesEmployee} ${user.employee?.lastNameEmployee} - ${user.role?.nameRole}'),
-        Text('Contacto: ${user.email}'),
-      ],
+    return Card(
+      margin: const EdgeInsets.all(8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                    'Solicitado por:\n${user.employee?.namesEmployee} ${user.employee?.lastNameEmployee} - ${user.role?.nameRole}'),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            Row(
+              children: [
+                Text('Contacto: ${user.email}'),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -129,12 +148,29 @@ class BranchInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Sucursal: ${branch.nameBranch}'),
-        Text('Direccion: ${branch.addressBranch}'),
-      ],
+    return Card(
+      margin: const EdgeInsets.all(8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text('Sucursal: ${branch.nameBranch}'),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            Row(
+              children: [
+                Text('Direccion: ${branch.addressBranch}'),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -151,9 +187,14 @@ class ProductTransferList extends StatelessWidget {
       shrinkWrap: true,
       itemCount: productTransfer.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(productTransfer[index].product!.modelProduct),
-          trailing: Text('${productTransfer[index].quantity}'),
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              title: Text(productTransfer[index].product!.modelProduct),
+              trailing: Text('Cantidad: ${productTransfer[index].quantity}'),
+            ),
+          ),
         );
       },
     );

@@ -25,12 +25,15 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ProductEntries.serializer)
       ..add(ProductEntry.serializer)
       ..add(ProductQuotation.serializer)
+      ..add(ProductSale.serializer)
       ..add(ProductTransfer.serializer)
       ..add(Products.serializer)
       ..add(Quotation.serializer)
       ..add(Quotations.serializer)
       ..add(Role.serializer)
       ..add(Roles.serializer)
+      ..add(Sale.serializer)
+      ..add(Sales.serializer)
       ..add(Section.serializer)
       ..add(Transfer.serializer)
       ..add(TransferOrder.serializer)
@@ -74,6 +77,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(ProductQuotation)]),
           () => new ListBuilder<ProductQuotation>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ProductSale)]),
+          () => new ListBuilder<ProductSale>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ProductTransfer)]),
           () => new ListBuilder<ProductTransfer>())
       ..addBuilderFactory(
@@ -82,6 +88,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Role)]),
           () => new ListBuilder<Role>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Sale)]),
+          () => new ListBuilder<Sale>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Section)]),
           () => new ListBuilder<Section>())
