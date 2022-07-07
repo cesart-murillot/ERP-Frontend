@@ -1,4 +1,6 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:erp_fronted/dash_board/best_seller/best_seller_view.dart';
+import 'package:erp_fronted/dash_board/least_seller/least_seller_view.dart';
 import 'package:erp_fronted/dash_board/product_sale/product_sale_view.dart';
 import 'package:erp_fronted/dash_board/total_income/total_income_view.dart';
 import 'package:erp_fronted/dash_board/total_quotation/total_quotation_view.dart';
@@ -37,7 +39,7 @@ class StateViews extends StatelessWidget {
             return Container();
             break;
           case States.loaded:
-            return const DashBoard();
+            return const NewGrid();
             break;
           case States.error:
             return Container();
@@ -140,44 +142,42 @@ class SaleData extends StatelessWidget {
     if (data != null) {
       return Column(
         children: [
-          Flexible(
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      children: const [
-                        Text('Ingresos hoy:'),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 6.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${data['today'][0]} Bs.',
-                          style: GoogleFonts.roboto(
-                              textStyle: Theme.of(context).textTheme.headlineSmall,
-                          ),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    children: const [
+                      Text('Ingresos hoy:'),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 6.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${data['today'][0]} Bs.',
+                        style: GoogleFonts.roboto(
+                          textStyle: Theme.of(context).textTheme.headlineSmall,
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 6.0,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Número de Ventas: ${data['today'][1]}',
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 6.0,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Número de Ventas: ${data['today'][1]}',
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
           ),
@@ -202,7 +202,8 @@ class SaleData extends StatelessWidget {
                         Text(
                           '${data['month'][0]} Bs.',
                           style: GoogleFonts.roboto(
-                            textStyle: Theme.of(context).textTheme.headlineSmall,
+                            textStyle:
+                                Theme.of(context).textTheme.headlineSmall,
                           ),
                         ),
                       ],
@@ -243,7 +244,8 @@ class SaleData extends StatelessWidget {
                         Text(
                           '${data['year'][0]} Bs.',
                           style: GoogleFonts.roboto(
-                            textStyle: Theme.of(context).textTheme.headlineSmall,
+                            textStyle:
+                                Theme.of(context).textTheme.headlineSmall,
                           ),
                         ),
                       ],
@@ -267,5 +269,32 @@ class SaleData extends StatelessWidget {
       );
     }
     return const SizedBox();
+  }
+}
+
+class NewGrid extends StatelessWidget {
+  const NewGrid({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 2,
+      children: [
+        const ProductSalePage(),
+        const SaleData(),
+        const TotalQuotationPage(),
+        const TotalIncomePage(),
+        Wrap(
+          children: const [
+            BestSellerPage(),
+          ],
+        ),
+        Wrap(
+          children: const [
+            LeastSellerPage(),
+          ],
+        )
+      ],
+    );
   }
 }

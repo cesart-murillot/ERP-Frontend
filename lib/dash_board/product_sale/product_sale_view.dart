@@ -58,9 +58,7 @@ class ProductSale extends StatelessWidget {
   Widget build(BuildContext context) {
     final data = context.watch<ProductSaleCubit>().state.quantity;
     if (data != null) {
-      return Flexible(
-        child: charts.BarChart(data),
-      );
+      return charts.BarChart(data);
     }
     return const SizedBox();
   }
