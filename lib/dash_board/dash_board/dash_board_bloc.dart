@@ -55,7 +55,7 @@ class DashBoardBloc extends Bloc<DashBoardEvent, DashBoardState> {
 
     List<charts.Series<OrdinalSales, String>> listData = [];
     listData.add(value);
-    //listData.add(value2);
+    listData.add(value2);
     print(value.data);
     emit(state.loadedData(state: States.loaded, exampleData: listData, saleData: saleData));
   }

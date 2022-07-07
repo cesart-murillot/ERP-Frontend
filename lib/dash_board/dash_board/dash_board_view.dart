@@ -1,4 +1,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:erp_fronted/dash_board/product_sale/product_sale_view.dart';
+import 'package:erp_fronted/dash_board/total_income/total_income_view.dart';
+import 'package:erp_fronted/dash_board/total_quotation/total_quotation_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -98,8 +101,7 @@ class DashBoard extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   child: Card(
-                    color: Colors.deepOrangeAccent,
-                    child: Text('1'),
+                    child: TotalQuotationPage(),
                   ),
                 ),
               ),
@@ -108,8 +110,7 @@ class DashBoard extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   child: Card(
-                    color: Colors.lightBlueAccent,
-                    child: Text('2'),
+                    child: TotalIncomePage(),
                   ),
                 ),
               ),
@@ -118,8 +119,7 @@ class DashBoard extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   child: Card(
-                    color: Colors.white30,
-                    child: Text('3'),
+                    child: ProductSalePage(),
                   ),
                 ),
               ),
