@@ -80,6 +80,12 @@ abstract class Product implements Built<Product, ProductBuilder> {
   @BuiltValueField(wireName: 'updated_at')
   String? get updatedAt;
 
+  @BuiltValueField(wireName: 'remain_units')
+  int? get remainUnits;
+
+  @BuiltValueField(wireName: 'reorder_point')
+  int? get reorderPoint;
+
   Product._();
   factory Product([void Function(ProductBuilder) updates]) = _$Product;
 }

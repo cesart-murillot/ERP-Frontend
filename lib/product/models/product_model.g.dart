@@ -212,6 +212,18 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.remainUnits;
+    if (value != null) {
+      result
+        ..add('remain_units')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.reorderPoint;
+    if (value != null) {
+      result
+        ..add('reorder_point')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     return result;
   }
 
@@ -301,6 +313,14 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'remain_units':
+          result.remainUnits = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'reorder_point':
+          result.reorderPoint = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
       }
     }
@@ -466,6 +486,10 @@ class _$Product extends Product {
   final String? createdAt;
   @override
   final String? updatedAt;
+  @override
+  final int? remainUnits;
+  @override
+  final int? reorderPoint;
 
   factory _$Product([void Function(ProductBuilder)? updates]) =>
       (new ProductBuilder()..update(updates))._build();
@@ -489,7 +513,9 @@ class _$Product extends Product {
       this.weightBoxProduct,
       this.weightPalletProduct,
       this.createdAt,
-      this.updatedAt})
+      this.updatedAt,
+      this.remainUnits,
+      this.reorderPoint})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         modelProduct, 'Product', 'modelProduct');
@@ -524,7 +550,9 @@ class _$Product extends Product {
         weightBoxProduct == other.weightBoxProduct &&
         weightPalletProduct == other.weightPalletProduct &&
         createdAt == other.createdAt &&
-        updatedAt == other.updatedAt;
+        updatedAt == other.updatedAt &&
+        remainUnits == other.remainUnits &&
+        reorderPoint == other.reorderPoint;
   }
 
   @override
@@ -547,33 +575,26 @@ class _$Product extends Product {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                id
-                                                                                    .hashCode),
-                                                                            modelProduct
-                                                                                .hashCode),
-                                                                        descriptionProduct
-                                                                            .hashCode),
-                                                                    urlImageProduct
-                                                                        .hashCode),
-                                                                formatProduct
-                                                                    .hashCode),
-                                                            codeProduct
-                                                                .hashCode),
-                                                        familyProduct.hashCode),
-                                                    finishProduct.hashCode),
-                                                brandProduct.hashCode),
-                                            originProduct.hashCode),
-                                        unitMeasureProduct.hashCode),
-                                    unitsBoxProduct.hashCode),
-                                areaBoxProduct.hashCode),
-                            boxesPalletProduct.hashCode),
-                        areaPalletProduct.hashCode),
-                    weightBoxProduct.hashCode),
-                weightPalletProduct.hashCode),
-            createdAt.hashCode),
-        updatedAt.hashCode));
+                                                                            $jc($jc($jc(0, id.hashCode), modelProduct.hashCode),
+                                                                                descriptionProduct.hashCode),
+                                                                            urlImageProduct.hashCode),
+                                                                        formatProduct.hashCode),
+                                                                    codeProduct.hashCode),
+                                                                familyProduct.hashCode),
+                                                            finishProduct.hashCode),
+                                                        brandProduct.hashCode),
+                                                    originProduct.hashCode),
+                                                unitMeasureProduct.hashCode),
+                                            unitsBoxProduct.hashCode),
+                                        areaBoxProduct.hashCode),
+                                    boxesPalletProduct.hashCode),
+                                areaPalletProduct.hashCode),
+                            weightBoxProduct.hashCode),
+                        weightPalletProduct.hashCode),
+                    createdAt.hashCode),
+                updatedAt.hashCode),
+            remainUnits.hashCode),
+        reorderPoint.hashCode));
   }
 
   @override
@@ -597,7 +618,9 @@ class _$Product extends Product {
           ..add('weightBoxProduct', weightBoxProduct)
           ..add('weightPalletProduct', weightPalletProduct)
           ..add('createdAt', createdAt)
-          ..add('updatedAt', updatedAt))
+          ..add('updatedAt', updatedAt)
+          ..add('remainUnits', remainUnits)
+          ..add('reorderPoint', reorderPoint))
         .toString();
   }
 }
@@ -694,6 +717,14 @@ class ProductBuilder implements Builder<Product, ProductBuilder> {
   String? get updatedAt => _$this._updatedAt;
   set updatedAt(String? updatedAt) => _$this._updatedAt = updatedAt;
 
+  int? _remainUnits;
+  int? get remainUnits => _$this._remainUnits;
+  set remainUnits(int? remainUnits) => _$this._remainUnits = remainUnits;
+
+  int? _reorderPoint;
+  int? get reorderPoint => _$this._reorderPoint;
+  set reorderPoint(int? reorderPoint) => _$this._reorderPoint = reorderPoint;
+
   ProductBuilder();
 
   ProductBuilder get _$this {
@@ -718,6 +749,8 @@ class ProductBuilder implements Builder<Product, ProductBuilder> {
       _weightPalletProduct = $v.weightPalletProduct;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
+      _remainUnits = $v.remainUnits;
+      _reorderPoint = $v.reorderPoint;
       _$v = null;
     }
     return this;
@@ -759,7 +792,9 @@ class ProductBuilder implements Builder<Product, ProductBuilder> {
             weightBoxProduct: weightBoxProduct,
             weightPalletProduct: weightPalletProduct,
             createdAt: createdAt,
-            updatedAt: updatedAt);
+            updatedAt: updatedAt,
+            remainUnits: remainUnits,
+            reorderPoint: reorderPoint);
     replace(_$result);
     return _$result;
   }

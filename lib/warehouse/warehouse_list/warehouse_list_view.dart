@@ -1,3 +1,5 @@
+import 'package:erp_fronted/warehouse/product_per_branch/product_per_branch_view.dart';
+import 'package:erp_fronted/warehouse/warehouse_product/warehouse_product_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -131,23 +133,45 @@ class WarehouseList extends StatelessWidget {
       body: Column(
         children: [
           Card(
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Sucursal: ${branch.nameBranch}',
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Dirección: ${branch.addressBranch}',
-                    ),
-                  ],
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Sucursal: ${branch.nameBranch}',
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Dirección: ${branch.addressBranch}',
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ActionChip(
+                        label: const Text('Ver todos los productos'),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) =>
+                                  ProductPerBranchPage(branchId: branch.id!),
+                            ),
+                          );
+                        },
+                        backgroundColor: Colors.transparent,
+                        avatar: const Icon(Icons.looks),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
           ListView.builder(
@@ -157,6 +181,16 @@ class WarehouseList extends StatelessWidget {
               final warehouse = branch.warehouses[index];
               return Card(
                 child: ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => WarehouseProductPage(
+                          warehouseId: branch.warehouses[index].id!,
+                        ),
+                      ),
+                    );
+                  },
                   title: Text(warehouse.nameWarehouse),
                   subtitle: Text(
                       'Número de Secciones: ${warehouse.sections!.length}'),

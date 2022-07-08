@@ -1,5 +1,7 @@
+import 'package:erp_fronted/new_product/detail_product_inventory/detail_product_inventory_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'product_detail_bloc.dart';
 import 'product_detail_event.dart';
@@ -39,38 +41,152 @@ class ProductDetail extends StatelessWidget {
             );
           case ProductDetailViewState.loaded:
             return Card(
-              margin: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Modelo: ${state.product?.modelProduct}'),
-                  Text('Formato: ${state.product?.formatProduct}'),
-                  const Divider(
-                    height: 8.0,
+              margin: const EdgeInsets.all(8.0),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Modelo: ${state.product?.modelProduct}'),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text('Formato: ${state.product?.formatProduct}'),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          FlutterLogo(size: 128.0),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ActionChip(
+                            label: const Text('Historial de Precios'),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => DetailProductInventoryPage(
+                                    productId: state.product!.id!,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(
+                            width: 8.0,
+                          ),
+                          ActionChip(
+                            label: const Text('Stock'),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => DetailProductInventoryPage(
+                                    productId: state.product!.id!,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      const Divider(
+                        height: 8.0,
+                      ),
+                      Text(
+                        'Infomación Adicional',
+                        style: GoogleFonts.roboto(
+                          textStyle: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text('Descripcion: ${state.product?.descriptionProduct}'),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text('Código: ${state.product?.codeProduct}'),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text('Familia: ${state.product?.familyProduct}'),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text('Acabado: ${state.product?.finishProduct}'),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text('Marca: ${state.product?.brandProduct}'),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text('Origen: ${state.product?.originProduct}'),
+                      const Divider(
+                        height: 8.0,
+                      ),
+                      Text(
+                        'Informacion Técnica',
+                        style: GoogleFonts.roboto(
+                          textStyle: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text(
+                        'Unidad de Medida: ${state.product?.unitMeasureProduct}',
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text(
+                        'Unidades por Caja: ${state.product?.unitsBoxProduct}',
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text(
+                        'Area por Caja: ${state.product?.areaBoxProduct}',
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text(
+                        'Cajas por Pallet: ${state.product?.boxesPalletProduct}',
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text(
+                        'Area por Pallet: ${state.product?.areaPalletProduct}',
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text(
+                        'Peso por Caja: ${state.product?.weightBoxProduct}',
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text(
+                        'Peso por Pallet: ${state.product?.weightPalletProduct}',
+                      ),
+                    ],
                   ),
-                  const Text('Infomación Adicional'),
-                  Text('Descripcion: ${state.product?.descriptionProduct}'),
-                  Text('Código: ${state.product?.codeProduct}'),
-                  Text('Familia: ${state.product?.familyProduct}'),
-                  Text('Acabado: ${state.product?.finishProduct}'),
-                  Text('Marca: ${state.product?.brandProduct}'),
-                  Text('Origen: ${state.product?.originProduct}'),
-                  const Divider(
-                    height: 8.0,
-                  ),
-                  const Text('Informacion Técnica'),
-                  Text(
-                      'Unidad de Medida: ${state.product?.unitMeasureProduct}'),
-                  Text('Unidades por Caja: ${state.product?.unitsBoxProduct}'),
-                  Text('Area por Caja: ${state.product?.areaBoxProduct}'),
-                  Text(
-                      'Cajas por Pallet: ${state.product?.boxesPalletProduct}'),
-                  Text('Area por Pallet: ${state.product?.areaPalletProduct}'),
-                  Text('Peso por Caja: ${state.product?.weightBoxProduct}'),
-                  Text(
-                      'Peso por Pallet: ${state.product?.weightPalletProduct}'),
-                ],
+                ),
               ),
             );
 

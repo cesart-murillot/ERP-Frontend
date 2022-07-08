@@ -1,3 +1,4 @@
+import 'package:erp_fronted/inventory/index_entry_order/index_entry_order_view.dart';
 import 'package:erp_fronted/inventory/product_inventory/product_inventory_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +31,7 @@ class MenuInventory extends StatelessWidget {
             Navigator.push(
                 context,
                   MaterialPageRoute(
-                    builder: (_) => const ProductInventoryPage(),
+                    builder: (_) => const IndexEntryOrderPage(),
                   ),
                 );
           },

@@ -1,10 +1,10 @@
+import 'package:erp_fronted/entry_order/check_entry_order/check_entry_order_view.dart';
 import 'package:erp_fronted/entry_order/register_entry_order/register_entry_order_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-import '../check_entry_order/check_entry_order_view.dart';
 import 'index_entry_order_bloc.dart';
 import 'index_entry_order_event.dart';
 import 'index_entry_order_state.dart';
@@ -20,21 +20,6 @@ class IndexEntryOrderPage extends StatelessWidget {
         builder: (context) => Scaffold(
           appBar: AppBar(),
           body: const StateViews(),
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => RegisterEntryOrderPage(),
-                ),
-              ).then(
-                (value) {
-                  context.read<IndexEntryOrderBloc>().add(const ReloadEvent());
-                },
-              );
-            },
-            label: const Text('Registar Orden de Ingreso'),
-          ),
         ),
       ),
     );
@@ -145,7 +130,7 @@ class AllEntryOrders extends StatelessWidget {
                 ),
               ),
             ),
-            /*onTap: () {
+            onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -155,7 +140,7 @@ class AllEntryOrders extends StatelessWidget {
                 ),
               ).then((value) =>
                   context.read<IndexEntryOrderBloc>().add(const ReloadEvent()));
-            },*/
+            },
           ),
         );
       },
