@@ -292,6 +292,8 @@ class VerificationDialog extends StatelessWidget {
                 context
                     .read<AddEmployeeBloc>()
                     .add(const VerifyEmployeeInfoEvent());
+                Navigator.pop(context);
+                Navigator.pop(context);
               },
               child: const Text('Ok'),
             ),

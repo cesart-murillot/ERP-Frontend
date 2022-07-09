@@ -1,6 +1,5 @@
 import 'package:erp_fronted/employee/add_employee/add_employee_view.dart';
 import 'package:erp_fronted/employee/models/employee_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -76,6 +75,8 @@ class ListOfEmployees extends StatelessWidget {
     return ListView.builder(
       itemCount: employees.employees.length,
       itemBuilder: (context, index) {
+        final role = employees.employees[index].user?.role?.nameRole ?? 'Sin Cargo';
+        final email = employees.employees[index].user?.email ?? 'Sin email';
         return Card(
           margin: const EdgeInsets.all(8.0),
           child: ListTile(
@@ -106,14 +107,14 @@ class ListOfEmployees extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'Cargo: ${employees.employees[index].user!.role!.nameRole}',
+                      'Cargo: $role',
                     ),
                   ],
                 ),
                 Row(
                   children: [
                     Text(
-                      'Email: ${employees.employees[index].user!.email}',
+                      'Email: $email',
                     ),
                   ],
                 ),

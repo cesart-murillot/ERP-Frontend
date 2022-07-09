@@ -37,7 +37,7 @@ class ShowEmployeePage extends StatelessWidget {
                   employeeID: employeeID,
                 ),
               ),
-            );
+            ).then((value) => context.read<ShowEmployeeBloc>().add(InitEvent(employeeID)));
           }
         },
       ),
@@ -270,6 +270,7 @@ class UserForm extends StatelessWidget {
                       int.parse(roleController.text),
                       emailController.text,
                     ));
+                Navigator.pop(context);
               },
               child: const Text('Confirmar'),
             ),
