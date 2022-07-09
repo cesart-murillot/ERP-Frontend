@@ -75,7 +75,8 @@ class ListOfEmployees extends StatelessWidget {
     return ListView.builder(
       itemCount: employees.employees.length,
       itemBuilder: (context, index) {
-        final role = employees.employees[index].user?.role?.nameRole ?? 'Sin Cargo';
+        final role =
+            employees.employees[index].user?.role?.nameRole ?? 'Sin Cargo';
         final email = employees.employees[index].user?.email ?? 'Sin email';
         return Card(
           margin: const EdgeInsets.all(8.0),
@@ -83,14 +84,15 @@ class ListOfEmployees extends StatelessWidget {
             contentPadding: const EdgeInsets.all(8.0),
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ShowEmployeePage(
-                            employeeID: employees.employees[index].id!,
-                          )));
-              context
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ShowEmployeePage(
+                    employeeID: employees.employees[index].id!,
+                  ),
+                ),
+              ).then((value) => context
                   .read<ListEmployeeBloc>()
-                  .add(ShowEmployeeEvent(employees.employees[index].id!));
+                  .add(ShowEmployeeEvent(employees.employees[index].id!)));
             },
             title: Text(
               '${employees.employees[index].lastNameEmployee}, ${employees.employees[index].namesEmployee}',

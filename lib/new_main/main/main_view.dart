@@ -32,43 +32,51 @@ class MainPage extends StatelessWidget {
                   ListView(
                     shrinkWrap: true,
                     children: [
-                      DrawerHeader(
-                        child: Column(
-                          //mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const FlutterLogo(size: 64.0),
-                            const SizedBox(
-                              height: 8.0,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                final int employeeId = BlocProvider.of<MainBloc>(context).state.user!.employee!.id!;
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        ShowEmployeePage(employeeID: employeeId),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                '${context.watch<MainBloc>().state.user?.employee?.namesEmployee} ${context.watch<MainBloc>().state.user?.employee?.lastNameEmployee}',
+                      SizedBox(
+                        height: 232.0,
+                        child: DrawerHeader(
+                          child: Column(
+                            //mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const FlutterLogo(size: 64.0),
+                              const SizedBox(
+                                height: 8.0,
                               ),
-                            ),
-
-                            Text(
-                              '${context.watch<MainBloc>().state.user?.email}',
-                            ),
-
-                            Text(
-                              '${context.watch<MainBloc>().state.user?.role?.nameRole}',
-                            )
-                          ],
+                              TextButton(
+                                onPressed: () {
+                                  final int employeeId =
+                                      BlocProvider.of<MainBloc>(context)
+                                          .state
+                                          .user!
+                                          .employee!
+                                          .id!;
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => ShowEmployeePage(
+                                          employeeID: employeeId),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  '${context.watch<MainBloc>().state.user?.employee?.namesEmployee} ${context.watch<MainBloc>().state.user?.employee?.lastNameEmployee}',
+                                ),
+                              ),
+                              Text(
+                                '${context.watch<MainBloc>().state.user?.email}',
+                              ),
+                              Text(
+                                '${context.watch<MainBloc>().state.user?.role?.nameRole}',
+                              ),
+                              Text(
+                                '${context.watch<MainBloc>().state.user?.employee?.branch?.typeBranch} - ${context.watch<MainBloc>().state.user?.employee?.branch?.nameBranch}',
+                              ),
+                            ],
+                          ),
+                          decoration: const BoxDecoration(color: Colors.white30),
                         ),
-                        decoration:
-                            const BoxDecoration(color: Colors.white30),
                       ),
                       const ModuleList(),
                     ],
