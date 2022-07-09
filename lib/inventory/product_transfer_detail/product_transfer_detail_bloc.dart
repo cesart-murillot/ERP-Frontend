@@ -35,7 +35,7 @@ class ProductTransferDetailBloc
     try {
       final String response = await postDataToApi(url, '');
     } catch (e) {
-      emit(state.error(errorMessage: e.toString()));
+      print(e.toString());
     }
   }
 }

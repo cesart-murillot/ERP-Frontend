@@ -278,7 +278,7 @@ class VerificationDialog extends StatelessWidget {
     return BlocBuilder<AddEmployeeBloc, AddEmployeeState>(
       builder: (context, state) {
         return AlertDialog(
-          title: const Text('Verificar Entrada de Productos'),
+          title: const Text('Se registrar al Empleado'),
           actions: [
             TextButton(
               onPressed: () {
