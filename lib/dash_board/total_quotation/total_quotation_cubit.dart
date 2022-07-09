@@ -18,7 +18,7 @@ class TotalQuotationCubit extends Cubit<TotalQuotationState> {
       emit(state.loadedData(
         state: States.loaded,
         numberOfQuotations: numberOfQuotations['numberOfQuotations'],
-        valueOfQuotations: numberOfQuotations['valueOfQuotations'],
+        valueOfQuotations: numberOfQuotations['valueOfQuotations'].toString(),
       ));
     } catch (e) {
       emit(state.error(errorMessage: e.toString()));
@@ -35,7 +35,7 @@ class TotalQuotationCubit extends Cubit<TotalQuotationState> {
       emit(state.loadedData(
         state: States.loaded,
         numberOfQuotations: numberOfQuotations['numberOfQuotations'],
-        valueOfQuotations: numberOfQuotations['valueOfQuotations'],
+        valueOfQuotations: numberOfQuotations['valueOfQuotations'].toString(),
       ));
     } catch (e) {
       emit(state.error(errorMessage: e.toString()));
@@ -52,7 +52,7 @@ class TotalQuotationCubit extends Cubit<TotalQuotationState> {
       emit(state.loadedData(
         state: States.loaded,
         numberOfQuotations: numberOfQuotations['numberOfQuotations'],
-        valueOfQuotations: numberOfQuotations['valueOfQuotations'],
+        valueOfQuotations: numberOfQuotations['valueOfQuotations'].toString(),
       ));
     } catch (e) {
       emit(state.error(errorMessage: e.toString()));

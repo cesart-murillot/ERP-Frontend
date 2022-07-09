@@ -86,7 +86,7 @@ class BestSeller extends StatelessWidget {
                   Text(
                     '$productModel - $soldQuantity unidades',
                     style: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.headlineMedium,
+                      textStyle: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
                 ],
