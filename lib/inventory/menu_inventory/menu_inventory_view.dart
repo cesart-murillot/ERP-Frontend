@@ -1,5 +1,6 @@
 import 'package:erp_fronted/inventory/index_entry_order/index_entry_order_view.dart';
 import 'package:erp_fronted/inventory/product_inventory/product_inventory_view.dart';
+import 'package:erp_fronted/inventory/product_transfer/product_transfer_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -45,7 +46,12 @@ class MenuInventory extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const ProductTransferPage(),
+              ),
+            );
           },
           child: const CardMenu(title: 'Traspasos'),
         ),
