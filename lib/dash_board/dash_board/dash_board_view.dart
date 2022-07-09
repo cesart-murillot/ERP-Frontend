@@ -1,7 +1,10 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:erp_fronted/dash_board/best_seller/best_seller_view.dart';
+import 'package:erp_fronted/dash_board/entry_order_key/entry_order_key_view.dart';
 import 'package:erp_fronted/dash_board/least_seller/least_seller_view.dart';
 import 'package:erp_fronted/dash_board/product_sale/product_sale_view.dart';
+import 'package:erp_fronted/dash_board/quotation_key/quotation_key_view.dart';
+import 'package:erp_fronted/dash_board/request_key/request_key_view.dart';
 import 'package:erp_fronted/dash_board/total_income/total_income_view.dart';
 import 'package:erp_fronted/dash_board/total_quotation/total_quotation_view.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +42,7 @@ class StateViews extends StatelessWidget {
             return Container();
             break;
           case States.loaded:
-            return const NewGrid();
+            return const GridTwoPointO();
             break;
           case States.error:
             return Container();
@@ -141,6 +144,7 @@ class SaleData extends StatelessWidget {
     final data = context.watch<DashBoardBloc>().state.saleData;
     if (data != null) {
       return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Card(
             child: Padding(
@@ -154,7 +158,8 @@ class SaleData extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(
-                    height: 6.0,
+                    height: 8.0,
+                    width: 8.0,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -181,87 +186,82 @@ class SaleData extends StatelessWidget {
               ),
             ),
           ),
-          Flexible(
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      children: const [
-                        Text('Ingresos este mes:'),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 6.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${data['month'][0]} Bs.',
-                          style: GoogleFonts.roboto(
-                            textStyle:
-                                Theme.of(context).textTheme.headlineSmall,
-                          ),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    children: const [
+                      Text('Ingresos este mes:'),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 6.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${data['month'][0]} Bs.',
+                        style: GoogleFonts.roboto(
+                          textStyle: Theme.of(context).textTheme.headlineSmall,
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 6.0,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Número de Ventas: ${data['month'][1]}',
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 6.0,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Número de Ventas: ${data['month'][1]}',
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
           ),
-          Flexible(
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      children: const [
-                        Text('Ingresos este año:'),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 6.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${data['year'][0]} Bs.',
-                          style: GoogleFonts.roboto(
-                            textStyle:
-                                Theme.of(context).textTheme.headlineSmall,
-                          ),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    children: const [
+                      Text('Ingresos este año:'),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 6.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${data['year'][0]} Bs.',
+                        style: GoogleFonts.roboto(
+                          textStyle: Theme.of(context).textTheme.headlineSmall,
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 6.0,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Número de Ventas: ${data['year'][1]}',
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 6.0,
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Número de Ventas: ${data['year'][1]}',
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
           ),
@@ -294,6 +294,72 @@ class NewGrid extends StatelessWidget {
             LeastSellerPage(),
           ],
         )
+      ],
+    );
+  }
+}
+
+class GridTwoPointO extends StatelessWidget {
+  const GridTwoPointO({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Flexible(
+          flex: 2,
+          child: Row(
+            children: [
+              Flexible(
+                flex: 1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Flexible(
+                      flex: 3,
+                      child: SaleData(),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: EntryOrderKeyPage(),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const [
+                    Flexible(
+                      flex: 0,
+                      child: TotalQuotationPage(),
+                    ),
+                    Flexible(
+                      flex: 0,
+                      child: RequestKeyPage(),
+                    ),
+                    Flexible(
+                      flex: 0,
+                      child: QuotationKeyPage(),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Flexible(
+          flex: 1,
+          child: Row(
+            children: const [
+              Flexible(
+                flex: 1,
+                child: TotalIncomePage(),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

@@ -58,28 +58,38 @@ class TotalIncome extends StatelessWidget {
   Widget build(BuildContext context) {
     final exampleData = context.watch<TotalIncomeCubit>().state.seriesList;
 
-    return Column(
-      children: [
-        Row(
-          children: const [
-            Text('Total Ingresos por Mes (en Bs.): ')
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Row(
+              children: const [
+                Flexible(
+                  child: Text(
+                    'Ingresos este año (en Bs.): ',
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            Flexible(
+              child: charts.LineChart(
+                exampleData!,
+                animate: true,
+                defaultRenderer: charts.LineRendererConfig(
+                  includePoints: true,
+                  includeArea: true,
+                ),
+                primaryMeasureAxis:
+                    const charts.NumericAxisSpec(showAxisLine: true),
+              ),
+            ),
           ],
         ),
-        const SizedBox(
-          height: 8.0,
-        ),
-        Flexible(
-          child: charts.LineChart(
-            exampleData!,
-            animate: true,
-            defaultRenderer: charts.LineRendererConfig(
-              includePoints: true,
-              includeArea: true,
-            ),
-            primaryMeasureAxis: const charts.NumericAxisSpec(showAxisLine: true),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

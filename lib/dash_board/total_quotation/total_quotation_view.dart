@@ -37,9 +37,7 @@ class StateViews extends StatelessWidget {
             );
             break;
           case States.loaded:
-            return const Center(
-              child: TotalQuotation(),
-            );
+            return const TotalQuotation();
           case States.error:
             return Center(
               child: Text(
@@ -62,79 +60,103 @@ class TotalQuotation extends StatelessWidget {
         context.watch<TotalQuotationCubit>().state.numberOfQuotations;
     final valueOfQuotations =
         context.watch<TotalQuotationCubit>().state.valueOfQuotations;
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ActionChip(
-                label: const Text('Este Año'),
-                onPressed: () {
-                  context
-                      .read<TotalQuotationCubit>()
-                      .getNumberOfQuotationsThisYear();
-                },
-              ),
-              const SizedBox(
-                width: 8.0,
-              ),
-              ActionChip(
-                label: const Text('Este Mes'),
-                onPressed: () {
-                  context
-                      .read<TotalQuotationCubit>()
-                      .getNumberOfQuotationsThisMonth();
-                },
-              ),
-              const SizedBox(
-                width: 8.0,
-              ),
-              ActionChip(
-                label: const Text('Hoy'),
-                onPressed: () {
-                  context
-                      .read<TotalQuotationCubit>()
-                      .getNumberOfQuotationsToday();
-                },
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 8.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const [Text('Cotizaciones Realizadas:')],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '$numberOfQuotations',
-                style: GoogleFonts.roboto(
-                  textStyle: Theme.of(context).textTheme.headline1,
-                  color:
-                  numberOfQuotations < 5 ? Colors.red : Colors.yellow,
-                ),
-              ),
-            ],
-          ),
-          numberOfQuotations > 0
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Por un valor de: $valueOfQuotations Bs.',
-                      style: GoogleFonts.roboto(
-                        textStyle: Theme.of(context).textTheme.bodyLarge,
-                      ),
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Wrap(
+              runSpacing: 8.0,
+              children: [
+                SizedBox(
+                  height: 24.0,
+                  width: 48.0,
+                  child: FittedBox(
+                    child: ActionChip(
+                      label: const Text('Año'),
+                      onPressed: () {
+                        context
+                            .read<TotalQuotationCubit>()
+                            .getNumberOfQuotationsThisYear();
+                      },
                     ),
-                  ],
-                )
-              : const SizedBox(),
-        ],
+                  ),
+                ),
+                SizedBox(
+                  height: 24.0,
+                  width: 48.0,
+                  child: FittedBox(
+                    child: ActionChip(
+                      label: const Text('Mes'),
+                      onPressed: () {
+                        context
+                            .read<TotalQuotationCubit>()
+                            .getNumberOfQuotationsThisMonth();
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 24.0,
+                  width: 48.0,
+                  child: FittedBox(
+                    child: ActionChip(
+                      label: const Text('Hoy'),
+                      onPressed: () {
+                        context
+                            .read<TotalQuotationCubit>()
+                            .getNumberOfQuotationsToday();
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Cotizaciones Realizadas:',
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '$numberOfQuotations',
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.headlineSmall,
+                    color: numberOfQuotations < 5 ? Colors.pinkAccent : Colors.orange,
+                  ),
+                ),
+              ],
+            ),
+            numberOfQuotations > 0
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'Por un valor de: $valueOfQuotations Bs.',
+                          style: GoogleFonts.roboto(
+                            textStyle: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
+          ],
+        ),
       ),
     );
   }
