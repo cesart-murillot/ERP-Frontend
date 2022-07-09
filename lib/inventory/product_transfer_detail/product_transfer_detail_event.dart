@@ -11,3 +11,10 @@ class InitEvent extends ProductTransferDetailEvent {
 
   const InitEvent(this.transferId);
 }
+
+class GenerateShipmentOrderEvent extends ProductTransferDetailEvent {
+  const GenerateShipmentOrderEvent();
+  @override
+  List<Object> get props => [];
+
+}

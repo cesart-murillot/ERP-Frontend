@@ -13,6 +13,7 @@ class ProductTransferDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocProvider(
       create: (BuildContext context) =>
           ProductTransferDetailBloc()..add(InitEvent(transferId)),
@@ -40,22 +41,18 @@ class StateViews extends StatelessWidget {
                 'Initial State',
               ),
             );
-            break;
           case States.loading:
             return const Center(
               child: CircularProgressIndicator(),
             );
-            break;
           case States.loaded:
             return const ProductTransferDetail();
-            break;
           case States.error:
             return Center(
               child: Text(
                 '${state.errorMessage}',
               ),
             );
-            break;
         }
       },
     );
@@ -71,6 +68,7 @@ class ProductTransferDetail extends StatelessWidget {
     if (transfer != null) {
       final date = DateFormat('EEEE d MMMM, ' 'yy - HH:mm a')
           .format(DateTime.parse(transfer.createdAt!));
+      final verified = transfer.verified ?? false;
       return Column(
         children: [
           Row(
@@ -87,6 +85,58 @@ class ProductTransferDetail extends StatelessWidget {
           const UserInfo(),
           const BranchInfo(),
           const ProductTransferInformation(),
+          const SizedBox(
+            height: 8.0,
+          ),
+          !verified
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FloatingActionButton.extended(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (_) => BlocProvider.value(
+                              value: BlocProvider.of<ProductTransferDetailBloc>(
+                                  context),
+                              child: const VerificationDialog(),
+                            ),
+                          ).then(
+                            (value) {
+                              if (value is bool) {
+                                if (value) {
+                                  context
+                                      .read<ProductTransferDetailBloc>()
+                                      .add(InitEvent(transfer.id!));
+                                }
+                              }
+                            },
+                          );
+                        },
+                        label: const Text(
+                          'Generar Orden de Envio',
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: const [
+                      Chip(
+                        avatar: Icon(
+                          Icons.check,
+                          color: Colors.green,
+                        ),
+                        label: Text('Verificado'),
+                      ),
+                    ],
+                  ),
+                ),
         ],
       );
     }
@@ -220,5 +270,38 @@ class ProductTransferInformation extends StatelessWidget {
       );
     }
     return Container();
+  }
+}
+
+class VerificationDialog extends StatelessWidget {
+  const VerificationDialog({Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(context) {
+    return BlocBuilder<ProductTransferDetailBloc, ProductTransferDetailState>(
+      builder: (context, state) {
+        return AlertDialog(
+          title: const Text('Generar Orden de Envio'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, 'Cancelar');
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                context
+                    .read<ProductTransferDetailBloc>()
+                    .add(const GenerateShipmentOrderEvent());
+                Navigator.pop(context, true);
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
