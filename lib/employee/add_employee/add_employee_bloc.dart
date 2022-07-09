@@ -49,9 +49,8 @@ class AddEmployeeBloc extends Bloc<AddEmployeeEvent, AddEmployeeState> {
       final url = preDefinedUri('/api/employees/');
       final employeeString = objectToString(employees, Employees.serializer);
       final String response = await postDataToApi(url, employeeString!);
-      print(response);
     } catch (e) {
-      print(e);
+      print(e.toString());
     }
   }
 }

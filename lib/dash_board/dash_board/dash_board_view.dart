@@ -278,7 +278,7 @@ class NewGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: 2,
+      crossAxisCount: 1,
       children: [
         const ProductSalePage(),
         const SaleData(),
