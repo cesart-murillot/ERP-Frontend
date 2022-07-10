@@ -20,44 +20,12 @@ class DashBoardBloc extends Bloc<DashBoardEvent, DashBoardState> {
     final branchId = prefs.get('branchId');
 
     final urlSale = preDefinedUri('/api/dateSales/$branchId');
-    final response = await get(urlSale);
 
-    final saleData = jsonDecode(response.body);
 
-    final urlSaleByMonth = preDefinedUri('/api/salesMonth/$branchId');
-    final responseSaleByMonth = await get(urlSaleByMonth);
-    final saleByMonthData = jsonDecode(responseSaleByMonth.body);
+    final data = await fetchDataFromApi(urlSale);
+    final saleData = jsonDecode(data);
 
-    final List<OrdinalSales> ordinalSales = [];
-
-    for (final saleByMonthDatum in saleByMonthData) {
-      //print(saleByMonthDatum);
-      if (saleByMonthDatum['sales'] is String){
-        ordinalSales.add(OrdinalSales(saleByMonthDatum['month'].toString(), double.parse(saleByMonthDatum['sales'])));
-      }
-    }
-
-    final value = charts.Series<OrdinalSales, String>(
-      id: 'Sales',
-      colorFn: (_,__) => charts.MaterialPalette.blue.shadeDefault,
-      domainFn: (OrdinalSales sales, _) => sales.month,
-      measureFn: (OrdinalSales sales, _) => sales.sales,
-      data: ordinalSales,
-    );
-
-    final value2 = charts.Series<OrdinalSales, String>(
-      id: 'Sales',
-      colorFn: (_,__) => charts.MaterialPalette.red.shadeDefault,
-      domainFn: (OrdinalSales sales, _) => sales.month,
-      measureFn: (OrdinalSales sales, _) => sales.sales,
-      data: ordinalSales,
-    );
-
-    List<charts.Series<OrdinalSales, String>> listData = [];
-    listData.add(value);
-    listData.add(value2);
-
-    emit(state.loadedData(state: States.loaded, exampleData: listData, saleData: saleData));
+    emit(state.loadedData(state: States.loaded, saleData: saleData));
   }
 }
 

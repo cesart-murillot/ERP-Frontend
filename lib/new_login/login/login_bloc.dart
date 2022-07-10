@@ -35,16 +35,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       try {
         final String response = await postDataToApi(url, userString);
         final deserialized = jsonDecode(response);
+        final userId = deserialized['user_id'];
 
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', deserialized['token']);
         await prefs.setBool('isLoggedIn', true);
         await prefs.setInt('userId', deserialized['user_id']);
 
+        final urlUserData = preDefinedUri('/api/users/$userId', {'with': 'all'});
+        final User user = await getObject(urlUserData, User.serializer);
+
+        await prefs.setInt('branchId', user.employee!.branchID!);
+        await prefs.setInt('roleId', user.roleId!);
+
         emit(const LoginState().loggedIn());
       } catch (e) {
         emit(const LoginState().errorLogging(error: e.toString()));
-        //print(e);
       }
     }
   }
