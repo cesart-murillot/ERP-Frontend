@@ -13,14 +13,35 @@ class ProductTransferDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider(
       create: (BuildContext context) =>
           ProductTransferDetailBloc()..add(InitEvent(transferId)),
-      child: Builder(
-        builder: (context) => Scaffold(
-          body: const StateViews(),
-          appBar: AppBar(),
+      child: BlocListener<ProductTransferDetailBloc, ProductTransferDetailState>(
+        listener: (context, state) {
+          if (state.showErrorModal) {
+            showModalBottomSheet(
+              backgroundColor: Colors.black,
+              context: context,
+              builder: (_) {
+                return SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      '${state.modalMessage}',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
+                );
+              },
+              isDismissible: true,
+            ).then((value) => context.read<ProductTransferDetailBloc>().add(const DismissModalEvent()));
+          }
+        },
+        child: Builder(
+          builder: (context) => Scaffold(
+            body: const StateViews(),
+            appBar: AppBar(),
+          ),
         ),
       ),
     );
@@ -274,8 +295,7 @@ class ProductTransferInformation extends StatelessWidget {
 }
 
 class VerificationDialog extends StatelessWidget {
-  const VerificationDialog({Key? key})
-      : super(key: key);
+  const VerificationDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(context) {

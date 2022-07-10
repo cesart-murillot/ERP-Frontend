@@ -1,6 +1,9 @@
 import 'package:erp_fronted/inventory/product_transfer_detail/product_transfer_detail_view.dart';
+import 'package:erp_fronted/transfer_order/product_shipment/product_shipment_view.dart';
+import 'package:erp_fronted/transfer_order/transfer_order_list/transfer_order_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import 'product_transfer_bloc.dart';
@@ -45,8 +48,16 @@ class StateViews extends StatelessWidget {
             );
             break;
           case States.loaded:
-            return const ProductTransfer();
-            break;
+            if (state.roleId == 1) {
+              return const TabTransfer();
+            }
+            if (state.roleId == 4) {
+              return const TabShipment();
+            }
+            if (state.roleId == 5) {
+              return const TabArrival();
+            }
+            return const SizedBox();
           case States.error:
             return Center(
               child: Text(
@@ -56,6 +67,192 @@ class StateViews extends StatelessWidget {
             break;
         }
       },
+    );
+  }
+}
+
+class TabArrival extends StatelessWidget {
+  const TabArrival({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        children: [
+          Flexible(
+            flex: 0,
+            child: TabBar(
+              tabs: [
+                Tab(
+                  icon: const Icon(
+                    Icons.transfer_within_a_station,
+                    color: Colors.cyanAccent,
+                  ),
+                  child: Text(
+                    'Traspasos',
+                    style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.labelSmall,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                Tab(
+                  icon: const Icon(
+                    Icons.input,
+                    color: Colors.lightGreenAccent,
+                  ),
+                  child: Text(
+                    'Llegadas',
+                    style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.labelSmall,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Expanded(
+            flex: 1,
+            child: TabBarView(
+              children: [
+                ProductTransfer(),
+                ProductShipmentPage(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TabShipment extends StatelessWidget {
+  const TabShipment({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        children: [
+          Flexible(
+            flex: 0,
+            child: TabBar(
+              tabs: [
+                Tab(
+                  icon: const Icon(
+                    Icons.transfer_within_a_station,
+                    color: Colors.cyanAccent,
+                  ),
+                  child: Text(
+                    'Traspasos',
+                    style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.labelSmall,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                Tab(
+                  icon: const Icon(
+                    Icons.local_shipping,
+                    color: Colors.orangeAccent,
+                  ),
+                  child: Text(
+                    'Envios',
+                    style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.labelSmall,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Expanded(
+            flex: 1,
+            child: TabBarView(
+              children: [
+                ProductTransfer(),
+                ProductShipmentPage(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+class TabTransfer extends StatelessWidget {
+  const TabTransfer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Column(
+        children: [
+          Flexible(
+            flex: 0,
+            child: TabBar(
+              tabs: [
+                Tab(
+                  icon: const Icon(
+                    Icons.transfer_within_a_station,
+                    color: Colors.cyanAccent,
+                  ),
+                  child: Text(
+                    'Traspasos',
+                    style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.labelSmall,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                Tab(
+                  icon: const Icon(
+                    Icons.local_shipping,
+                    color: Colors.orangeAccent,
+                  ),
+                  child: Text(
+                    'Envios',
+                    style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.labelSmall,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                Tab(
+                  icon: const Icon(
+                    Icons.input,
+                    color: Colors.lightGreenAccent,
+                  ),
+                  child: Text(
+                    'Llegadas',
+                    style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.labelSmall,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Expanded(
+            flex: 1,
+            child: TabBarView(
+              children: [
+                ProductTransfer(),
+                ProductShipmentPage(),
+                ProductShipmentPage(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -88,11 +285,11 @@ class ProductTransfer extends StatelessWidget {
                       transferId: transfer.id!,
                     ),
                   ),
-                );
+                ).then((value) => context.read<ProductTransferBloc>().add(const InitEvent()));
               },
               title: Column(
                 children: [
-                  Row(
+                  Wrap(
                     children: [
                       Text(
                         '${transfer.branch?.typeBranch} - ${transfer.branch?.nameBranch}',

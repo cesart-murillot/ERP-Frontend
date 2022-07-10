@@ -5,6 +5,7 @@ import 'package:erp_fronted/src/resources/get_object.dart';
 import 'package:erp_fronted/src/resources/post_object.dart';
 import 'package:erp_fronted/transfer_order/models/transfer_order_model.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'check_transfer_order_event.dart';
 import 'check_transfer_order_state.dart';
@@ -25,7 +26,13 @@ class CheckTransferOrderBloc
     final url = preDefinedUri('/api/transfer_orders/${event.transferOrderId}');
     try {
       final TransferOrder transferOrder = await getObject(url, TransferOrder.serializer);
-      emit(const CheckTransferOrderState()
+      final prefs = await SharedPreferences.getInstance();
+      final roleId = prefs.getInt('roleId');
+
+      if (roleId != null) {
+        return emit(state.loadingData(state: States.loaded, transferOrder: transferOrder, roleId: roleId));
+      }
+      return emit(const CheckTransferOrderState()
           .loadingData(state: States.loaded, transferOrder: transferOrder));
     } catch (e) {
       emit(const CheckTransferOrderState().error(e.toString()));

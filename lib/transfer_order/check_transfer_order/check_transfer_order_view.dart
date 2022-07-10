@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:erp_fronted/employee/models/user_model.dart';
 import 'package:erp_fronted/product_request/models/product_transfer_model.dart';
 import 'package:erp_fronted/transfer_order/models/transfer_order_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -125,57 +126,100 @@ class TransferOrderWidget extends StatelessWidget {
         '${transferOrder.transfer.user?.employee?.namesEmployee} ${transferOrder.transfer.user?.employee?.lastNameEmployee}';
     final userRole = '${transferOrder.transfer.user?.role?.nameRole}';
     final userContact = '${transferOrder.transfer.user?.email}';
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Card(
-          margin: const EdgeInsets.all(8.0),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Solicitado por $employeeName',
-                  style: GoogleFonts.oswald(
-                    textStyle: Theme.of(context).textTheme.headlineSmall,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        requestDate,
+                        style: GoogleFonts.roboto(
+                          textStyle: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Text(
-                  '$userContact - $userRole',
-                  style: GoogleFonts.oswald(
-                    textStyle: Theme.of(context).textTheme.subtitle1,
-                    fontStyle: FontStyle.italic,
+                  const SizedBox(
+                    height: 8.0,
+                    width: 8.0,
                   ),
-                ),
-                Text(
-                  requestDate,
-                  style: GoogleFonts.oswald(
-                    textStyle: Theme.of(context).textTheme.titleSmall,
+                  Row(
+                    children: [
+                      Text(
+                        'Solicitado por $employeeName',
+                        style: GoogleFonts.roboto(
+                          textStyle: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Text(
-                  branch,
-                  style: GoogleFonts.oswald(
-                    textStyle: Theme.of(context).textTheme.bodySmall,
+                  const SizedBox(
+                    height: 8.0,
+                    width: 8.0,
                   ),
-                ),
-              ],
+                  Row(
+                    children: [
+                      Text(
+                        '$userContact - $userRole',
+                        style: GoogleFonts.roboto(
+                          textStyle: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                    width: 8.0,
+                  ),
+                  Wrap(
+                    children: [
+                      Text(
+                        branch,
+                        style: GoogleFonts.roboto(
+                          textStyle: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        Text('Aprobado $verifiedDate'),
-        TransferControl(
-          sent: transferOrder.sent,
-          received: transferOrder.received,
-        ),
-        Flexible(
-          child: ProductTransferList(
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Aprobado el: $verifiedDate',
+                    style: GoogleFonts.roboto(
+                      textStyle: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          ProductTransferList(
             productTransfer: transferOrder.transfer.productTransfers,
           ),
-        ),
-      ],
+          TransferControl(
+            sent: transferOrder.sent,
+            received: transferOrder.received,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -196,24 +240,13 @@ class ProductTransferList extends StatelessWidget {
             '${productTransfer[index].product?.formatProduct}';
         final quantity = productTransfer[index].quantity;
         return Card(
-          margin: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Flexible(
-                child: ListTile(
-                  title: Text(modelProduct),
-                  subtitle: Text(formatProduct),
-                  trailing: Text(quantity.toString()),
-                ),
-              ),
-              Flexible(
-                child: Checkbox(
-                  value: false,
-                  onChanged: (value) {},
-                ),
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              title: Text('Modelo: $modelProduct'),
+              subtitle: Text('Formato: $formatProduct'),
+              trailing: Text('Cantidad: ${quantity.toString()} unidades'),
+            ),
           ),
         );
       },
@@ -228,28 +261,37 @@ class TransferControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int roleId = context.watch<CheckTransferOrderBloc>().state.roleId;
     if (!sent && !received) {
-      return ElevatedButton(
-        onPressed: () {
-          context
-              .read<CheckTransferOrderBloc>()
-              .add(const ShowSentDialogEvent());
-        },
-        child: const Text('Marcar como Enviado'),
-      );
+
+      if (roleId == 1 || roleId == 4) {
+        return ElevatedButton(
+          onPressed: () {
+            context
+                .read<CheckTransferOrderBloc>()
+                .add(const ShowSentDialogEvent());
+          },
+          child: const Text('Marcar como Enviado'),
+        );
+      }
     }
     if (sent && !received) {
       return Column(
         children: [
           const SentInformation(),
-          ElevatedButton(
-            onPressed: () {
-              context
-                  .read<CheckTransferOrderBloc>()
-                  .add(const ShowReceivedDialogEvent());
-            },
-            child: const Text('Marcar como Recibido'),
-          ),
+          roleId == 5 || roleId == 1
+              ? ElevatedButton(
+                  onPressed: () {
+                    context
+                        .read<CheckTransferOrderBloc>()
+                        .add(const ShowReceivedDialogEvent());
+                  },
+                  child: const Text('Marcar como Recibido'),
+                )
+              : const SizedBox(
+                  height: 8.0,
+                  width: 8.0,
+                ),
         ],
       );
     }
@@ -262,7 +304,10 @@ class TransferControl extends StatelessWidget {
         ],
       );
     }
-    return const Text('Error');
+    return const SizedBox(
+      height: 8.0,
+      width: 8.0,
+    );
   }
 }
 
@@ -286,24 +331,65 @@ class SentInformation extends StatelessWidget {
     final String role = '${user.role?.nameRole}';
 
     return Card(
-      child: Column(
-        children: [
-          Text(
-            'Enviado por: $userName',
-            style: GoogleFonts.oswald(
-                textStyle: Theme.of(context).textTheme.titleSmall),
-          ),
-          Text(
-            '$role - $email',
-            style: GoogleFonts.oswald(
-                textStyle: Theme.of(context).textTheme.subtitle1),
-          ),
-          Text(
-            sentDateFormatted,
-            style: GoogleFonts.oswald(
-                textStyle: Theme.of(context).textTheme.bodySmall),
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'Enviado el: $sentDateFormatted',
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+              width: 8.0,
+            ),
+            Row(
+              children: [
+                Text(
+                  'Enviado por: $userName',
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+              width: 8.0,
+            ),
+            Row(
+              children: [
+                Text(
+                  '$role',
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+              width: 8.0,
+            ),
+            Row(
+              children: [
+                Text(
+                  'Contacto: $email',
+                  style: GoogleFonts.roboto(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -332,11 +418,46 @@ class ReceivedInformation extends StatelessWidget {
     final String role = '${user.role?.nameRole}';
 
     return Card(
-      child: Column(
-        children: [
-          Text('Recibido por: $userName - $role\n$email'),
-          Text(sentDateFormatted),
-        ],
+      margin: const EdgeInsets.all(8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text('Recibido el: $sentDateFormatted'),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+              width: 8.0,
+            ),
+            Row(
+              children: [
+                Text('Recibido por: $userName'),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+              width: 8.0,
+            ),
+            Row(
+              children: [
+                Text(role),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+              width: 8.0,
+            ),
+            Row(
+              children: [
+                Text('Contacto: $email'),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

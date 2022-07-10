@@ -14,6 +14,7 @@ class ProductTransferDetailBloc
       : super(const ProductTransferDetailState().init()) {
     on<InitEvent>(_init);
     on<GenerateShipmentOrderEvent>(_generateShipmentOrder);
+    on<DismissModalEvent>(_dismissModal);
   }
 
   void _init(InitEvent event, Emitter<ProductTransferDetailState> emit) async {
@@ -35,7 +36,19 @@ class ProductTransferDetailBloc
     try {
       final String response = await postDataToApi(url, '');
     } catch (e) {
-      print(e.toString());
+      emit(state.loadedData(
+        showErrorModal: true,
+        modalMessage: e.toString(),
+        state: States.loaded,
+      ));
     }
+  }
+
+  FutureOr<void> _dismissModal(
+      DismissModalEvent event, Emitter<ProductTransferDetailState> emit) {
+    emit(state.loadedData(
+      showErrorModal: false,
+      state: States.loaded,
+    ));
   }
 }

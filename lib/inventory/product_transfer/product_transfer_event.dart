@@ -1,3 +1,12 @@
-abstract class ProductTransferEvent {}
+import 'package:equatable/equatable.dart';
 
-class InitEvent extends ProductTransferEvent {}
+abstract class ProductTransferEvent extends Equatable {
+  const ProductTransferEvent();
+}
+
+class InitEvent extends ProductTransferEvent {
+  @override
+  List<Object?> get props => [];
+
+  const InitEvent();
+}

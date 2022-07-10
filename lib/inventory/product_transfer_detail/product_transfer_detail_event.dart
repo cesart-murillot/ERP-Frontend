@@ -16,5 +16,10 @@ class GenerateShipmentOrderEvent extends ProductTransferDetailEvent {
   const GenerateShipmentOrderEvent();
   @override
   List<Object> get props => [];
+}
 
+class DismissModalEvent extends ProductTransferDetailEvent {
+  const DismissModalEvent();
+  @override
+  List<Object> get props => [];
 }

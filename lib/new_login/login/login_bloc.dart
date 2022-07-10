@@ -46,6 +46,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final User user = await getObject(urlUserData, User.serializer);
 
         await prefs.setInt('branchId', user.employee!.branchID!);
+
         await prefs.setInt('roleId', user.roleId!);
 
         emit(const LoginState().loggedIn());

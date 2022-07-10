@@ -7,6 +7,7 @@ class ProductTransferState extends Equatable {
   final States state;
   final String? errorMessage;
   final Transfers? transfers;
+  final int roleId;
 
   ProductTransferState init() {
     return const ProductTransferState();
@@ -26,10 +27,12 @@ class ProductTransferState extends Equatable {
   ProductTransferState loadedData({
     required States state,
     Transfers? transfers,
+    int? roleId,
   }) {
     return ProductTransferState(
       state: state,
       transfers: transfers ?? this.transfers,
+      roleId: roleId ?? this.roleId,
     );
   }
 
@@ -38,11 +41,13 @@ class ProductTransferState extends Equatable {
         state,
         errorMessage,
         transfers,
+        roleId,
       ];
 
   const ProductTransferState({
     this.state = States.initial,
     this.errorMessage,
     this.transfers,
+    this.roleId = 0,
   });
 }
