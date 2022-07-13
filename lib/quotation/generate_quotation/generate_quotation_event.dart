@@ -1,3 +1,14 @@
-abstract class GenerateQuotationEvent {}
+import 'package:equatable/equatable.dart';
 
-class InitEvent extends GenerateQuotationEvent {}
+abstract class GenerateQuotationEvent extends Equatable {}
+
+class InitEvent extends GenerateQuotationEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class AddProductQuotationEvent extends GenerateQuotationEvent {
+  @override
+  List<Object?> get props => [];
+}
+
