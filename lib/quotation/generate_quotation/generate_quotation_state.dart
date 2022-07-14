@@ -1,15 +1,18 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:equatable/equatable.dart';
-import 'package:erp_fronted/quotation/models/quotation_model.dart';
+import 'package:erp_fronted/product/models/product_model.dart';
+import 'package:flutter/material.dart';
 
 enum States { loading, loaded }
 
 class GenerateQuotationState extends Equatable {
-  //final products = <ProductQuotation>[];
-  final ListBuilder<ProductQuotation>? products;
   final States? state;
-  final int numberOfElements;
-  final List<int> list;
+  final List<Product> products;
+
+  final List<TextEditingController> quantities;
+  final List<TextEditingController> prices;
+  final List<double> subTotals;
+
+  final double total;
 
   GenerateQuotationState init() {
     return const GenerateQuotationState();
@@ -20,22 +23,39 @@ class GenerateQuotationState extends Equatable {
   }
 
   GenerateQuotationState addedProductQuotation({
-    required int numberOfElements,
-    List<int>? list,
+    required States state,
+    List<Product>? products,
+    List<TextEditingController>? quantities,
+    List<TextEditingController>? prices,
+    List<double>? subTotals,
+    double? total,
   }) {
     return GenerateQuotationState(
-      numberOfElements: numberOfElements,
-      list: list ?? this.list,
+      state: state,
+      products: products ?? this.products,
+      quantities: quantities ?? this.quantities,
+      prices: prices ?? this.prices,
+      subTotals: subTotals ?? this.subTotals,
+      total: total ?? this.total,
     );
   }
 
   @override
-  List<Object?> get props => [products, state, numberOfElements, list];
+  List<Object?> get props => [
+        state,
+        products,
+        quantities,
+        prices,
+        subTotals,
+        total,
+      ];
 
   const GenerateQuotationState({
-    this.products,
+    this.quantities = const [],
+    this.prices = const [],
+    this.subTotals = const [],
+    this.total = 0,
     this.state,
-    this.numberOfElements = 0,
-    this.list = const [],
+    this.products = const [],
   });
 }

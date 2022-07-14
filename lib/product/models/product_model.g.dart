@@ -87,6 +87,9 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
       'model_product',
       serializers.serialize(object.modelProduct,
           specifiedType: const FullType(String)),
+      'price',
+      serializers.serialize(object.price,
+          specifiedType: const FullType(double)),
     ];
     Object? value;
     value = object.id;
@@ -322,6 +325,10 @@ class _$ProductSerializer implements StructuredSerializer<Product> {
           result.reorderPoint = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'price':
+          result.price = serializers.deserialize(value,
+              specifiedType: const FullType(double))! as double;
+          break;
       }
     }
 
@@ -490,6 +497,8 @@ class _$Product extends Product {
   final int? remainUnits;
   @override
   final int? reorderPoint;
+  @override
+  final double price;
 
   factory _$Product([void Function(ProductBuilder)? updates]) =>
       (new ProductBuilder()..update(updates))._build();
@@ -515,10 +524,12 @@ class _$Product extends Product {
       this.createdAt,
       this.updatedAt,
       this.remainUnits,
-      this.reorderPoint})
+      this.reorderPoint,
+      required this.price})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         modelProduct, 'Product', 'modelProduct');
+    BuiltValueNullFieldError.checkNotNull(price, 'Product', 'price');
   }
 
   @override
@@ -552,7 +563,8 @@ class _$Product extends Product {
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         remainUnits == other.remainUnits &&
-        reorderPoint == other.reorderPoint;
+        reorderPoint == other.reorderPoint &&
+        price == other.price;
   }
 
   @override
@@ -575,26 +587,26 @@ class _$Product extends Product {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc(0, id.hashCode), modelProduct.hashCode),
-                                                                                descriptionProduct.hashCode),
-                                                                            urlImageProduct.hashCode),
-                                                                        formatProduct.hashCode),
-                                                                    codeProduct.hashCode),
-                                                                familyProduct.hashCode),
-                                                            finishProduct.hashCode),
-                                                        brandProduct.hashCode),
-                                                    originProduct.hashCode),
-                                                unitMeasureProduct.hashCode),
-                                            unitsBoxProduct.hashCode),
-                                        areaBoxProduct.hashCode),
-                                    boxesPalletProduct.hashCode),
-                                areaPalletProduct.hashCode),
-                            weightBoxProduct.hashCode),
-                        weightPalletProduct.hashCode),
-                    createdAt.hashCode),
-                updatedAt.hashCode),
-            remainUnits.hashCode),
-        reorderPoint.hashCode));
+                                                                            $jc($jc($jc($jc(0, id.hashCode), modelProduct.hashCode), descriptionProduct.hashCode),
+                                                                                urlImageProduct.hashCode),
+                                                                            formatProduct.hashCode),
+                                                                        codeProduct.hashCode),
+                                                                    familyProduct.hashCode),
+                                                                finishProduct.hashCode),
+                                                            brandProduct.hashCode),
+                                                        originProduct.hashCode),
+                                                    unitMeasureProduct.hashCode),
+                                                unitsBoxProduct.hashCode),
+                                            areaBoxProduct.hashCode),
+                                        boxesPalletProduct.hashCode),
+                                    areaPalletProduct.hashCode),
+                                weightBoxProduct.hashCode),
+                            weightPalletProduct.hashCode),
+                        createdAt.hashCode),
+                    updatedAt.hashCode),
+                remainUnits.hashCode),
+            reorderPoint.hashCode),
+        price.hashCode));
   }
 
   @override
@@ -620,7 +632,8 @@ class _$Product extends Product {
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('remainUnits', remainUnits)
-          ..add('reorderPoint', reorderPoint))
+          ..add('reorderPoint', reorderPoint)
+          ..add('price', price))
         .toString();
   }
 }
@@ -725,6 +738,10 @@ class ProductBuilder implements Builder<Product, ProductBuilder> {
   int? get reorderPoint => _$this._reorderPoint;
   set reorderPoint(int? reorderPoint) => _$this._reorderPoint = reorderPoint;
 
+  double? _price;
+  double? get price => _$this._price;
+  set price(double? price) => _$this._price = price;
+
   ProductBuilder();
 
   ProductBuilder get _$this {
@@ -751,6 +768,7 @@ class ProductBuilder implements Builder<Product, ProductBuilder> {
       _updatedAt = $v.updatedAt;
       _remainUnits = $v.remainUnits;
       _reorderPoint = $v.reorderPoint;
+      _price = $v.price;
       _$v = null;
     }
     return this;
@@ -794,7 +812,9 @@ class ProductBuilder implements Builder<Product, ProductBuilder> {
             createdAt: createdAt,
             updatedAt: updatedAt,
             remainUnits: remainUnits,
-            reorderPoint: reorderPoint);
+            reorderPoint: reorderPoint,
+            price: BuiltValueNullFieldError.checkNotNull(
+                price, 'Product', 'price'));
     replace(_$result);
     return _$result;
   }

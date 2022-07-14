@@ -86,6 +86,8 @@ abstract class Product implements Built<Product, ProductBuilder> {
   @BuiltValueField(wireName: 'reorder_point')
   int? get reorderPoint;
 
+  double get price;
+
   Product._();
   factory Product([void Function(ProductBuilder) updates]) = _$Product;
 }

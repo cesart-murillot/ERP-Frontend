@@ -1,3 +1,5 @@
+import 'package:erp_fronted/quotation/generate_quotation/generate_quotation_event.dart';
+import 'package:erp_fronted/search_bar/product_search/product_search_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,6 +44,7 @@ class GenerateQuotation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final total = context.watch<GenerateQuotationBloc>().state.total;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -78,63 +81,42 @@ class GenerateQuotation extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Flexible(
-                  flex: 2,
-                  child: SizedBox(),
+                TextButton(
+                  onPressed: () {
+                    /*context
+                        .read<GenerateQuotationBloc>()
+                        .add(AddProductQuotationEvent());*/
+                    showDialog(
+                      context: context,
+                      builder: (_) => const ProductSearchPage(),
+                    ).then(
+                      (productId) {
+                        if (productId != null && productId is int) {
+                          context
+                              .read<GenerateQuotationBloc>()
+                              .add(AddProductQuotationEvent(productId));
+                        }
+                      },
+                    );
+                  },
+                  child: const Text('Añadir Producto'),
                 ),
-                Flexible(
-                  flex: 1,
-                  child: TextButton(
-                    onPressed: () {
-                      /*context
-                          .read<GenerateQuotationBloc>()
-                          .add(AddProductQuotationEvent());*/
-                      showSearch(
-                        context: context,
-                        delegate: ProductSearch(),
-                      );
-                    },
-                    child: const Text('Añadir Producto'),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text('Remover Producto'),
-                  ),
-                )
               ],
             ),
-            const ProductDetail(),
+            const Center(
+              child: ProductDetail(),
+            ),
+            const Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text('Total: $total'),
+              ],
+            ),
           ],
         ),
       ),
     );
-  }
-}
-
-class ProductSearch extends SearchDelegate {
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [
-      Icon(Icons.clear),
-    ];
-  }
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return Icon(Icons.clear);
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return Icon(Icons.clear);
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return Icon(Icons.clear);
   }
 }
 
@@ -144,89 +126,100 @@ class ProductDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //final products = context.watch<GenerateQuotationBloc>().state.products;
-    final products = context.watch<GenerateQuotationBloc>().state.list;
-    return DataTable(
-      showBottomBorder: true,
-      showCheckboxColumn: false,
-      columns: const <DataColumn>[
-        DataColumn(
-          label: Text(
-            'Codigo',
+    final products = context.watch<GenerateQuotationBloc>().state.products;
+    final prices = context.watch<GenerateQuotationBloc>().state.prices;
+    final quantities = context.watch<GenerateQuotationBloc>().state.quantities;
+    final subTotals = context.watch<GenerateQuotationBloc>().state.subTotals;
+
+    return FittedBox(
+      child: DataTable(
+        columns: <DataColumn>[
+          DataColumn(
+            label: Wrap(
+              children: const [
+                Text('Detalle')
+              ],
+            ),
           ),
-        ),
-        DataColumn(
-          label: Text(
-            'Detalle del Producto',
+          DataColumn(
+            label: Wrap(
+              children: const [
+                Text(
+                  'Precio\nunitario',
+                ),
+              ],
+            ),
           ),
-        ),
-        DataColumn(
-          label: Text(
-            'Precio unitario',
+          DataColumn(
+            label: Wrap(
+              children: const [
+                Text(
+                  'Cantidad',
+                ),
+              ],
+            ),
           ),
-        ),
-        DataColumn(
-          label: Text(
-            'Cantidad',
+          DataColumn(
+            label: Wrap(
+              children: const [
+                Text(
+                  'Sub Total',
+                ),
+              ],
+            ),
           ),
+        ],
+        rows: List.generate(
+          products.length,
+          (index) {
+            final product = products[index];
+            final price = prices[index];
+            final quantity = quantities[index];
+            final subTotal = subTotals[index];
+            return DataRow(
+              cells: <DataCell>[
+                DataCell(
+                  Text(
+                    '${product.modelProduct} - ${product.formatProduct}',
+                  ),
+                ),
+                DataCell(
+                  TextFormField(
+                    controller: price,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                    ),
+                    onChanged: (value) {
+                      context
+                          .read<GenerateQuotationBloc>()
+                          .add(QuantityPriceChangeEvent(index));
+                    },
+                  ),
+                ),
+                DataCell(
+                  TextFormField(
+                    controller: quantity,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                    ),
+                    onChanged: (value) {
+                      context
+                          .read<GenerateQuotationBloc>()
+                          .add(QuantityPriceChangeEvent(index));
+                    },
+                  ),
+                ),
+                DataCell(
+                  Text(
+                    '$subTotal',
+                  ),
+                ),
+              ],
+            );
+          },
         ),
-        DataColumn(
-          label: Text(
-            'Sub Total',
-          ),
-        ),
-      ],
-      rows: List.generate(
-        products.length,
-        (index) {
-          return const DataRow(
-            cells: <DataCell>[
-              DataCell(
-                Text(
-                  'Code',
-                ),
-              ),
-              DataCell(
-                Text(
-                  'Detail',
-                ),
-              ),
-              DataCell(
-                Text(
-                  'Unit price',
-                ),
-              ),
-              DataCell(
-                Text(
-                  'Quantity',
-                ),
-              ),
-              DataCell(
-                Text(
-                  'Sub total',
-                ),
-              ),
-            ],
-          );
-        },
       ),
     );
     return const SizedBox();
-  }
-}
-
-class Example extends StatelessWidget {
-  const Example({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final products = context.watch<GenerateQuotationBloc>().state.list;
-    print(products.length);
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: products.length,
-      itemBuilder: (context, index) {
-        return FlutterLogo();
-      },
-    );
   }
 }
