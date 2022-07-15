@@ -10,7 +10,7 @@ class ProductSearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ProductSearchCubit(),
+      create: (BuildContext context) => ProductSearchCubit()..getMostSaleProducts(),
       child: Builder(builder: (context) => ProductSearch()),
     );
   }
@@ -27,18 +27,6 @@ class ProductSearch extends StatelessWidget {
         return AlertDialog(
           title: Row(
             children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                ),
-              ),
-              const SizedBox(
-                height: 8.0,
-                width: 8.0,
-              ),
               Flexible(
                 child: TextField(
                   controller: _textEditingController,
@@ -47,6 +35,9 @@ class ProductSearch extends StatelessWidget {
                   },
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
+                    prefixIcon: const Icon(
+                      Icons.search,
+                    ),
                     suffixIcon: IconButton(
                       onPressed: () {
                         _textEditingController.clear();
@@ -78,15 +69,10 @@ class StateViews extends StatelessWidget {
         switch (state.state) {
           case States.initial:
             return const SizedBox(
-              height: 128.0,
               width: 256.0,
-              child: Center(
-                child: Text(
-                  'Initial State',
-                ),
-              ),
+              height: 128.0,
+              child: SearchResult(),
             );
-            break;
           case States.loading:
             return const SizedBox(
               height: 128.0,

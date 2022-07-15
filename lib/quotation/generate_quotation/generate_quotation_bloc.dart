@@ -14,6 +14,7 @@ class GenerateQuotationBloc
     on<InitEvent>(_init);
     on<AddProductQuotationEvent>(_addProductQuotation);
     on<QuantityPriceChangeEvent>(_quantityPriceChange);
+    on<RemoveProductQuotationEvent>(_removeProductQuotation);
   }
 
   void _init(InitEvent event, Emitter<GenerateQuotationState> emit) async {
@@ -51,9 +52,10 @@ class GenerateQuotationBloc
       for (var element in subTotals) {
         total = total + element;
       }
+      final castedTotal = double.parse(total.toStringAsFixed(2));
 
       emit(state.addedProductQuotation(
-        total: total,
+        total: castedTotal,
         state: States.loading,
         products: products,
         prices: prices,
@@ -65,7 +67,8 @@ class GenerateQuotationBloc
     }
   }
 
-  FutureOr<void> _quantityPriceChange(QuantityPriceChangeEvent event, Emitter<GenerateQuotationState> emit) {
+  FutureOr<void> _quantityPriceChange(
+      QuantityPriceChangeEvent event, Emitter<GenerateQuotationState> emit) {
     emit(state.addedProductQuotation(state: States.loading));
     final subTotals = state.subTotals;
     var price = 0.0;
@@ -75,7 +78,6 @@ class GenerateQuotationBloc
       price = 0;
     } else {
       price = double.parse(state.prices[event.index].value.text);
-
     }
 
     if (state.quantities[event.index].value.text.isEmpty) {
@@ -94,6 +96,39 @@ class GenerateQuotationBloc
       total = total + element;
     }
 
-    emit(state.addedProductQuotation(state: States.loaded, subTotals: subTotals, total: total));
+    final castedTotal = double.parse(total.toStringAsFixed(2));
+
+    emit(state.addedProductQuotation(
+        state: States.loaded, subTotals: subTotals, total: castedTotal));
+  }
+
+  FutureOr<void> _removeProductQuotation(
+      RemoveProductQuotationEvent event, Emitter<GenerateQuotationState> emit) {
+    emit(state.addedProductQuotation(state: States.loading));
+
+    final products = state.products;
+    final quantities = state.quantities;
+    final prices = state.prices;
+    final subTotals = state.subTotals;
+
+    products.removeAt(event.index);
+    quantities.removeAt(event.index);
+    prices.removeAt(event.index);
+    subTotals.removeAt(event.index);
+
+    var total = 0.0;
+    for (var element in subTotals) {
+      total = total + element;
+    }
+
+    final castedTotal = double.parse(total.toStringAsFixed(2));
+    emit(state.addedProductQuotation(
+      state: States.loaded,
+      subTotals: subTotals,
+      total: castedTotal,
+      prices: prices,
+      products: products,
+      quantities: quantities,
+    ));
   }
 }

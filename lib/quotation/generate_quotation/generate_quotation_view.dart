@@ -1,6 +1,7 @@
 import 'package:erp_fronted/quotation/generate_quotation/generate_quotation_event.dart';
 import 'package:erp_fronted/search_bar/product_search/product_search_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -136,9 +137,7 @@ class ProductDetail extends StatelessWidget {
         columns: <DataColumn>[
           DataColumn(
             label: Wrap(
-              children: const [
-                Text('Detalle')
-              ],
+              children: const [Text('Detalle')],
             ),
           ),
           DataColumn(
@@ -168,6 +167,15 @@ class ProductDetail extends StatelessWidget {
               ],
             ),
           ),
+          DataColumn(
+            label: Wrap(
+              children: const [
+                Text(
+                  '',
+                ),
+              ],
+            ),
+          )
         ],
         rows: List.generate(
           products.length,
@@ -185,6 +193,12 @@ class ProductDetail extends StatelessWidget {
                 ),
                 DataCell(
                   TextFormField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r'^\d+\.?\d{0,2}'),
+                      ),
+                      //FilteringTextInputFormatter.digitsOnly,
+                    ],
                     controller: price,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
@@ -198,6 +212,9 @@ class ProductDetail extends StatelessWidget {
                 ),
                 DataCell(
                   TextFormField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
                     controller: quantity,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
@@ -212,6 +229,16 @@ class ProductDetail extends StatelessWidget {
                 DataCell(
                   Text(
                     '$subTotal',
+                  ),
+                ),
+                DataCell(
+                  IconButton(
+                    icon: const Icon(Icons.remove),
+                    onPressed: () {
+                      context
+                          .read<GenerateQuotationBloc>()
+                          .add(RemoveProductQuotationEvent(index));
+                    },
                   ),
                 ),
               ],
