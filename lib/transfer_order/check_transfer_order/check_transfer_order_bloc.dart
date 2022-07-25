@@ -19,6 +19,7 @@ class CheckTransferOrderBloc
     on<HideDialogEvent>(_hideDialogEvent);
     on<ShowSentDialogEvent>(_showSentDialog);
     on<ShowReceivedDialogEvent>(_showReceivedDialog);
+    on<ReloadPageEvent>(_reloadPage);
   }
 
   void _init(InitEvent event, Emitter<CheckTransferOrderState> emit) async {
@@ -75,5 +76,9 @@ class CheckTransferOrderBloc
 
   FutureOr<void> _showReceivedDialog(ShowReceivedDialogEvent event, Emitter<CheckTransferOrderState> emit) {
     emit(const CheckTransferOrderState().loadingData(state: States.loaded, transferOrder: state.transferOrder, dialog: Dialogs.received));
+  }
+
+  FutureOr<void> _reloadPage(ReloadPageEvent event, Emitter<CheckTransferOrderState> emit) {
+    add(InitEvent(state.transferOrder!.id));
   }
 }

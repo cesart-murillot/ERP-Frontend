@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:erp_fronted/sale/models/sale_model.dart';
 import 'package:erp_fronted/src/resources/get_object.dart';
@@ -9,6 +11,7 @@ import 'list_sale_state.dart';
 class ListSaleBloc extends Bloc<ListSaleEvent, ListSaleState> {
   ListSaleBloc() : super(const ListSaleState().init()) {
     on<InitEvent>(_init);
+    on<ReloadListSalePageEvent>(_reloadListSalePage);
   }
 
   void _init(InitEvent event, Emitter<ListSaleState> emit) async {
@@ -22,5 +25,9 @@ class ListSaleBloc extends Bloc<ListSaleEvent, ListSaleState> {
     final sales = await getObject(url, Sales.serializer);
 
     emit(state.loadData(state: States.loaded, sales: sales));
+  }
+
+  FutureOr<void> _reloadListSalePage(ReloadListSalePageEvent event, Emitter<ListSaleState> emit) {
+    add(const InitEvent());
   }
 }

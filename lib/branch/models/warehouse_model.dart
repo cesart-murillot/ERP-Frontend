@@ -12,7 +12,7 @@ part 'warehouse_model.g.dart';
 abstract class Warehouses implements Built<Warehouses, WarehousesBuilder> {
   static Serializer<Warehouses> get serializer => _$warehousesSerializer;
 
-  BuiltList get warehouses;
+  BuiltList<Warehouse> get warehouses;
 
   Warehouses._();
   factory Warehouses([void Function(WarehousesBuilder) updates]) = _$Warehouses;

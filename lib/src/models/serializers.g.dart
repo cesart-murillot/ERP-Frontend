@@ -7,6 +7,8 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(BInventories.serializer)
+      ..add(BInventory.serializer)
       ..add(Branch.serializer)
       ..add(Branches.serializer)
       ..add(Employee.serializer)
@@ -35,6 +37,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Sale.serializer)
       ..add(Sales.serializer)
       ..add(Section.serializer)
+      ..add(Sections.serializer)
       ..add(Transfer.serializer)
       ..add(TransferOrder.serializer)
       ..add(TransferOrders.serializer)
@@ -43,6 +46,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Users.serializer)
       ..add(Warehouse.serializer)
       ..add(Warehouses.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(BInventory)]),
+          () => new ListBuilder<BInventory>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Branch)]),
           () => new ListBuilder<Branch>())
@@ -95,6 +101,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(Section)]),
           () => new ListBuilder<Section>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Section)]),
+          () => new ListBuilder<Section>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Transfer)]),
           () => new ListBuilder<Transfer>())
       ..addBuilderFactory(
@@ -107,8 +116,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(Warehouse)]),
           () => new ListBuilder<Warehouse>())
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(dynamic)]),
-          () => new ListBuilder<dynamic>()))
+          const FullType(BuiltList, const [const FullType(Warehouse)]),
+          () => new ListBuilder<Warehouse>()))
     .build();
 
 // ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

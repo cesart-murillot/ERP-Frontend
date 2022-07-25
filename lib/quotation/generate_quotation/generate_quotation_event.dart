@@ -9,6 +9,14 @@ class InitEvent extends GenerateQuotationEvent {
   List<Object?> get props => [];
 }
 
+class NameQuotationChangedEvent extends GenerateQuotationEvent {
+  final String nameQuotation;
+  @override
+  List<Object?> get props => [nameQuotation];
+
+  const NameQuotationChangedEvent(this.nameQuotation);
+}
+
 class AddProductQuotationEvent extends GenerateQuotationEvent {
   final int productId;
   @override
@@ -33,4 +41,9 @@ class QuantityPriceChangeEvent extends GenerateQuotationEvent {
   List<Object?> get props => [index];
 
   const QuantityPriceChangeEvent(this.index);
+}
+
+class SaveQuotationEvent extends GenerateQuotationEvent {
+  @override
+  List<Object?> get props => [];
 }

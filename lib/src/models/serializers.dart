@@ -17,6 +17,7 @@ import 'package:erp_fronted/role/models/role_model.dart';
 import 'package:erp_fronted/sale/models/sale_model.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
 import 'package:erp_fronted/product/models/product_model.dart';
+import 'package:erp_fronted/transfer_order/models/b_inventory_model.dart';
 import 'package:erp_fronted/transfer_order/models/transfer_order_model.dart';
 
 import '../../branch/models/section_model.dart';
@@ -34,6 +35,7 @@ part 'serializers.g.dart';
   User,
   Users,
   Section,
+  Sections,
   Branch,
   Branches,
   Warehouse,
@@ -60,6 +62,8 @@ part 'serializers.g.dart';
   Sale,
   Sales,
   ProductSale,
+  BInventories,
+  BInventory,
 ])
 
 Serializers serializers = _$serializers;

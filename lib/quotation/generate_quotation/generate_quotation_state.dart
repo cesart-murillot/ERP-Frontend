@@ -13,6 +13,9 @@ class GenerateQuotationState extends Equatable {
   final List<double> subTotals;
 
   final double total;
+  final String nameQuotation;
+
+  final int quotationId;
 
   GenerateQuotationState init() {
     return const GenerateQuotationState();
@@ -29,6 +32,8 @@ class GenerateQuotationState extends Equatable {
     List<TextEditingController>? prices,
     List<double>? subTotals,
     double? total,
+    String? nameQuotation,
+    int? quotationId,
   }) {
     return GenerateQuotationState(
       state: state,
@@ -37,6 +42,8 @@ class GenerateQuotationState extends Equatable {
       prices: prices ?? this.prices,
       subTotals: subTotals ?? this.subTotals,
       total: total ?? this.total,
+      nameQuotation: nameQuotation ?? this.nameQuotation,
+      quotationId: quotationId ?? this.quotationId,
     );
   }
 
@@ -48,6 +55,8 @@ class GenerateQuotationState extends Equatable {
         prices,
         subTotals,
         total,
+        nameQuotation,
+        quotationId,
       ];
 
   const GenerateQuotationState({
@@ -57,5 +66,7 @@ class GenerateQuotationState extends Equatable {
     this.total = 0,
     this.state,
     this.products = const [],
+    this.nameQuotation = '',
+    this.quotationId = 0,
   });
 }

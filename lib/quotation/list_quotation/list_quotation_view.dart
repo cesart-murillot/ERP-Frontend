@@ -1,3 +1,4 @@
+import 'package:erp_fronted/quotation/create_quotation/create_quotation_view.dart';
 import 'package:erp_fronted/quotation/generate_quotation/generate_quotation_view.dart';
 import 'package:erp_fronted/quotation/show_quotation/show_quotation_view.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class ListQuotationPage extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (_) => const GenerateQuotationPage(),
                     ),
-                  );
+                  ).then((value) => context.read<ListQuotationBloc>().add(ReloadEvent()));
             },
             label: const Text(
               'Generar Cotización',
@@ -83,7 +84,7 @@ class ListQuotation extends StatelessWidget {
         itemBuilder: (context, index) {
           final quotation = quotations[index];
           final dateQuotation = DateFormat('EEEE d MMMM, ' 'yy - HH:mm a')
-              .format(DateTime.parse(quotation.dateQuotation));
+              .format(DateTime.parse(quotation.dateQuotation!));
           return Card(
             child: ListTile(
               title: Text(
@@ -149,7 +150,7 @@ class QuotationTable extends StatelessWidget {
               (index) {
                 final quotation = quotations[index];
                 final dateQuotation = DateFormat('EEEE d MMMM, ' 'yy')
-                    .format(DateTime.parse(quotation.dateQuotation));
+                    .format(DateTime.parse(quotation.dateQuotation!));
                 return DataRow(
                   onSelectChanged: (value) {
                     if (quotation.id != null) {

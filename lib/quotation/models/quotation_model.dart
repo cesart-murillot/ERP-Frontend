@@ -28,16 +28,16 @@ abstract class Quotation implements Built<Quotation, QuotationBuilder> {
   double get priceQuotation;
 
   @BuiltValueField(wireName: 'date_quotation')
-  String get dateQuotation;
+  String? get dateQuotation;
 
   @BuiltValueField(wireName: 'expiration_date')
-  String get expirationDate;
+  String? get expirationDate;
 
   @BuiltValueField(wireName: 'user_id')
-  int get userId;
+  int? get userId;
 
   @BuiltValueField(wireName: 'branch_id')
-  int get branchId;
+  int? get branchId;
 
   @BuiltValueField(wireName: 'product_quotations')
   BuiltList<ProductQuotation> get productQuotations;
@@ -63,7 +63,7 @@ abstract class ProductQuotation implements Built<ProductQuotation, ProductQuotat
   double get totalPrice;
 
   @BuiltValueField(wireName: 'quotation_id')
-  int get quotationId;
+  int? get quotationId;
 
   @BuiltValueField(wireName: 'product_id')
   int get productId;

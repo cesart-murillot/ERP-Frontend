@@ -28,6 +28,19 @@ class _$ProductTransferSerializer
           specifiedType: const FullType(int)),
     ];
     Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.allocated;
+    if (value != null) {
+      result
+        ..add('allocated')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.product;
     if (value != null) {
       result
@@ -50,6 +63,10 @@ class _$ProductTransferSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
         case 'product_id':
           result.productId = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
@@ -57,6 +74,10 @@ class _$ProductTransferSerializer
         case 'quantity':
           result.quantity = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
+          break;
+        case 'allocated':
+          result.allocated = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'product':
           result.product.replace(serializers.deserialize(value,
@@ -71,9 +92,13 @@ class _$ProductTransferSerializer
 
 class _$ProductTransfer extends ProductTransfer {
   @override
+  final int? id;
+  @override
   final int productId;
   @override
   final int quantity;
+  @override
+  final bool? allocated;
   @override
   final Product? product;
 
@@ -81,7 +106,11 @@ class _$ProductTransfer extends ProductTransfer {
       (new ProductTransferBuilder()..update(updates))._build();
 
   _$ProductTransfer._(
-      {required this.productId, required this.quantity, this.product})
+      {this.id,
+      required this.productId,
+      required this.quantity,
+      this.allocated,
+      this.product})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         productId, 'ProductTransfer', 'productId');
@@ -101,22 +130,30 @@ class _$ProductTransfer extends ProductTransfer {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is ProductTransfer &&
+        id == other.id &&
         productId == other.productId &&
         quantity == other.quantity &&
+        allocated == other.allocated &&
         product == other.product;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc(0, productId.hashCode), quantity.hashCode), product.hashCode));
+        $jc(
+            $jc($jc($jc(0, id.hashCode), productId.hashCode),
+                quantity.hashCode),
+            allocated.hashCode),
+        product.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ProductTransfer')
+          ..add('id', id)
           ..add('productId', productId)
           ..add('quantity', quantity)
+          ..add('allocated', allocated)
           ..add('product', product))
         .toString();
   }
@@ -126,6 +163,10 @@ class ProductTransferBuilder
     implements Builder<ProductTransfer, ProductTransferBuilder> {
   _$ProductTransfer? _$v;
 
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
+
   int? _productId;
   int? get productId => _$this._productId;
   set productId(int? productId) => _$this._productId = productId;
@@ -133,6 +174,10 @@ class ProductTransferBuilder
   int? _quantity;
   int? get quantity => _$this._quantity;
   set quantity(int? quantity) => _$this._quantity = quantity;
+
+  bool? _allocated;
+  bool? get allocated => _$this._allocated;
+  set allocated(bool? allocated) => _$this._allocated = allocated;
 
   ProductBuilder? _product;
   ProductBuilder get product => _$this._product ??= new ProductBuilder();
@@ -143,8 +188,10 @@ class ProductTransferBuilder
   ProductTransferBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _id = $v.id;
       _productId = $v.productId;
       _quantity = $v.quantity;
+      _allocated = $v.allocated;
       _product = $v.product?.toBuilder();
       _$v = null;
     }
@@ -170,10 +217,12 @@ class ProductTransferBuilder
     try {
       _$result = _$v ??
           new _$ProductTransfer._(
+              id: id,
               productId: BuiltValueNullFieldError.checkNotNull(
                   productId, 'ProductTransfer', 'productId'),
               quantity: BuiltValueNullFieldError.checkNotNull(
                   quantity, 'ProductTransfer', 'quantity'),
+              allocated: allocated,
               product: _product?.build());
     } catch (_) {
       late String _$failedField;

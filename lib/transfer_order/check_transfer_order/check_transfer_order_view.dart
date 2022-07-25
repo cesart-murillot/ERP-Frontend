@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:erp_fronted/employee/models/user_model.dart';
 import 'package:erp_fronted/product_request/models/product_transfer_model.dart';
+import 'package:erp_fronted/transfer_order/allocate_transfer_order/allocate_transfer_order_view.dart';
 import 'package:erp_fronted/transfer_order/models/transfer_order_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -231,6 +232,7 @@ class ProductTransferList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int roleId = context.watch<CheckTransferOrderBloc>().state.roleId;
     return ListView.builder(
       itemCount: productTransfer.length,
       shrinkWrap: true,
@@ -239,6 +241,7 @@ class ProductTransferList extends StatelessWidget {
         final formatProduct =
             '${productTransfer[index].product?.formatProduct}';
         final quantity = productTransfer[index].quantity;
+        final allocated = productTransfer[index].allocated ?? false;
         return Card(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -246,6 +249,26 @@ class ProductTransferList extends StatelessWidget {
               title: Text('Modelo: $modelProduct'),
               subtitle: Text('Formato: $formatProduct'),
               trailing: Text('Cantidad: ${quantity.toString()} unidades'),
+              leading: allocated
+                  ? const Icon(
+                      Icons.assignment,
+                      color: Colors.greenAccent,
+                    )
+                  : const Icon(
+                      Icons.assignment_late,
+                      color: Colors.yellowAccent,
+                    ),
+              onTap: () {
+                if (roleId == 5 || roleId == 1) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => AllocateTransferOrderPage(
+                          transferOrderId: productTransfer[index].id!),
+                    ),
+                  ).then((value) => context.read<CheckTransferOrderBloc>().add(const ReloadPageEvent()));
+                }
+              },
             ),
           ),
         );
@@ -262,8 +285,13 @@ class TransferControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int roleId = context.watch<CheckTransferOrderBloc>().state.roleId;
+    final productTransfers = context
+        .read<CheckTransferOrderBloc>()
+        .state
+        .transferOrder
+        ?.transfer
+        .productTransfers;
     if (!sent && !received) {
-
       if (roleId == 1 || roleId == 4) {
         return ElevatedButton(
           onPressed: () {
@@ -280,14 +308,19 @@ class TransferControl extends StatelessWidget {
         children: [
           const SentInformation(),
           roleId == 5 || roleId == 1
-              ? ElevatedButton(
-                  onPressed: () {
-                    context
-                        .read<CheckTransferOrderBloc>()
-                        .add(const ShowReceivedDialogEvent());
-                  },
-                  child: const Text('Marcar como Recibido'),
-                )
+              ? productTransfers!.every((p0) => p0.allocated! == true)
+                  ? ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<CheckTransferOrderBloc>()
+                            .add(const ShowReceivedDialogEvent());
+                      },
+                      child: const Text('Marcar como Recibido'),
+                    )
+                  : const SizedBox(
+                      height: 8.0,
+                      width: 8.0,
+                    )
               : const SizedBox(
                   height: 8.0,
                   width: 8.0,

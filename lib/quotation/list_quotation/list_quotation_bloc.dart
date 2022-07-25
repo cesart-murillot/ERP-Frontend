@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:erp_fronted/quotation/models/quotation_model.dart';
 import 'package:erp_fronted/src/resources/get_object.dart';
@@ -9,6 +11,7 @@ import 'list_quotation_state.dart';
 class ListQuotationBloc extends Bloc<ListQuotationEvent, ListQuotationState> {
   ListQuotationBloc() : super(const ListQuotationState().init()) {
     on<InitEvent>(_init);
+    on<ReloadEvent>(_reload);
   }
 
   void _init(InitEvent event, Emitter<ListQuotationState> emit) async {
@@ -30,5 +33,9 @@ class ListQuotationBloc extends Bloc<ListQuotationEvent, ListQuotationState> {
     } catch (e) {
       emit(state.error(errorMessage: e.toString()));
     }
+  }
+
+  FutureOr<void> _reload(ReloadEvent event, Emitter<ListQuotationState> emit) {
+    add(InitEvent());
   }
 }

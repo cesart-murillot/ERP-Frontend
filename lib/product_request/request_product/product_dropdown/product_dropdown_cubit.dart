@@ -16,8 +16,13 @@ class ProductDropdownCubit extends Cubit<ProductDropdownState> {
 
     for (var p0 in products.products) {
       productItems.add(DropdownMenuItem<int>(
-        child: Text(p0.modelProduct),
+        child: Text('${p0.modelProduct} - ${p0.remainUnits ?? 0} u.d.'),
         value: p0.id,
+        enabled: p0.remainUnits == null
+            ? false
+            : p0.remainUnits! > 0
+                ? true
+                : false,
       ));
     }
 

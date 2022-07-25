@@ -32,10 +32,10 @@ class FormGenerator extends StatelessWidget {
                 children: [
                   TextButton(onPressed: (){
                     context.read<FormGeneratorCubit>().addElement();
-                  }, child: Text('Añadir'),),
+                  }, child: const Text('Añadir'),),
                   TextButton(onPressed: (){
                     context.read<FormGeneratorCubit>().removeElement();
-                  }, child: Text('Remover'),),
+                  }, child: const Text('Remover'),),
                 ],
               ),
             ),

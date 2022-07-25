@@ -1,49 +1,44 @@
+import 'package:erp_fronted/branch/models/warehouse_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'product_search_cubit.dart';
-import 'product_search_state.dart';
+import 'warehouse_search_cubit.dart';
+import 'warehouse_search_state.dart';
 
-class ProductSearchPage extends StatelessWidget {
-  const ProductSearchPage({Key? key}) : super(key: key);
+class WarehouseSearchPage extends StatelessWidget {
+  const WarehouseSearchPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) =>
-          ProductSearchCubit()..getMostSaleProducts(),
-      child: Builder(builder: (context) => ProductSearch()),
+      create: (BuildContext context) => WarehouseSearchCubit()..getWarehouses(),
+      child: Builder(builder: (context) => WarehouseSearch()),
     );
   }
 }
 
-class ProductSearch extends StatelessWidget {
-  ProductSearch({Key? key}) : super(key: key);
-  final TextEditingController _textEditingController = TextEditingController();
+class WarehouseSearch extends StatelessWidget {
+  WarehouseSearch({Key? key}) : super(key: key);
+  final TextEditingController _warehouseController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductSearchCubit, ProductSearchState>(
+    return BlocBuilder<WarehouseSearchCubit, WarehouseSearchState>(
       builder: (context, state) {
         return AlertDialog(
           title: Row(
             children: [
               Flexible(
                 child: TextField(
-                  controller: _textEditingController,
-                  onChanged: (text) {
-                    context.read<ProductSearchCubit>().getProducts(text);
-                  },
+                  controller: _warehouseController,
+                  onChanged: (text) {},
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     prefixIcon: const Icon(
                       Icons.search,
                     ),
                     suffixIcon: IconButton(
-                      onPressed: () {
-                        _textEditingController.clear();
-                        context.read<ProductSearchCubit>().getProducts('');
-                      },
+                      onPressed: () {},
                       icon: const Icon(
                         Icons.clear,
                       ),
@@ -65,19 +60,24 @@ class StateViews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductSearchCubit, ProductSearchState>(
+    return BlocBuilder<WarehouseSearchCubit, WarehouseSearchState>(
       builder: (context, state) {
         switch (state.state) {
           case States.initial:
             return const SizedBox(
               width: 256.0,
               height: 128.0,
-              child: SearchResult(),
+              child: Center(
+                child: Text(
+                  'Initial State',
+                ),
+              ),
             );
+            break;
           case States.loading:
             return const SizedBox(
-              height: 128.0,
               width: 256.0,
+              height: 128.0,
               child: Center(
                 child: CircularProgressIndicator(),
               ),
@@ -92,9 +92,11 @@ class StateViews extends StatelessWidget {
             break;
           case States.error:
             return SizedBox(
+              width: 256.0,
+              height: 128.0,
               child: Center(
                 child: Text(
-                  '${state.errorMessage}',
+                  state.errorMessage,
                 ),
               ),
             );
@@ -110,31 +112,18 @@ class SearchResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final products = context.watch<ProductSearchCubit>().state.products;
-    if (products != null) {
+    final warehouses = context.watch<WarehouseSearchCubit>().state.warehouses;
+    if (warehouses != null) {
       return ListView.builder(
-        itemCount: products.products.length,
+        itemCount: warehouses.warehouses.length,
         shrinkWrap: true,
         itemBuilder: (context, index) {
-          final product = products.products[index];
-          return Card(
-            margin: const EdgeInsets.all(8.0),
-            child: ListTile(
-              title: Text(product.modelProduct),
-              trailing: Column(
-                children: [
-                  Text('${product.remainUnits ?? 0} Casa Matriz'),
-                  const SizedBox(
-                    height: 8.0,
-                    width: 8.0,
-                  ),
-                  Text('${product.branchRemainUnits ?? 0} Sucursal')
-                ],
-              ),
-              onTap: () {
-                Navigator.pop(context, product.id);
-              },
-            ),
+          final Warehouse warehouse = warehouses.warehouses[index];
+          return ListTile(
+            title: Text(warehouse.nameWarehouse),
+            onTap: () {
+              Navigator.pop(context, warehouse.id);
+            },
           );
         },
       );

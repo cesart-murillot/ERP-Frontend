@@ -10,7 +10,7 @@ class QuotationKeyCubit extends Cubit<QuotationKeyState> {
 
   Future<void> quotationData() async {
     emit(state.loadedData(state: States.loading));
-    final url = preDefinedUri('/api/quotations/quotationData/');
+    final url = preDefinedUri('/api/quotations/quotationData/all/');
 
     try {
       final response = await fetchDataFromApi(url);

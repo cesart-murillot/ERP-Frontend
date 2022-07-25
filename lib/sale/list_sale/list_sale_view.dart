@@ -1,3 +1,5 @@
+import 'package:erp_fronted/sale/generate_sale/generate_sale_bloc.dart';
+import 'package:erp_fronted/sale/generate_sale/generate_sale_view.dart';
 import 'package:erp_fronted/sale/show_sale/show_sale_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,10 +15,22 @@ class ListSalePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ListSaleBloc()..add(InitEvent()),
+      create: (BuildContext context) => ListSaleBloc()..add(const InitEvent()),
       child: Builder(
-        builder: (context) => const Scaffold(
-          body: StateView(),
+        builder: (context) => Scaffold(
+          body: const StateView(),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                    MaterialPageRoute(
+                      builder: (_) => const GenerateSalePage(),
+                    ),
+                  ).then((value) => context.read<ListSaleBloc>().add(const ReloadListSalePageEvent()));
+            },
+            label: const Text('Vender'),
+            icon: const Icon(Icons.point_of_sale),
+          ),
         ),
       ),
     );

@@ -22,7 +22,7 @@ class _$WarehousesSerializer implements StructuredSerializer<Warehouses> {
       'warehouses',
       serializers.serialize(object.warehouses,
           specifiedType:
-              const FullType(BuiltList, const [const FullType(dynamic)])),
+              const FullType(BuiltList, const [const FullType(Warehouse)])),
     ];
 
     return result;
@@ -42,7 +42,7 @@ class _$WarehousesSerializer implements StructuredSerializer<Warehouses> {
         case 'warehouses':
           result.warehouses.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(dynamic)]))!
+                      BuiltList, const [const FullType(Warehouse)]))!
               as BuiltList<Object?>);
           break;
       }
@@ -128,7 +128,7 @@ class _$WarehouseSerializer implements StructuredSerializer<Warehouse> {
 
 class _$Warehouses extends Warehouses {
   @override
-  final BuiltList<dynamic> warehouses;
+  final BuiltList<Warehouse> warehouses;
 
   factory _$Warehouses([void Function(WarehousesBuilder)? updates]) =>
       (new WarehousesBuilder()..update(updates))._build();
@@ -167,10 +167,10 @@ class _$Warehouses extends Warehouses {
 class WarehousesBuilder implements Builder<Warehouses, WarehousesBuilder> {
   _$Warehouses? _$v;
 
-  ListBuilder<dynamic>? _warehouses;
-  ListBuilder<dynamic> get warehouses =>
-      _$this._warehouses ??= new ListBuilder<dynamic>();
-  set warehouses(ListBuilder<dynamic>? warehouses) =>
+  ListBuilder<Warehouse>? _warehouses;
+  ListBuilder<Warehouse> get warehouses =>
+      _$this._warehouses ??= new ListBuilder<Warehouse>();
+  set warehouses(ListBuilder<Warehouse>? warehouses) =>
       _$this._warehouses = warehouses;
 
   WarehousesBuilder();

@@ -8,3 +8,8 @@ class InitEvent extends ListQuotationEvent {
   @override
   List<Object?> get props => [];
 }
+
+class ReloadEvent extends ListQuotationEvent {
+  @override
+  List<Object?> get props => [];
+}

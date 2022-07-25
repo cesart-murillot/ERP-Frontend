@@ -2,6 +2,7 @@ import 'package:erp_fronted/branch/models/branch_model.dart';
 import 'package:erp_fronted/employee/models/user_model.dart';
 import 'package:erp_fronted/product_request/request_product/form_generator/form_generator_view.dart';
 import 'package:erp_fronted/product_request/request_product/product_dropdown/product_dropdown_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -93,45 +94,48 @@ class RequestForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RequestProductBloc, RequestProductState>(
       builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 32.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Se realizara la solicitud como:\n${user?.employee?.namesEmployee} ${user?.employee?.lastNameEmployee}',
-                style: const TextStyle(fontSize: 18.0),
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              Text(
-                'Cargo: ${user?.role?.nameRole}',
-                style: const TextStyle(fontSize: 18.0),
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              Text(
-                'Contacto: ${user?.email}',
-                style: const TextStyle(fontSize: 18.0),
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              Text(
-                'Para: ${branch?.nameBranch}',
-                style: const TextStyle(fontSize: 18.0),
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              Text(
-                'Dirección: ${branch!.addressBranch}',
-                style: const TextStyle(fontSize: 18.0),
-              ),
-              const FormGeneratorPage(element: ProductQuantity()),
-            ],
+        return Card(
+          margin: const EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Se realizara la solicitud como:\n${user?.employee?.namesEmployee} ${user?.employee?.lastNameEmployee}',
+                  style: const TextStyle(fontSize: 18.0),
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Text(
+                  'Cargo: ${user?.role?.nameRole}',
+                  style: const TextStyle(fontSize: 18.0),
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Text(
+                  'Contacto: ${user?.email}',
+                  style: const TextStyle(fontSize: 18.0),
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Text(
+                  'Para: ${branch?.nameBranch}',
+                  style: const TextStyle(fontSize: 18.0),
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Text(
+                  'Dirección: ${branch!.addressBranch}',
+                  style: const TextStyle(fontSize: 18.0),
+                ),
+                const FormGeneratorPage(element: ProductQuantity()),
+              ],
+            ),
           ),
         );
       },
@@ -146,30 +150,33 @@ class ProductQuantity extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RequestProductBloc, RequestProductState>(
       builder: (context, state) {
-        return Row(
-          children: [
-            const Flexible(
-              flex: 3,
-              child: ProductDropdownPage(),
-            ),
-            const SizedBox(
-              width: 16.0,
-            ),
-            Flexible(
-              flex: 1,
-              child: TextFormField(
-                onSaved: (value) {
-                  context
-                      .read<RequestProductBloc>()
-                      .add(AddQuantityEvent(int.parse(value!)));
-                },
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Cantidad',
+        return Card(
+          margin: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              const Flexible(
+                flex: 3,
+                child: ProductDropdownPage(),
+              ),
+              const SizedBox(
+                width: 16.0,
+              ),
+              Flexible(
+                flex: 1,
+                child: TextFormField(
+                  onSaved: (value) {
+                    context
+                        .read<RequestProductBloc>()
+                        .add(AddQuantityEvent(int.parse(value!)));
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Cantidad',
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

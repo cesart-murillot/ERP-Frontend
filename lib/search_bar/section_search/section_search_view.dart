@@ -1,49 +1,47 @@
+import 'package:erp_fronted/branch/models/section_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'product_search_cubit.dart';
-import 'product_search_state.dart';
+import 'section_search_cubit.dart';
+import 'section_search_state.dart';
 
-class ProductSearchPage extends StatelessWidget {
-  const ProductSearchPage({Key? key}) : super(key: key);
+class SectionSearchPage extends StatelessWidget {
+  const SectionSearchPage({Key? key, required this.warehouseId})
+      : super(key: key);
+  final int warehouseId;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) =>
-          ProductSearchCubit()..getMostSaleProducts(),
-      child: Builder(builder: (context) => ProductSearch()),
+          SectionSearchCubit()..getSections(warehouseId),
+      child: Builder(builder: (context) => SectionSearch()),
     );
   }
 }
 
-class ProductSearch extends StatelessWidget {
-  ProductSearch({Key? key}) : super(key: key);
-  final TextEditingController _textEditingController = TextEditingController();
+class SectionSearch extends StatelessWidget {
+  SectionSearch({Key? key}) : super(key: key);
+  final TextEditingController _sectionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductSearchCubit, ProductSearchState>(
+    return BlocBuilder<SectionSearchCubit, SectionSearchState>(
       builder: (context, state) {
         return AlertDialog(
           title: Row(
             children: [
               Flexible(
                 child: TextField(
-                  controller: _textEditingController,
-                  onChanged: (text) {
-                    context.read<ProductSearchCubit>().getProducts(text);
-                  },
+                  controller: _sectionController,
+                  onChanged: (text) {},
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     prefixIcon: const Icon(
                       Icons.search,
                     ),
                     suffixIcon: IconButton(
-                      onPressed: () {
-                        _textEditingController.clear();
-                        context.read<ProductSearchCubit>().getProducts('');
-                      },
+                      onPressed: () {},
                       icon: const Icon(
                         Icons.clear,
                       ),
@@ -65,19 +63,24 @@ class StateViews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductSearchCubit, ProductSearchState>(
+    return BlocBuilder<SectionSearchCubit, SectionSearchState>(
       builder: (context, state) {
         switch (state.state) {
           case States.initial:
             return const SizedBox(
               width: 256.0,
               height: 128.0,
-              child: SearchResult(),
+              child: Center(
+                child: Text(
+                  'Initial State',
+                ),
+              ),
             );
+            break;
           case States.loading:
             return const SizedBox(
-              height: 128.0,
               width: 256.0,
+              height: 128.0,
               child: Center(
                 child: CircularProgressIndicator(),
               ),
@@ -92,9 +95,11 @@ class StateViews extends StatelessWidget {
             break;
           case States.error:
             return SizedBox(
+              width: 256.0,
+              height: 128.0,
               child: Center(
                 child: Text(
-                  '${state.errorMessage}',
+                  state.errorMessage,
                 ),
               ),
             );
@@ -110,31 +115,18 @@ class SearchResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final products = context.watch<ProductSearchCubit>().state.products;
-    if (products != null) {
+    final sections = context.watch<SectionSearchCubit>().state.sections;
+    if (sections != null) {
       return ListView.builder(
-        itemCount: products.products.length,
+        itemCount: sections.sections.length,
         shrinkWrap: true,
         itemBuilder: (context, index) {
-          final product = products.products[index];
-          return Card(
-            margin: const EdgeInsets.all(8.0),
-            child: ListTile(
-              title: Text(product.modelProduct),
-              trailing: Column(
-                children: [
-                  Text('${product.remainUnits ?? 0} Casa Matriz'),
-                  const SizedBox(
-                    height: 8.0,
-                    width: 8.0,
-                  ),
-                  Text('${product.branchRemainUnits ?? 0} Sucursal')
-                ],
-              ),
-              onTap: () {
-                Navigator.pop(context, product.id);
-              },
-            ),
+          final Section section = sections.sections[index];
+          return ListTile(
+            title: Text(section.nameSection),
+            onTap: () {
+              Navigator.pop(context, section.id);
+            },
           );
         },
       );

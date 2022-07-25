@@ -66,9 +66,9 @@ class ShowQuotation extends StatelessWidget {
     final quotation = context.read<ShowQuotationBloc>().state.quotation;
     if (quotation != null) {
       final quotationDate = DateFormat('EEEE d MMMM, ' 'yy - HH:mm a')
-          .format(DateTime.parse(quotation.dateQuotation));
+          .format(DateTime.parse(quotation.dateQuotation!));
       final expirationDate = DateFormat('EEEE d MMMM, ' 'yy')
-          .format(DateTime.parse(quotation.expirationDate));
+          .format(DateTime.parse(quotation.expirationDate!));
       return Column(
         children: [
           Card(

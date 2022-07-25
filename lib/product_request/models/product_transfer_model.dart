@@ -7,9 +7,12 @@ part 'product_transfer_model.g.dart';
 abstract class ProductTransfer implements Built<ProductTransfer, ProductTransferBuilder> {
   static Serializer<ProductTransfer> get serializer => _$productTransferSerializer;
 
+  int? get id;
+
   @BuiltValueField(wireName: 'product_id')
   int get productId;
   int get quantity;
+  bool? get allocated;
 
   Product? get product;
 

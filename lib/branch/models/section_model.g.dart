@@ -7,6 +7,7 @@ part of 'section_model.dart';
 // **************************************************************************
 
 Serializer<Section> _$sectionSerializer = new _$SectionSerializer();
+Serializer<Sections> _$sectionsSerializer = new _$SectionsSerializer();
 
 class _$SectionSerializer implements StructuredSerializer<Section> {
   @override
@@ -57,6 +58,49 @@ class _$SectionSerializer implements StructuredSerializer<Section> {
         case 'warehouse':
           result.warehouse.replace(serializers.deserialize(value,
               specifiedType: const FullType(Warehouse))! as Warehouse);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$SectionsSerializer implements StructuredSerializer<Sections> {
+  @override
+  final Iterable<Type> types = const [Sections, _$Sections];
+  @override
+  final String wireName = 'Sections';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, Sections object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'sections',
+      serializers.serialize(object.sections,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(Section)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  Sections deserialize(Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new SectionsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'sections':
+          result.sections.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(Section)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -175,6 +219,95 @@ class SectionBuilder implements Builder<Section, SectionBuilder> {
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'Section', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$Sections extends Sections {
+  @override
+  final BuiltList<Section> sections;
+
+  factory _$Sections([void Function(SectionsBuilder)? updates]) =>
+      (new SectionsBuilder()..update(updates))._build();
+
+  _$Sections._({required this.sections}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(sections, 'Sections', 'sections');
+  }
+
+  @override
+  Sections rebuild(void Function(SectionsBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  SectionsBuilder toBuilder() => new SectionsBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is Sections && sections == other.sections;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, sections.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('Sections')..add('sections', sections))
+        .toString();
+  }
+}
+
+class SectionsBuilder implements Builder<Sections, SectionsBuilder> {
+  _$Sections? _$v;
+
+  ListBuilder<Section>? _sections;
+  ListBuilder<Section> get sections =>
+      _$this._sections ??= new ListBuilder<Section>();
+  set sections(ListBuilder<Section>? sections) => _$this._sections = sections;
+
+  SectionsBuilder();
+
+  SectionsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _sections = $v.sections.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(Sections other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$Sections;
+  }
+
+  @override
+  void update(void Function(SectionsBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  Sections build() => _build();
+
+  _$Sections _build() {
+    _$Sections _$result;
+    try {
+      _$result = _$v ?? new _$Sections._(sections: sections.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'sections';
+        sections.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Sections', _$failedField, e.toString());
       }
       rethrow;
     }

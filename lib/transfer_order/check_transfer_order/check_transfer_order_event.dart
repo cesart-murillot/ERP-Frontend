@@ -46,3 +46,10 @@ class HideDialogEvent extends CheckTransferOrderEvent {
   @override
   List<Object> get props => [];
 }
+
+class ReloadPageEvent extends CheckTransferOrderEvent {
+  const ReloadPageEvent();
+
+  @override
+  List<Object> get props => [];
+}

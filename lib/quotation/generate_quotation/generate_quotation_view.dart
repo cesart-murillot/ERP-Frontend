@@ -1,5 +1,7 @@
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:erp_fronted/quotation/generate_quotation/generate_quotation_event.dart';
 import 'package:erp_fronted/search_bar/product_search/product_search_view.dart';
+import 'package:erp_fronted/src/resources/get_object.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +17,7 @@ class GenerateQuotationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => GenerateQuotationBloc()),
+        BlocProvider(create: (_) => GenerateQuotationBloc()..add(InitEvent())),
       ],
       child: Builder(
         builder: (context) => Scaffold(
@@ -32,7 +34,18 @@ class StateViews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GenerateQuotationBloc, GenerateQuotationState>(
+    return BlocConsumer<GenerateQuotationBloc, GenerateQuotationState>(
+      listener: (context, state) async {
+        if (state.quotationId != 0) {
+          final url = preDefinedUri('/api/example/${state.quotationId}');
+
+          try {
+            PDFDocument doc = await PDFDocument.fromURL(url.toString());
+          } catch (e) {
+            print(e);
+          }
+        }
+      },
       builder: (context, state) {
         return const GenerateQuotation();
       },
@@ -46,6 +59,8 @@ class GenerateQuotation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final total = context.watch<GenerateQuotationBloc>().state.total;
+    final length = context.watch<GenerateQuotationBloc>().state.products.length;
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -114,6 +129,32 @@ class GenerateQuotation extends StatelessWidget {
                 Text('Total: $total'),
               ],
             ),
+            const SizedBox(
+              height: 8.0,
+              width: 8.0,
+            ),
+            length > 0
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FloatingActionButton.extended(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (_) => BlocProvider.value(
+                              value: BlocProvider.of<GenerateQuotationBloc>(
+                                  context),
+                              child: const ConfirmationDialog(),
+                            ),
+                          );
+                        },
+                        label: const Text(
+                          'Registrar',
+                        ),
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
           ],
         ),
       ),
@@ -134,6 +175,7 @@ class ProductDetail extends StatelessWidget {
 
     return FittedBox(
       child: DataTable(
+        columnSpacing: 16.0,
         columns: <DataColumn>[
           DataColumn(
             label: Wrap(
@@ -248,5 +290,37 @@ class ProductDetail extends StatelessWidget {
       ),
     );
     return const SizedBox();
+  }
+}
+
+class ConfirmationDialog extends StatelessWidget {
+  const ConfirmationDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<GenerateQuotationBloc, GenerateQuotationState>(
+      builder: (context, state) {
+        return AlertDialog(
+          title: const Text('Generar Cotización'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                context.read<GenerateQuotationBloc>().add(SaveQuotationEvent());
+
+                Navigator.pop(context);
+
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

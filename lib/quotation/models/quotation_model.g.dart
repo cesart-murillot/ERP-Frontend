@@ -70,17 +70,6 @@ class _$QuotationSerializer implements StructuredSerializer<Quotation> {
       'price_quotation',
       serializers.serialize(object.priceQuotation,
           specifiedType: const FullType(double)),
-      'date_quotation',
-      serializers.serialize(object.dateQuotation,
-          specifiedType: const FullType(String)),
-      'expiration_date',
-      serializers.serialize(object.expirationDate,
-          specifiedType: const FullType(String)),
-      'user_id',
-      serializers.serialize(object.userId, specifiedType: const FullType(int)),
-      'branch_id',
-      serializers.serialize(object.branchId,
-          specifiedType: const FullType(int)),
       'product_quotations',
       serializers.serialize(object.productQuotations,
           specifiedType: const FullType(
@@ -91,6 +80,32 @@ class _$QuotationSerializer implements StructuredSerializer<Quotation> {
     if (value != null) {
       result
         ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.dateQuotation;
+    if (value != null) {
+      result
+        ..add('date_quotation')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.expirationDate;
+    if (value != null) {
+      result
+        ..add('expiration_date')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.userId;
+    if (value != null) {
+      result
+        ..add('user_id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.branchId;
+    if (value != null) {
+      result
+        ..add('branch_id')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
     value = object.user;
@@ -135,19 +150,19 @@ class _$QuotationSerializer implements StructuredSerializer<Quotation> {
           break;
         case 'date_quotation':
           result.dateQuotation = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'expiration_date':
           result.expirationDate = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'user_id':
           result.userId = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'branch_id':
           result.branchId = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'product_quotations':
           result.productQuotations.replace(serializers.deserialize(value,
@@ -190,9 +205,6 @@ class _$ProductQuotationSerializer
       'total_price',
       serializers.serialize(object.totalPrice,
           specifiedType: const FullType(double)),
-      'quotation_id',
-      serializers.serialize(object.quotationId,
-          specifiedType: const FullType(int)),
       'product_id',
       serializers.serialize(object.productId,
           specifiedType: const FullType(int)),
@@ -202,6 +214,12 @@ class _$ProductQuotationSerializer
     if (value != null) {
       result
         ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.quotationId;
+    if (value != null) {
+      result
+        ..add('quotation_id')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
     value = object.product;
@@ -244,7 +262,7 @@ class _$ProductQuotationSerializer
           break;
         case 'quotation_id':
           result.quotationId = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'product_id':
           result.productId = serializers.deserialize(value,
@@ -361,13 +379,13 @@ class _$Quotation extends Quotation {
   @override
   final double priceQuotation;
   @override
-  final String dateQuotation;
+  final String? dateQuotation;
   @override
-  final String expirationDate;
+  final String? expirationDate;
   @override
-  final int userId;
+  final int? userId;
   @override
-  final int branchId;
+  final int? branchId;
   @override
   final BuiltList<ProductQuotation> productQuotations;
   @override
@@ -382,10 +400,10 @@ class _$Quotation extends Quotation {
       {this.id,
       required this.nameQuotation,
       required this.priceQuotation,
-      required this.dateQuotation,
-      required this.expirationDate,
-      required this.userId,
-      required this.branchId,
+      this.dateQuotation,
+      this.expirationDate,
+      this.userId,
+      this.branchId,
       required this.productQuotations,
       this.user,
       this.branch})
@@ -394,12 +412,6 @@ class _$Quotation extends Quotation {
         nameQuotation, 'Quotation', 'nameQuotation');
     BuiltValueNullFieldError.checkNotNull(
         priceQuotation, 'Quotation', 'priceQuotation');
-    BuiltValueNullFieldError.checkNotNull(
-        dateQuotation, 'Quotation', 'dateQuotation');
-    BuiltValueNullFieldError.checkNotNull(
-        expirationDate, 'Quotation', 'expirationDate');
-    BuiltValueNullFieldError.checkNotNull(userId, 'Quotation', 'userId');
-    BuiltValueNullFieldError.checkNotNull(branchId, 'Quotation', 'branchId');
     BuiltValueNullFieldError.checkNotNull(
         productQuotations, 'Quotation', 'productQuotations');
   }
@@ -559,14 +571,10 @@ class QuotationBuilder implements Builder<Quotation, QuotationBuilder> {
                   nameQuotation, 'Quotation', 'nameQuotation'),
               priceQuotation: BuiltValueNullFieldError.checkNotNull(
                   priceQuotation, 'Quotation', 'priceQuotation'),
-              dateQuotation: BuiltValueNullFieldError.checkNotNull(
-                  dateQuotation, 'Quotation', 'dateQuotation'),
-              expirationDate: BuiltValueNullFieldError.checkNotNull(
-                  expirationDate, 'Quotation', 'expirationDate'),
-              userId: BuiltValueNullFieldError.checkNotNull(
-                  userId, 'Quotation', 'userId'),
-              branchId: BuiltValueNullFieldError.checkNotNull(
-                  branchId, 'Quotation', 'branchId'),
+              dateQuotation: dateQuotation,
+              expirationDate: expirationDate,
+              userId: userId,
+              branchId: branchId,
               productQuotations: productQuotations.build(),
               user: _user?.build(),
               branch: _branch?.build());
@@ -600,7 +608,7 @@ class _$ProductQuotation extends ProductQuotation {
   @override
   final double totalPrice;
   @override
-  final int quotationId;
+  final int? quotationId;
   @override
   final int productId;
   @override
@@ -615,7 +623,7 @@ class _$ProductQuotation extends ProductQuotation {
       required this.quantity,
       required this.unitPrice,
       required this.totalPrice,
-      required this.quotationId,
+      this.quotationId,
       required this.productId,
       this.product})
       : super._() {
@@ -625,8 +633,6 @@ class _$ProductQuotation extends ProductQuotation {
         unitPrice, 'ProductQuotation', 'unitPrice');
     BuiltValueNullFieldError.checkNotNull(
         totalPrice, 'ProductQuotation', 'totalPrice');
-    BuiltValueNullFieldError.checkNotNull(
-        quotationId, 'ProductQuotation', 'quotationId');
     BuiltValueNullFieldError.checkNotNull(
         productId, 'ProductQuotation', 'productId');
   }
@@ -755,8 +761,7 @@ class ProductQuotationBuilder
                   unitPrice, 'ProductQuotation', 'unitPrice'),
               totalPrice: BuiltValueNullFieldError.checkNotNull(
                   totalPrice, 'ProductQuotation', 'totalPrice'),
-              quotationId: BuiltValueNullFieldError.checkNotNull(
-                  quotationId, 'ProductQuotation', 'quotationId'),
+              quotationId: quotationId,
               productId: BuiltValueNullFieldError.checkNotNull(
                   productId, 'ProductQuotation', 'productId'),
               product: _product?.build());
