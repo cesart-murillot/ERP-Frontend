@@ -19,19 +19,25 @@ abstract class Sales implements Built<Sales, SalesBuilder> {
 abstract class Sale implements Built<Sale, SaleBuilder> {
   static Serializer<Sale> get serializer => _$saleSerializer;
 
-  int get id;
+  int? get id;
+
+  @BuiltValueField(wireName: 'name_sale')
+  String get nameSale;
+
+  @BuiltValueField(wireName: 'nit_sale')
+  String get nitSale;
 
   @BuiltValueField(wireName: 'total_sale')
   double get totalSale;
 
   @BuiltValueField(wireName: 'date_sale')
-  String get dateSale;
+  String? get dateSale;
 
   @BuiltValueField(wireName: 'user_id')
-  int get userId;
+  int? get userId;
 
   @BuiltValueField(wireName: 'branch_id')
-  int get branchId;
+  int? get branchId;
 
   @BuiltValueField(wireName: 'quotation_id')
   int? get quotationId;
@@ -50,7 +56,7 @@ abstract class Sale implements Built<Sale, SaleBuilder> {
 abstract class ProductSale implements Built<ProductSale, ProductSaleBuilder> {
   static Serializer<ProductSale> get serializer => _$productSaleSerializer;
 
-  int get id;
+  int? get id;
 
   @BuiltValueField(wireName: 'unit_price')
   double get unitPrice;
@@ -61,7 +67,7 @@ abstract class ProductSale implements Built<ProductSale, ProductSaleBuilder> {
   double get totalPrice;
 
   @BuiltValueField(wireName: 'sale_id')
-  int get saleId;
+  int? get saleId;
 
   @BuiltValueField(wireName: 'product_id')
   int get productId;

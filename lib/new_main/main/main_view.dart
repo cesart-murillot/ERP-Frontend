@@ -1,6 +1,7 @@
 import 'package:erp_fronted/dash_board/dash_board/dash_board_view.dart';
 import 'package:erp_fronted/employee/list_employee/list_employee_view.dart';
 import 'package:erp_fronted/employee/show_employee/show_employee_view.dart';
+import 'package:erp_fronted/invoice/invoice_list/invoice_list_view.dart';
 import 'package:erp_fronted/new_login/login/login_view.dart';
 import 'package:erp_fronted/new_main/main/main_state.dart';
 import 'package:erp_fronted/new_product/product_list/product_list_view.dart';
@@ -196,11 +197,7 @@ class BodyPage extends StatelessWidget {
           case AppPage.sales:
             return const ListSalePage();
           case AppPage.invoices:
-            return const Center(
-              child: Text(
-                'Facturas',
-              ),
-            );
+            return const InvoiceListPage();
         }
       },
     );

@@ -65,7 +65,7 @@ class ShowSale extends StatelessWidget {
     final sale = context.read<ShowSaleBloc>().state.sale;
     if (sale != null) {
       final saleDate = DateFormat('EEEE d MMMM, ' 'yy - HH:mm a')
-          .format(DateTime.parse(sale.dateSale));
+          .format(DateTime.parse(sale.dateSale!));
       return Column(
         children: [
           Padding(

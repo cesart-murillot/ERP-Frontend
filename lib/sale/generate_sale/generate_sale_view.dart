@@ -1,5 +1,6 @@
 import 'package:erp_fronted/search_bar/product_search/product_search_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'generate_sale_bloc.dart';
@@ -12,7 +13,8 @@ class GenerateSalePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => GenerateSaleBloc()..add(InitEvent()),
+      create: (BuildContext context) =>
+          GenerateSaleBloc()..add(const InitEvent()),
       child: Builder(
         builder: (context) => Scaffold(
           body: const StateViews(),
@@ -37,22 +39,18 @@ class StateViews extends StatelessWidget {
                 'Initial State',
               ),
             );
-            break;
           case States.loading:
             return const Center(
               child: CircularProgressIndicator(),
             );
-            break;
           case States.loaded:
             return const GenerateSale();
-            break;
           case States.error:
             return Center(
               child: Text(
                 state.errorMessage,
               ),
             );
-            break;
         }
       },
     );
@@ -64,6 +62,10 @@ class GenerateSale extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final name = context.watch<GenerateSaleBloc>().state.name;
+    final ci = context.watch<GenerateSaleBloc>().state.ci;
+    final products = context.watch<GenerateSaleBloc>().state.products.length;
+    final total = context.watch<GenerateSaleBloc>().state.total;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -73,6 +75,12 @@ class GenerateSale extends StatelessWidget {
               children: [
                 Flexible(
                   child: TextFormField(
+                    initialValue: name,
+                    onChanged: (name) {
+                      context
+                          .read<GenerateSaleBloc>()
+                          .add(NameChangedEvent(name));
+                    },
                     decoration: const InputDecoration(
                       label: Text('Apellido o Razón Social'),
                       border: OutlineInputBorder(),
@@ -89,6 +97,10 @@ class GenerateSale extends StatelessWidget {
               children: [
                 Flexible(
                   child: TextFormField(
+                    initialValue: ci,
+                    onChanged: (ci) {
+                      context.read<GenerateSaleBloc>().add(CiChangedEvent(ci));
+                    },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       label: Text('CI o NIT'),
@@ -127,7 +139,45 @@ class GenerateSale extends StatelessWidget {
             ),
             const Divider(),
             const ProductDetail(),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text('Total: $total'),
+                ],
+              ),
+            ),
             const Divider(),
+            const SizedBox(
+              height: 8.0,
+              width: 8.0,
+            ),
+            products > 0 && name != '' && ci != ''
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FloatingActionButton.extended(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) => BlocProvider.value(
+                                value: BlocProvider.of<GenerateSaleBloc>(
+                                    context),
+                                child: const ConfirmationDialog(),
+                              ),
+                          );
+                        },
+                        label: const Text(
+                          'Facturar',
+                        ),
+                      )
+                    ],
+                  )
+                : const SizedBox(
+                    height: 8.0,
+                    width: 8.0,
+                  ),
           ],
         ),
       ),
@@ -141,7 +191,9 @@ class ProductDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final products = context.watch<GenerateSaleBloc>().state.products;
-
+    final prices = context.watch<GenerateSaleBloc>().state.prices;
+    final quantities = context.watch<GenerateSaleBloc>().state.quantities;
+    final subTotals = context.watch<GenerateSaleBloc>().state.subTotals;
     return FittedBox(
       child: DataTable(
         rows: List.generate(
@@ -156,8 +208,17 @@ class ProductDetail extends StatelessWidget {
                   ),
                 ),
                 DataCell(
-                  Text(
-                    '${product.price}',
+                  TextFormField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    controller: quantities[index],
+                    decoration: const InputDecoration(border: InputBorder.none),
+                    onChanged: (value) {
+                      context
+                          .read<GenerateSaleBloc>()
+                          .add(QuantityPriceChangeEvent(index));
+                    },
                   ),
                 ),
                 DataCell(
@@ -166,13 +227,25 @@ class ProductDetail extends StatelessWidget {
                   ),
                 ),
                 DataCell(
-                  Text(
-                    '${product.id ?? 0 * 100}',
+                  TextFormField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r'^\d+\.?\d{0,2}'),
+                      ),
+                      //FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    controller: prices[index],
+                    decoration: const InputDecoration(border: InputBorder.none),
+                    onChanged: (value) {
+                      context
+                          .read<GenerateSaleBloc>()
+                          .add(QuantityPriceChangeEvent(index));
+                    },
                   ),
                 ),
                 DataCell(
                   Text(
-                    '${product.price}',
+                    '${subTotals[index]}',
                   ),
                 ),
               ],
@@ -207,6 +280,36 @@ class ProductDetail extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class ConfirmationDialog extends StatelessWidget {
+  const ConfirmationDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<GenerateSaleBloc, GenerateSaleState>(
+      builder: (context, state) {
+        return AlertDialog(
+          title: const Text('Facturar'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                context.read<GenerateSaleBloc>().add(const SaveSaleEvent());
+                Navigator.pop(context);
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

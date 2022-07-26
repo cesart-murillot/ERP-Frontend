@@ -63,21 +63,42 @@ class _$SaleSerializer implements StructuredSerializer<Sale> {
   Iterable<Object?> serialize(Serializers serializers, Sale object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      'name_sale',
+      serializers.serialize(object.nameSale,
+          specifiedType: const FullType(String)),
+      'nit_sale',
+      serializers.serialize(object.nitSale,
+          specifiedType: const FullType(String)),
       'total_sale',
       serializers.serialize(object.totalSale,
           specifiedType: const FullType(double)),
-      'date_sale',
-      serializers.serialize(object.dateSale,
-          specifiedType: const FullType(String)),
-      'user_id',
-      serializers.serialize(object.userId, specifiedType: const FullType(int)),
-      'branch_id',
-      serializers.serialize(object.branchId,
-          specifiedType: const FullType(int)),
     ];
     Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.dateSale;
+    if (value != null) {
+      result
+        ..add('date_sale')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.userId;
+    if (value != null) {
+      result
+        ..add('user_id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.branchId;
+    if (value != null) {
+      result
+        ..add('branch_id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.quotationId;
     if (value != null) {
       result
@@ -122,7 +143,15 @@ class _$SaleSerializer implements StructuredSerializer<Sale> {
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'name_sale':
+          result.nameSale = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'nit_sale':
+          result.nitSale = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
           break;
         case 'total_sale':
           result.totalSale = serializers.deserialize(value,
@@ -130,15 +159,15 @@ class _$SaleSerializer implements StructuredSerializer<Sale> {
           break;
         case 'date_sale':
           result.dateSale = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'user_id':
           result.userId = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'branch_id':
           result.branchId = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'quotation_id':
           result.quotationId = serializers.deserialize(value,
@@ -175,8 +204,6 @@ class _$ProductSaleSerializer implements StructuredSerializer<ProductSale> {
   Iterable<Object?> serialize(Serializers serializers, ProductSale object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'unit_price',
       serializers.serialize(object.unitPrice,
           specifiedType: const FullType(double)),
@@ -186,13 +213,23 @@ class _$ProductSaleSerializer implements StructuredSerializer<ProductSale> {
       'total_price',
       serializers.serialize(object.totalPrice,
           specifiedType: const FullType(double)),
-      'sale_id',
-      serializers.serialize(object.saleId, specifiedType: const FullType(int)),
       'product_id',
       serializers.serialize(object.productId,
           specifiedType: const FullType(int)),
     ];
     Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.saleId;
+    if (value != null) {
+      result
+        ..add('sale_id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.product;
     if (value != null) {
       result
@@ -216,7 +253,7 @@ class _$ProductSaleSerializer implements StructuredSerializer<ProductSale> {
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'unit_price':
           result.unitPrice = serializers.deserialize(value,
@@ -232,7 +269,7 @@ class _$ProductSaleSerializer implements StructuredSerializer<ProductSale> {
           break;
         case 'sale_id':
           result.saleId = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'product_id':
           result.productId = serializers.deserialize(value,
@@ -339,15 +376,19 @@ class SalesBuilder implements Builder<Sales, SalesBuilder> {
 
 class _$Sale extends Sale {
   @override
-  final int id;
+  final int? id;
+  @override
+  final String nameSale;
+  @override
+  final String nitSale;
   @override
   final double totalSale;
   @override
-  final String dateSale;
+  final String? dateSale;
   @override
-  final int userId;
+  final int? userId;
   @override
-  final int branchId;
+  final int? branchId;
   @override
   final int? quotationId;
   @override
@@ -361,21 +402,21 @@ class _$Sale extends Sale {
       (new SaleBuilder()..update(updates))._build();
 
   _$Sale._(
-      {required this.id,
+      {this.id,
+      required this.nameSale,
+      required this.nitSale,
       required this.totalSale,
-      required this.dateSale,
-      required this.userId,
-      required this.branchId,
+      this.dateSale,
+      this.userId,
+      this.branchId,
       this.quotationId,
       this.user,
       this.branch,
       this.productSales})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, 'Sale', 'id');
+    BuiltValueNullFieldError.checkNotNull(nameSale, 'Sale', 'nameSale');
+    BuiltValueNullFieldError.checkNotNull(nitSale, 'Sale', 'nitSale');
     BuiltValueNullFieldError.checkNotNull(totalSale, 'Sale', 'totalSale');
-    BuiltValueNullFieldError.checkNotNull(dateSale, 'Sale', 'dateSale');
-    BuiltValueNullFieldError.checkNotNull(userId, 'Sale', 'userId');
-    BuiltValueNullFieldError.checkNotNull(branchId, 'Sale', 'branchId');
   }
 
   @override
@@ -390,6 +431,8 @@ class _$Sale extends Sale {
     if (identical(other, this)) return true;
     return other is Sale &&
         id == other.id &&
+        nameSale == other.nameSale &&
+        nitSale == other.nitSale &&
         totalSale == other.totalSale &&
         dateSale == other.dateSale &&
         userId == other.userId &&
@@ -408,7 +451,13 @@ class _$Sale extends Sale {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, id.hashCode), totalSale.hashCode),
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc($jc(0, id.hashCode),
+                                            nameSale.hashCode),
+                                        nitSale.hashCode),
+                                    totalSale.hashCode),
                                 dateSale.hashCode),
                             userId.hashCode),
                         branchId.hashCode),
@@ -422,6 +471,8 @@ class _$Sale extends Sale {
   String toString() {
     return (newBuiltValueToStringHelper('Sale')
           ..add('id', id)
+          ..add('nameSale', nameSale)
+          ..add('nitSale', nitSale)
           ..add('totalSale', totalSale)
           ..add('dateSale', dateSale)
           ..add('userId', userId)
@@ -440,6 +491,14 @@ class SaleBuilder implements Builder<Sale, SaleBuilder> {
   int? _id;
   int? get id => _$this._id;
   set id(int? id) => _$this._id = id;
+
+  String? _nameSale;
+  String? get nameSale => _$this._nameSale;
+  set nameSale(String? nameSale) => _$this._nameSale = nameSale;
+
+  String? _nitSale;
+  String? get nitSale => _$this._nitSale;
+  set nitSale(String? nitSale) => _$this._nitSale = nitSale;
 
   double? _totalSale;
   double? get totalSale => _$this._totalSale;
@@ -481,6 +540,8 @@ class SaleBuilder implements Builder<Sale, SaleBuilder> {
     final $v = _$v;
     if ($v != null) {
       _id = $v.id;
+      _nameSale = $v.nameSale;
+      _nitSale = $v.nitSale;
       _totalSale = $v.totalSale;
       _dateSale = $v.dateSale;
       _userId = $v.userId;
@@ -513,15 +574,16 @@ class SaleBuilder implements Builder<Sale, SaleBuilder> {
     try {
       _$result = _$v ??
           new _$Sale._(
-              id: BuiltValueNullFieldError.checkNotNull(id, 'Sale', 'id'),
+              id: id,
+              nameSale: BuiltValueNullFieldError.checkNotNull(
+                  nameSale, 'Sale', 'nameSale'),
+              nitSale: BuiltValueNullFieldError.checkNotNull(
+                  nitSale, 'Sale', 'nitSale'),
               totalSale: BuiltValueNullFieldError.checkNotNull(
                   totalSale, 'Sale', 'totalSale'),
-              dateSale: BuiltValueNullFieldError.checkNotNull(
-                  dateSale, 'Sale', 'dateSale'),
-              userId: BuiltValueNullFieldError.checkNotNull(
-                  userId, 'Sale', 'userId'),
-              branchId: BuiltValueNullFieldError.checkNotNull(
-                  branchId, 'Sale', 'branchId'),
+              dateSale: dateSale,
+              userId: userId,
+              branchId: branchId,
               quotationId: quotationId,
               user: _user?.build(),
               branch: _branch?.build(),
@@ -548,7 +610,7 @@ class SaleBuilder implements Builder<Sale, SaleBuilder> {
 
 class _$ProductSale extends ProductSale {
   @override
-  final int id;
+  final int? id;
   @override
   final double unitPrice;
   @override
@@ -556,7 +618,7 @@ class _$ProductSale extends ProductSale {
   @override
   final double totalPrice;
   @override
-  final int saleId;
+  final int? saleId;
   @override
   final int productId;
   @override
@@ -566,21 +628,19 @@ class _$ProductSale extends ProductSale {
       (new ProductSaleBuilder()..update(updates))._build();
 
   _$ProductSale._(
-      {required this.id,
+      {this.id,
       required this.unitPrice,
       required this.quantity,
       required this.totalPrice,
-      required this.saleId,
+      this.saleId,
       required this.productId,
       this.product})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, 'ProductSale', 'id');
     BuiltValueNullFieldError.checkNotNull(
         unitPrice, 'ProductSale', 'unitPrice');
     BuiltValueNullFieldError.checkNotNull(quantity, 'ProductSale', 'quantity');
     BuiltValueNullFieldError.checkNotNull(
         totalPrice, 'ProductSale', 'totalPrice');
-    BuiltValueNullFieldError.checkNotNull(saleId, 'ProductSale', 'saleId');
     BuiltValueNullFieldError.checkNotNull(
         productId, 'ProductSale', 'productId');
   }
@@ -700,16 +760,14 @@ class ProductSaleBuilder implements Builder<ProductSale, ProductSaleBuilder> {
     try {
       _$result = _$v ??
           new _$ProductSale._(
-              id: BuiltValueNullFieldError.checkNotNull(
-                  id, 'ProductSale', 'id'),
+              id: id,
               unitPrice: BuiltValueNullFieldError.checkNotNull(
                   unitPrice, 'ProductSale', 'unitPrice'),
               quantity: BuiltValueNullFieldError.checkNotNull(
                   quantity, 'ProductSale', 'quantity'),
               totalPrice: BuiltValueNullFieldError.checkNotNull(
                   totalPrice, 'ProductSale', 'totalPrice'),
-              saleId: BuiltValueNullFieldError.checkNotNull(
-                  saleId, 'ProductSale', 'saleId'),
+              saleId: saleId,
               productId: BuiltValueNullFieldError.checkNotNull(
                   productId, 'ProductSale', 'productId'),
               product: _product?.build());

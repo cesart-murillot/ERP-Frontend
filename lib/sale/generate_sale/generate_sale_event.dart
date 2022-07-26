@@ -18,3 +18,35 @@ class AddProductToSaleEvent extends GenerateSaleEvent {
 
   const AddProductToSaleEvent(this.productId);
 }
+
+class QuantityPriceChangeEvent extends GenerateSaleEvent {
+  final int index;
+
+  @override
+  List<Object?> get props => [index];
+
+  const QuantityPriceChangeEvent(this.index);
+}
+
+class NameChangedEvent extends GenerateSaleEvent {
+  final String name;
+  @override
+  List<Object?> get props => [];
+
+  const NameChangedEvent(this.name);
+}
+
+class CiChangedEvent extends GenerateSaleEvent {
+  final String ci;
+  @override
+  List<Object?> get props => [];
+
+  const CiChangedEvent(this.ci);
+}
+
+class SaveSaleEvent extends GenerateSaleEvent {
+  @override
+  List<Object?> get props => [];
+
+  const SaveSaleEvent();
+}

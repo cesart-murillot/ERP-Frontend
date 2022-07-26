@@ -78,7 +78,7 @@ class ListSales extends StatelessWidget {
         itemBuilder: (context, index) {
           final sale = sales.sales[index];
           final dateSale = DateFormat('EEEE d MMMM, ' 'yy - HH:mm a')
-              .format(DateTime.parse(sale.dateSale));
+              .format(DateTime.parse(sale.dateSale!));
           return ListTile(
             title: Text('Monto: ${sale.totalSale}'),
             subtitle: Text('Fecha: $dateSale'),
@@ -87,7 +87,7 @@ class ListSales extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (_) => ShowSalePage(
-                    saleId: sale.id,
+                    saleId: sale.id!,
                   ),
                 ),
               );
