@@ -91,50 +91,53 @@ class Login extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  onSaved: (value) {
-                    if (value != null) {
-                      email.text = value;
-                    }
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Correo',
-                    icon: Icon(Icons.email),
-                    border: OutlineInputBorder(),
+            child: SizedBox(
+              width: 384.0,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    onSaved: (value) {
+                      if (value != null) {
+                        email.text = value;
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Correo',
+                      icon: Icon(Icons.email),
+                      border: OutlineInputBorder(),
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                TextFormField(
-                  obscureText: true,
-                  onSaved: (value) {
-                    if (value != null) {
-                      password.text = value;
-                    }
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Contraseña',
-                    icon: Icon(Icons.password),
-                    border: OutlineInputBorder(),
+                  const SizedBox(
+                    height: 8.0,
                   ),
-                ),
-                const SizedBox(
-                  height: 16.0,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _formKey.currentState?.save();
-                    context
-                        .read<LoginBloc>()
-                        .add(SubmitLogin(email.text, password.text));
-                  },
-                  child: const Text('Ingresar'),
-                ),
-              ],
+                  TextFormField(
+                    obscureText: true,
+                    onSaved: (value) {
+                      if (value != null) {
+                        password.text = value;
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Contraseña',
+                      icon: Icon(Icons.password),
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      _formKey.currentState?.save();
+                      context
+                          .read<LoginBloc>()
+                          .add(SubmitLogin(email.text, password.text));
+                    },
+                    child: const Text('Ingresar'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
