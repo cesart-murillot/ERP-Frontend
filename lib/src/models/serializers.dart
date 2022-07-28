@@ -7,6 +7,7 @@ import 'package:erp_fronted/employee/models/user_model.dart';
 import 'package:erp_fronted/entry/models/entry_model.dart';
 import 'package:erp_fronted/entry_order/models/entry_order_model.dart';
 import 'package:erp_fronted/entry_order/models/entry_order_product_model.dart';
+import 'package:erp_fronted/invoice/models/invoice_model.dart';
 
 import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/product_entry/models/product_entry_model.dart';
@@ -64,6 +65,8 @@ part 'serializers.g.dart';
   ProductSale,
   BInventories,
   BInventory,
+  Invoices,
+  Invoice,
 ])
 
 Serializers serializers = _$serializers;

@@ -311,6 +311,7 @@ class VerificationDialog extends StatelessWidget {
               onPressed: () {
                 context.read<CheckEntryOrderBloc>().add(const VerifyEvent());
                 Navigator.pop(context);
+                Navigator.pop(context);
               },
               child: const Text('Verificar'),
             ),

@@ -1,5 +1,4 @@
 import 'package:erp_fronted/inventory/index_entry_order/index_entry_order_view.dart';
-import 'package:erp_fronted/inventory/product_inventory/product_inventory_view.dart';
 import 'package:erp_fronted/inventory/product_transfer/product_transfer_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,23 +24,25 @@ class MenuInventory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final roleId = context.watch<MenuInventoryBloc>().state.roleId;
+
     return ListView(
       children: [
+        roleId == 5
+            ? const SizedBox()
+            : GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const IndexEntryOrderPage(),
+                    ),
+                  );
+                },
+                child: const CardMenu(title: 'Entradas'),
+              ),
         GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context,
-                  MaterialPageRoute(
-                    builder: (_) => const IndexEntryOrderPage(),
-                  ),
-                );
-          },
-          child: const CardMenu(title: 'Entradas'),
-        ),
-        GestureDetector(
-          onTap: () {
-
-          },
+          onTap: () {},
           child: const CardMenu(title: 'Salidas'),
         ),
         GestureDetector(
@@ -56,15 +57,11 @@ class MenuInventory extends StatelessWidget {
           child: const CardMenu(title: 'Traspasos'),
         ),
         GestureDetector(
-          onTap: () {
-
-          },
+          onTap: () {},
           child: const CardMenu(title: 'Mermas'),
         ),
         GestureDetector(
-          onTap: () {
-
-          },
+          onTap: () {},
           child: const CardMenu(title: 'Saldos'),
         ),
       ],

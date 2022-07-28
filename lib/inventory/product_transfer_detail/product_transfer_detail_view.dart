@@ -90,75 +90,77 @@ class ProductTransferDetail extends StatelessWidget {
       final date = DateFormat('EEEE d MMMM, ' 'yy - HH:mm a')
           .format(DateTime.parse(transfer.createdAt!));
       final verified = transfer.verified ?? false;
-      return Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Fecha de Solicitud: $date',
-                ),
-              ),
-            ],
-          ),
-          const UserInfo(),
-          const BranchInfo(),
-          const ProductTransferInformation(),
-          const SizedBox(
-            height: 8.0,
-          ),
-          !verified
-              ? Padding(
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FloatingActionButton.extended(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (_) => BlocProvider.value(
-                              value: BlocProvider.of<ProductTransferDetailBloc>(
-                                  context),
-                              child: const VerificationDialog(),
-                            ),
-                          ).then(
-                            (value) {
-                              if (value is bool) {
-                                if (value) {
-                                  context
-                                      .read<ProductTransferDetailBloc>()
-                                      .add(InitEvent(transfer.id!));
+                  child: Text(
+                    'Fecha de Solicitud: $date',
+                  ),
+                ),
+              ],
+            ),
+            const UserInfo(),
+            const BranchInfo(),
+            const ProductTransferInformation(),
+            const SizedBox(
+              height: 8.0,
+            ),
+            !verified
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        FloatingActionButton.extended(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => BlocProvider.value(
+                                value: BlocProvider.of<ProductTransferDetailBloc>(
+                                    context),
+                                child: const VerificationDialog(),
+                              ),
+                            ).then(
+                              (value) {
+                                if (value is bool) {
+                                  if (value) {
+                                    context
+                                        .read<ProductTransferDetailBloc>()
+                                        .add(InitEvent(transfer.id!));
+                                  }
                                 }
-                              }
-                            },
-                          );
-                        },
-                        label: const Text(
-                          'Generar Orden de Envio',
+                              },
+                            );
+                          },
+                          label: const Text(
+                            'Generar Orden de Envio',
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                )
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Chip(
-                        avatar: Icon(
-                          Icons.check,
-                          color: Colors.green,
+                      ],
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: const [
+                        Chip(
+                          avatar: Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          ),
+                          label: Text('Verificado'),
                         ),
-                        label: Text('Verificado'),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-        ],
+          ],
+        ),
       );
     }
     return Container();
@@ -267,6 +269,8 @@ class ProductTransferInformation extends StatelessWidget {
         ?.productTransfers;
     if (productTransfers != null) {
       return ListView.builder(
+        scrollDirection: Axis.vertical,
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: productTransfers.length,
         itemBuilder: (context, index) {

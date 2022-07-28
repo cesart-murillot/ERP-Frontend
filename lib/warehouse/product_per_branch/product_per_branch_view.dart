@@ -71,6 +71,7 @@ class ProductPerBranch extends StatelessWidget {
           final product = products[index];
           final int remainUnits = product.remainUnits ?? 0;
           final int reorderPoint = product.reorderPoint ?? 0;
+          final int estimateTime = product.estimateTime ?? 0;
           return Card(
             child: ListTile(
               onTap: () {
@@ -85,7 +86,7 @@ class ProductPerBranch extends StatelessWidget {
               },
               leading: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100.0),
+                  borderRadius: BorderRadius.zero,
                   border: Border.all(
                     width: 2.0,
                     color: reorderPoint > remainUnits
@@ -101,15 +102,22 @@ class ProductPerBranch extends StatelessWidget {
               ),
               title: Text(product.modelProduct),
               subtitle: Text('${product.formatProduct}'),
-              trailing: Chip(
-                label: Text(
-                  '${product.remainUnits} uds.',
-                ),
-                backgroundColor: reorderPoint > remainUnits
-                    ? Colors.redAccent
-                    : reorderPoint < remainUnits
-                        ? Colors.lightGreenAccent
-                        : Colors.yellowAccent,
+              trailing: Column(
+                children: [
+                  Chip(
+                    label: Text(
+                      '${product.remainUnits} uds.',
+                    ),
+                    backgroundColor: reorderPoint > remainUnits
+                        ? Colors.red.shade300
+                        : reorderPoint < remainUnits
+                            ? Colors.green.shade300
+                            : Colors.yellow.shade300,
+                  ),
+                  estimateTime > 0
+                      ? Text('$estimateTime semanas restantes')
+                      : const Text('Cantidad insuficiente'),
+                ],
               ),
             ),
           );

@@ -14,7 +14,7 @@ class InvoiceListPage extends StatelessWidget {
       create: (BuildContext context) => InvoiceListBloc()..add(InitEvent()),
       child: Builder(
         builder: (context) => const StateViews(),
-        ),
+      ),
     );
   }
 }
@@ -56,6 +56,18 @@ class InvoiceList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final invoicesList = context.watch<InvoiceListBloc>().state.invoices;
+    if (invoicesList != null) {
+      final invoices = invoicesList.invoices;
+      return ListView.builder(
+        itemCount: invoices.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+
+          );
+        },
+      );
+    }
     return Container();
   }
 }

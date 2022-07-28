@@ -18,6 +18,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(EntryOrder.serializer)
       ..add(EntryOrderProduct.serializer)
       ..add(EntryOrders.serializer)
+      ..add(Invoice.serializer)
+      ..add(Invoices.serializer)
       ..add(LinkData.serializer)
       ..add(MetaData.serializer)
       ..add(Module.serializer)
@@ -64,6 +66,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(EntryOrderProduct)]),
           () => new ListBuilder<EntryOrderProduct>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Invoice)]),
+          () => new ListBuilder<Invoice>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Module)]),
           () => new ListBuilder<Module>())

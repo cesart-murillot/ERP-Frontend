@@ -268,6 +268,7 @@ class VerificationDialog extends StatelessWidget {
                     .read<VerifyProductEntryBloc>()
                     .add(const StoreDataEvent());
                 Navigator.pop(context);
+                Navigator.pop(context);
               },
               child: const Text('Ok'),
             ),

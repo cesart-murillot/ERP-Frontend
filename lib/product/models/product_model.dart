@@ -89,6 +89,9 @@ abstract class Product implements Built<Product, ProductBuilder> {
   @BuiltValueField(wireName: 'branch_remain_units')
   int? get branchRemainUnits;
 
+  @BuiltValueField(wireName: 'estimate_time')
+  int? get estimateTime;
+
   double get price;
 
   Product._();
