@@ -185,7 +185,7 @@ class BodyPage extends StatelessWidget {
           case AppPage.invoices:
             return const InvoiceListPage();
           case AppPage.home:
-            return const HomePage();
+            return const DashBoardPage();
         }
       },
     );
