@@ -63,6 +63,10 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         emit(state.currentPage(page: AppPage.invoices, user: event.user));
         break;
 
+      case 'home':
+        emit(state.currentPage(page: AppPage.home, user: event.user));
+        break;
+
       /*case 'product':
         emit(const MainState().currentPage(page: AppPage.product, user: event.user));
         break;

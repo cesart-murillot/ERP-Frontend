@@ -11,6 +11,7 @@ enum AppPage {
   quotations,
   sales,
   invoices,
+  home,
 
   /*product,
   billing,

@@ -304,6 +304,7 @@ class ConfirmationDialog extends StatelessWidget {
               onPressed: () {
                 context.read<GenerateSaleBloc>().add(const SaveSaleEvent());
                 Navigator.pop(context);
+                Navigator.pop(context);
               },
               child: const Text('Ok'),
             ),

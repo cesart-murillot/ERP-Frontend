@@ -1,6 +1,7 @@
 import 'package:erp_fronted/dash_board/dash_board/dash_board_view.dart';
 import 'package:erp_fronted/employee/list_employee/list_employee_view.dart';
 import 'package:erp_fronted/employee/show_employee/show_employee_view.dart';
+import 'package:erp_fronted/home/home/home_view.dart';
 import 'package:erp_fronted/invoice/invoice_list/invoice_list_view.dart';
 import 'package:erp_fronted/new_login/login/login_view.dart';
 import 'package:erp_fronted/new_main/main/main_state.dart';
@@ -27,83 +28,85 @@ class MainPage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(),
             drawer: Drawer(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ListView(
-                    shrinkWrap: true,
-                    children: [
-                      SizedBox(
-                        height: 232.0,
-                        child: DrawerHeader(
-                          child: Column(
-                            //mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const FlutterLogo(size: 64.0),
-                              const SizedBox(
-                                height: 8.0,
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  final int employeeId =
-                                      BlocProvider.of<MainBloc>(context)
-                                          .state
-                                          .user!
-                                          .employee!
-                                          .id!;
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => ShowEmployeePage(
-                                          employeeID: employeeId),
-                                    ),
-                                  );
-                                },
-                                child: Text(
-                                  '${context.watch<MainBloc>().state.user?.employee?.namesEmployee} ${context.watch<MainBloc>().state.user?.employee?.lastNameEmployee}',
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ListView(
+                      shrinkWrap: true,
+                      children: [
+                        SizedBox(
+                          height: 232.0,
+                          child: DrawerHeader(
+                            child: Column(
+                              //mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const FlutterLogo(size: 64.0),
+                                const SizedBox(
+                                  height: 8.0,
                                 ),
-                              ),
-                              Text(
-                                '${context.watch<MainBloc>().state.user?.email}',
-                              ),
-                              Text(
-                                '${context.watch<MainBloc>().state.user?.role?.nameRole}',
-                              ),
-                              Text(
-                                '${context.watch<MainBloc>().state.user?.employee?.branch?.typeBranch} - ${context.watch<MainBloc>().state.user?.employee?.branch?.nameBranch}',
-                              ),
-                            ],
+                                TextButton(
+                                  onPressed: () {
+                                    final int employeeId =
+                                        BlocProvider.of<MainBloc>(context)
+                                            .state
+                                            .user!
+                                            .employee!
+                                            .id!;
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => ShowEmployeePage(
+                                            employeeID: employeeId),
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    '${context.watch<MainBloc>().state.user?.employee?.namesEmployee} ${context.watch<MainBloc>().state.user?.employee?.lastNameEmployee}',
+                                  ),
+                                ),
+                                Text(
+                                  '${context.watch<MainBloc>().state.user?.email}',
+                                ),
+                                Text(
+                                  '${context.watch<MainBloc>().state.user?.role?.nameRole}',
+                                ),
+                                Text(
+                                  '${context.watch<MainBloc>().state.user?.employee?.branch?.typeBranch} - ${context.watch<MainBloc>().state.user?.employee?.branch?.nameBranch}',
+                                ),
+                              ],
+                            ),
+                            decoration: const BoxDecoration(color: Colors.white30),
                           ),
-                          decoration: const BoxDecoration(color: Colors.white30),
                         ),
-                      ),
-                      const ModuleList(),
-                    ],
-                  ),
-                  Wrap(
-                    children: [
-                      const Divider(),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: TextButton(
-                          onPressed: () {
-                            showDialog(
-                              useSafeArea: true,
-                              context: context,
-                              builder: (_) => BlocProvider.value(
-                                value: BlocProvider.of<MainBloc>(context),
-                                child: const VerificationDialog(),
-                              ),
-                            );
-                          },
-                          child: const Text('Cerrar Sesión'),
+                        const ModuleList(),
+                      ],
+                    ),
+                    Wrap(
+                      children: [
+                        const Divider(),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: TextButton(
+                            onPressed: () {
+                              showDialog(
+                                useSafeArea: true,
+                                context: context,
+                                builder: (_) => BlocProvider.value(
+                                  value: BlocProvider.of<MainBloc>(context),
+                                  child: const VerificationDialog(),
+                                ),
+                              );
+                            },
+                            child: const Text('Cerrar Sesión'),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             body: const BodyPage(),
@@ -123,6 +126,7 @@ class ModuleList extends StatelessWidget {
       builder: (context, state) {
         if (state.state == MainViewState.loadedInfo) {
           return ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: state.user!.role!.modules!.length,
             itemBuilder: (context, index) {
@@ -164,24 +168,6 @@ class BodyPage extends StatelessWidget {
     return BlocBuilder<MainBloc, MainState>(
       builder: (context, state) {
         switch (state.page) {
-          /*case AppPage.product:
-            return const ProductListPage();
-          case AppPage.inventory:
-            return const ProductInventoryPage();
-          case AppPage.billing:
-            return const TransferOrderListPage();
-          case AppPage.employee:
-            return const ListEmployeePage();
-          case AppPage.branch:
-            return const Text('branch');
-          case AppPage.homepage:
-            return const DashBoardPage();
-          case AppPage.entry:
-            return const IndexEntryOrderPage();
-          case AppPage.productEntry:
-            return const IndexProductEntryPage();
-          case AppPage.productRequest:
-            return const ListProductRequestPage();*/
           case AppPage.dashboard:
             return const DashBoardPage();
           case AppPage.users:
@@ -198,6 +184,8 @@ class BodyPage extends StatelessWidget {
             return const ListSalePage();
           case AppPage.invoices:
             return const InvoiceListPage();
+          case AppPage.home:
+            return const HomePage();
         }
       },
     );

@@ -13,11 +13,8 @@ class InvoiceListPage extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => InvoiceListBloc()..add(InitEvent()),
       child: Builder(
-        builder: (context) => Scaffold(
-          body: const StateViews(),
-          appBar: AppBar(),
+        builder: (context) => const StateViews(),
         ),
-      ),
     );
   }
 }

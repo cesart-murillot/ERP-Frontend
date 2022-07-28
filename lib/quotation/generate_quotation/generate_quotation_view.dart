@@ -314,6 +314,7 @@ class ConfirmationDialog extends StatelessWidget {
                 context.read<GenerateQuotationBloc>().add(SaveQuotationEvent());
 
                 Navigator.pop(context);
+                Navigator.pop(context);
 
               },
               child: const Text('Ok'),
