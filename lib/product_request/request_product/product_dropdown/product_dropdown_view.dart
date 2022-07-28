@@ -30,7 +30,9 @@ class ProductDropdown extends StatelessWidget {
             Icons.arrow_drop_down,
           ),
           onSaved: (value) {
-            context.read<RequestProductBloc>().add(AddProductEvent(int.parse(value.toString())));
+            if (value is List<int>) {
+              context.read<RequestProductBloc>().add(AddProductEvent(int.parse(value[0].toString())));
+            }
           },
           decoration: const InputDecoration(
             labelText: 'Producto',

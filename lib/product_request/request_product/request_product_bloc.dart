@@ -49,7 +49,6 @@ class RequestProductBloc
 
   FutureOr<void> _storeData(
       StoreDataEvent event, Emitter<RequestProductState> emit) {
-    print('hello from bloc');
   }
 
   FutureOr<void> _addProduct(
@@ -83,13 +82,12 @@ class RequestProductBloc
 
     final transferString = objectToString(transfer, Transfer.serializer);
     final url = preDefinedUri('api/transfers/');
-    print(transferString);
 
     try {
       final String response = await postDataToApi(url, transferString!);
-      print(response);
+
     } catch (e) {
-      print(e);
+      print(e.toString());
     }
   }
 

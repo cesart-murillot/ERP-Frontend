@@ -15,9 +15,15 @@ class WarehouseListPage extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => WarehouseListBloc()..add(InitEvent()),
       child: Builder(
-        builder: (context) => Scaffold(
-          appBar: AppBar(),
-          body: const StateViews(),
+        builder: (context) =>
+            BlocBuilder<WarehouseListBloc, WarehouseListState>(
+          builder: (context, state) {
+            final isAdmin = context.read<WarehouseListBloc>().state.isAdmin;
+            return Scaffold(
+              appBar: isAdmin ? AppBar() : null,
+              body: const StateViews(),
+            );
+          },
         ),
       ),
     );
@@ -96,18 +102,16 @@ class BranchList extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '${branch.typeBranch}',
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
                       '${branch.addressBranch}',
                     ),
                   ],
                 ),
               ],
+            ),
+            trailing: Chip(
+              label: Text(
+                '${branch.typeBranch}',
+              ),
             ),
           ),
         );

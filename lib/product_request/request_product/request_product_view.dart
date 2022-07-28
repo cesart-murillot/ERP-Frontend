@@ -4,6 +4,7 @@ import 'package:erp_fronted/product_request/request_product/form_generator/form_
 import 'package:erp_fronted/product_request/request_product/product_dropdown/product_dropdown_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'request_product_bloc.dart';
@@ -164,6 +165,9 @@ class ProductQuantity extends StatelessWidget {
               Flexible(
                 flex: 1,
                 child: TextFormField(
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   onSaved: (value) {
                     context
                         .read<RequestProductBloc>()

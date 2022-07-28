@@ -12,12 +12,12 @@ class ProductDropdownCubit extends Cubit<ProductDropdownState> {
     final url = preDefinedUri('api/products', {'only': 'model'});
     Products products = await getObject(url, Products.serializer);
 
-    List<DropdownMenuItem<int>> productItems = [];
+    List<DropdownMenuItem<List<int>>> productItems = [];
 
     for (var p0 in products.products) {
-      productItems.add(DropdownMenuItem<int>(
+      productItems.add(DropdownMenuItem<List<int>>(
         child: Text('${p0.modelProduct} - ${p0.remainUnits ?? 0} u.d.'),
-        value: p0.id,
+        value: [p0.id!],
         enabled: p0.remainUnits == null
             ? false
             : p0.remainUnits! > 0

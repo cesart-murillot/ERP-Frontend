@@ -1,4 +1,5 @@
 import 'package:erp_fronted/inventory/detail_product_inventory/detail_product_inventory_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -84,25 +85,15 @@ class ProductPerBranch extends StatelessWidget {
                   ),
                 );
               },
-              leading: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.zero,
-                  border: Border.all(
-                    width: 2.0,
-                    color: reorderPoint > remainUnits
-                        ? Colors.red
-                        : reorderPoint < remainUnits
-                            ? Colors.green
-                            : Colors.yellow,
-                  ),
-                ),
-                child: const FlutterLogo(
-                  size: 48.0,
+              leading: Image(
+                image: NetworkImage(
+                  product.urlImageProduct!,
                 ),
               ),
               title: Text(product.modelProduct),
               subtitle: Text('${product.formatProduct}'),
               trailing: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Chip(
                     label: Text(

@@ -64,7 +64,11 @@ class ProductList extends StatelessWidget {
                         ),
                       );
                     },
-                    leading: const FlutterLogo(),
+                    leading: Image(
+                      image: NetworkImage(
+                        state.products!.products[index].urlImageProduct!,
+                      ),
+                    ),
                     title: Text(
                       '${state.products?.products[index].modelProduct}',
                     ),

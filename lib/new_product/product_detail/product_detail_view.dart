@@ -59,8 +59,16 @@ class ProductDetail extends StatelessWidget {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          FlutterLogo(size: 128.0),
+                        children: [
+                          SizedBox(
+                            height: 256.0,
+                            width: 256.0,
+                            child: Image(
+                              image: NetworkImage(
+                                state.product!.urlImageProduct!,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(
