@@ -20,6 +20,5 @@ class ProductPerBranchBloc extends Bloc<ProductPerBranchEvent, ProductPerBranchS
     } catch (e) {
       emit(state.error(errorMessage: e.toString()));
     }
-
   }
 }

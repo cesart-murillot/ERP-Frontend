@@ -1,7 +1,6 @@
 import 'package:erp_fronted/dash_board/dash_board/dash_board_view.dart';
 import 'package:erp_fronted/employee/list_employee/list_employee_view.dart';
 import 'package:erp_fronted/employee/show_employee/show_employee_view.dart';
-import 'package:erp_fronted/home/home/home_view.dart';
 import 'package:erp_fronted/invoice/invoice_list/invoice_list_view.dart';
 import 'package:erp_fronted/new_login/login/login_view.dart';
 import 'package:erp_fronted/new_main/main/main_state.dart';
@@ -25,7 +24,8 @@ class MainPage extends StatelessWidget {
       create: (BuildContext context) => MainBloc()..add(const InitEvent()),
       child: Builder(
         builder: (context) {
-          return Scaffold(
+          return const MainMenu();
+          /*Scaffold(
             appBar: AppBar(),
             drawer: Drawer(
               child: SingleChildScrollView(
@@ -78,7 +78,8 @@ class MainPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            decoration: const BoxDecoration(color: Colors.white30),
+                            decoration:
+                                const BoxDecoration(color: Colors.white30),
                           ),
                         ),
                         const ModuleList(),
@@ -110,7 +111,7 @@ class MainPage extends StatelessWidget {
               ),
             ),
             body: const BodyPage(),
-          );
+          );*/
         },
       ),
     );
@@ -226,5 +227,61 @@ class VerificationDialog extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class MainMenu extends StatefulWidget {
+  const MainMenu({Key? key}) : super(key: key);
+
+  @override
+  State<MainMenu> createState() => _MainMenuState();
+}
+
+class _MainMenuState extends State<MainMenu> {
+  bool menuBarVisibility = false;
+  bool menuVisibility = true;
+  static const double maxWidth = 1024;
+  static const double reorderWidth = 640;
+
+  @override
+  Widget build(BuildContext context) {
+    final data = MediaQuery.of(context);
+
+    return MediaQuery(
+      data: data,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: maxWidth,
+          ),
+          child: Row(
+            children: [
+              if (menuVisibility && data.size.width > reorderWidth)
+                Flexible(
+                  flex: 2,
+                  child: Column(),
+                ),
+              const Flexible(
+                child: BodyPage(),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Menu extends StatefulWidget {
+  const Menu({Key? key}) : super(key: key);
+
+  @override
+  State<Menu> createState() => _MenuState();
+}
+
+class _MenuState extends State<Menu> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

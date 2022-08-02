@@ -1,4 +1,5 @@
 import 'package:erp_fronted/inventory/index_entry_order/index_entry_order_view.dart';
+import 'package:erp_fronted/inventory/product_output/output_list/output_list_view.dart';
 import 'package:erp_fronted/inventory/product_transfer/product_transfer_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +43,14 @@ class MenuInventory extends StatelessWidget {
                 child: const CardMenu(title: 'Entradas'),
               ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                  MaterialPageRoute(
+                    builder: (_) => OutputListPage(),
+                  ),
+                );
+          },
           child: const CardMenu(title: 'Salidas'),
         ),
         GestureDetector(

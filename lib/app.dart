@@ -2,6 +2,8 @@ import 'package:erp_fronted/employee/add_employee/add_employee_view.dart';
 import 'package:erp_fronted/employee/list_employee/list_employee_view.dart';
 import 'package:erp_fronted/entry_order/list_entry_order/list_entry_order_view.dart';
 import 'package:erp_fronted/new_login/login/login_view.dart';
+import 'package:erp_fronted/try/try/try_view.dart';
+import 'package:erp_fronted/try/try_hard/try_hard_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
