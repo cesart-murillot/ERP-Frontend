@@ -63,8 +63,15 @@ class MainMenu extends StatefulWidget {
 class _MainMenuState extends State<MainMenu> {
   bool menuBarVisibility = false;
   bool menuVisibility = true;
+  bool _menuButtonVisible = false;
   static const double maxWidth = 1024;
   static const double reorderWidth = 640;
+
+  void _handleTapMenuButton(bool newValue) {
+    setState(() {
+      _menuButtonVisible = newValue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +91,28 @@ class _MainMenuState extends State<MainMenu> {
                   flex: 1,
                   child: Menu(),
                 ),
-              const Flexible(
+              Flexible(
                 flex: 3,
-                child: Text('Hello2'),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      toolbarHeight: 32.0,
+                      leading: data.size.width <= reorderWidth
+                          ? FittedBox(
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.menu),
+                              ),
+                            )
+                          : FittedBox(
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.arrow_back),
+                              ),
+                            ),
+                    )
+                  ],
+                ),
               )
             ],
           ),
@@ -110,35 +136,49 @@ class Menu extends StatelessWidget {
             child: CustomScrollView(
               primary: false,
               slivers: [
-                SliverPadding(
-                  sliver: SliverAppBar(
-                    title: const Placeholder(
-                      color: Colors.green,
+                SliverAppBar(
+                  actions: [
+                    FittedBox(
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.start,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
-                    floating: true,
-                    stretch: true,
-                    pinned: true,
-                    leading: const CircleAvatar(
-                      child: Placeholder(),
+                  ],
+                  pinned: true,
+                  backgroundColor: Colors.transparent,
+                  toolbarHeight: 32.0,
+                ),
+                SliverToBoxAdapter(
+                  child: DrawerHeader(
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          child: Placeholder(),
+                          maxRadius: 48.0,
+                        ),
+                        Text(
+                          '${userInfo.namesEmployee} ${userInfo.lastNameEmployee}',
+                        ),
+                      ],
                     ),
-                    collapsedHeight: 64.0,
-                    expandedHeight: 256.0,
-                    flexibleSpace: const Placeholder(
-                      color: Colors.yellow,
-                    ),
-                    onStretchTrigger: () => Future<void>(() => print('hello')),
-                    actions: const [
-                      Flexible(child: Placeholder()),
-                    ],
-                    bottom: const PreferredSize(child: Placeholder(color: Colors.pinkAccent, fallbackHeight: 64.0), preferredSize: Size.fromHeight(64.0)),
                   ),
-                  padding: const EdgeInsets.all(8.0),
                 ),
                 SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
                     final module = modules[index];
                     return ListTile(
+                      leading: Icon(
+                        IconData(
+                          int.parse(module.iconModule ?? '0xf0555'),
+                          fontFamily: 'MaterialIcons',
+                        ),
+                      ),
                       title: Text(module.nameModule),
+                      onTap: () {},
                     );
                   }, childCount: modules.length),
                 ),
@@ -156,5 +196,34 @@ class Menu extends StatelessWidget {
       );
     }
     return const SizedBox();
+  }
+}
+
+class Content extends StatelessWidget {
+  const Content({
+    Key? key,
+    this.menuButtonVisible = false,
+    required this.onChanged,
+  }) : super(key: key);
+  final bool menuButtonVisible;
+  final ValueChanged<bool> onChanged;
+
+  void _handleTap() {
+    onChanged(!menuButtonVisible);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        menuButtonVisible
+            ? const Text('Menu Button')
+            : const Text('no menu button'),
+        FloatingActionButton(
+          onPressed: () => _handleTap(),
+          child: const Text('tapme'),
+        ),
+      ],
+    );
   }
 }
