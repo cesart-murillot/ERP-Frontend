@@ -63,13 +63,14 @@ class MainMenu extends StatefulWidget {
 class _MainMenuState extends State<MainMenu> {
   bool menuBarVisibility = false;
   bool menuVisibility = true;
+  bool _isExpanded = true;
   bool _menuButtonVisible = false;
   static const double maxWidth = 1024;
   static const double reorderWidth = 640;
 
   void _handleTapMenuButton(bool newValue) {
     setState(() {
-      _menuButtonVisible = newValue;
+      _isExpanded = newValue;
     });
   }
 
@@ -86,10 +87,18 @@ class _MainMenuState extends State<MainMenu> {
           ),
           child: Row(
             children: [
-              if (menuVisibility && data.size.width > reorderWidth)
-                const Flexible(
+              if (_isExpanded && data.size.width > reorderWidth)
+                Flexible(
                   flex: 1,
-                  child: Menu(),
+                  child: Menu(
+                    onChanged: _handleTapMenuButton,
+                    isExpanded: true,
+                  ),
+                )
+              else if (!_isExpanded)
+                MenuBar(
+                  onChanged: _handleTapMenuButton,
+                  isExpanded: false,
                 ),
               Flexible(
                 flex: 3,
@@ -123,7 +132,18 @@ class _MainMenuState extends State<MainMenu> {
 }
 
 class Menu extends StatelessWidget {
-  const Menu({Key? key}) : super(key: key);
+  const Menu({
+    Key? key,
+    this.isExpanded = true,
+    required this.onChanged,
+  }) : super(key: key);
+
+  final bool isExpanded;
+  final ValueChanged<bool> onChanged;
+
+  void _handleTap() {
+    onChanged(!isExpanded);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +160,9 @@ class Menu extends StatelessWidget {
                   actions: [
                     FittedBox(
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _handleTap();
+                        },
                         icon: const Icon(
                           Icons.start,
                           color: Colors.black,
@@ -225,5 +247,84 @@ class Content extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class MenuBar extends StatelessWidget {
+  const MenuBar({
+    Key? key,
+    this.isExpanded = false,
+    required this.onChanged,
+  }) : super(key: key);
+
+  final bool isExpanded;
+  final ValueChanged<bool> onChanged;
+
+  void _handleTap() {
+    onChanged(!isExpanded);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final modules = context.watch<MainMenuBloc>().state.user?.role?.modules;
+    if (modules != null) {
+      return ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxWidth: 64.0
+        ),
+        child: Column(
+          children: [
+            Flexible(
+              child: CustomScrollView(
+                primary: false,
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: IconButton(
+                      onPressed: () {
+                        _handleTap();
+                      },
+                      icon: const Icon(Icons.expand),
+                    ),
+                  )
+/*                SliverAppBar(
+                    primary: false,
+                    pinned: true,
+                    actions: [
+                      IconButton(
+                        onPressed: () {
+                          _handleTap();
+                        },
+                        icon: const Icon(Icons.expand),
+                      ),
+                    ],
+                  )*/,
+                  const SliverToBoxAdapter(
+                    child: CircleAvatar(),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final module = modules[index];
+                        return IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            IconData(
+                              int.parse(module.iconModule ?? '0xf0555'),
+                              fontFamily: 'MaterialIcons',
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: modules.length,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    }
+    return Container();
   }
 }
