@@ -88,7 +88,7 @@ class _DisplayBranchesState extends State<DisplayBranches> {
             child: Text(state.branch!.nameBranch!),
           );*/
         return Container(
-          child: Text('Error!!'),
+          child: const Text('Error!!'),
         );
       },
     );

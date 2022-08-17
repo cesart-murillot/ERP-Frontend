@@ -1,4 +1,3 @@
-import 'package:erp_fronted/sale/generate_sale/generate_sale_bloc.dart';
 import 'package:erp_fronted/sale/generate_sale/generate_sale_view.dart';
 import 'package:erp_fronted/sale/show_sale/show_sale_view.dart';
 import 'package:flutter/material.dart';

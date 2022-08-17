@@ -93,7 +93,7 @@ class _MenuBarState extends State<MenuBar> {
                         alignment: Alignment.bottomRight,
                         child: TextButton(
                           onPressed: () {},
-                          child: Text('Cerrar Sesión'),
+                          child: const Text('Cerrar Sesión'),
                         ),
                       )
                     ],

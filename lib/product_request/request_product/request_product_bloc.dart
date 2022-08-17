@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:erp_fronted/branch/models/branch_model.dart';
 import 'package:erp_fronted/employee/models/user_model.dart';
+import 'package:erp_fronted/product/models/product_model.dart';
 import 'package:erp_fronted/product_request/models/product_transfer_model.dart';
 import 'package:erp_fronted/product_request/models/transfer_model.dart';
 import 'package:erp_fronted/src/resources/generic_serializer.dart';
@@ -43,13 +44,27 @@ class RequestProductBloc
 
     final Branch branch = await getObject(branchUrl, Branch.serializer);
 
+    final productUrl = preDefinedUri('/api/products/', {'only': 'model'});
+
+    final Products productList =
+        await getObject(productUrl, Products.serializer);
+
+    final List<Map<String, dynamic>> productListBool = [];
+
+    for (final product in productList.products) {
+      productListBool.add({'product': product, 'listed': false});
+    }
+
     emit(const RequestProductState().loadedInfo(
-        state: RequestProductViewState.loaded, user: user, branch: branch));
+      state: RequestProductViewState.loaded,
+      user: user,
+      branch: branch,
+      products: productListBool,
+    ));
   }
 
   FutureOr<void> _storeData(
-      StoreDataEvent event, Emitter<RequestProductState> emit) {
-  }
+      StoreDataEvent event, Emitter<RequestProductState> emit) {}
 
   FutureOr<void> _addProduct(
       AddProductEvent event, Emitter<RequestProductState> emit) {
@@ -85,7 +100,6 @@ class RequestProductBloc
 
     try {
       final String response = await postDataToApi(url, transferString!);
-
     } catch (e) {
       print(e.toString());
     }

@@ -1,5 +1,4 @@
 import 'package:erp_fronted/product/bloc/product_bloc.dart';
-import 'package:erp_fronted/product/views/product_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

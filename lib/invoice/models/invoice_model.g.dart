@@ -156,10 +156,6 @@ class _$InvoiceSerializer implements StructuredSerializer<Invoice> {
           result.authCode = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'company_name':
-          result.date = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
         case 'nit_client':
           result.nitClient = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;

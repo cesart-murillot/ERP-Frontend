@@ -14,7 +14,7 @@ class ProductShipmentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ProductShipmentBloc()..add(InitEvent()),
+      create: (BuildContext context) => ProductShipmentBloc()..add(const InitEvent()),
       child: Builder(
         builder: (context) => const StateViews(),
       ),

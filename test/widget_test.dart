@@ -7,23 +7,18 @@
 
 import 'dart:convert';
 
-import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:erp_fronted/branch/models/branch_model.dart';
 import 'package:erp_fronted/employee/models/user_model.dart';
 import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/product/models/product_model.dart';
 import 'package:erp_fronted/src/models/meta_model.dart';
-import 'package:erp_fronted/src/models/product_model.dart';
 import 'package:erp_fronted/src/models/serializers.dart';
 import 'package:erp_fronted/src/resources/generic_serializer.dart';
 import 'package:erp_fronted/src/resources/api_provider.dart';
 import 'package:erp_fronted/src/resources/repository.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:erp_fronted/src/resources/api_provider.dart';
 
-import 'package:http/http.dart' as http;
 
 //enum UnEncodePath {products, branches, warehouses}
 
@@ -159,12 +154,12 @@ void main() {
 
   test("parse link", () {
     const jsonString = """
-    {"first":"http:\/\/127.0.0.1:8000\/api\/models?page=1","last":"http:\/\/127.0.0.1:8000\/api\/models?page=1","prev":null,"next":null}
+    {"first":"http://127.0.0.1:8000/api/models?page=1","last":"http://127.0.0.1:8000/api/models?page=1","prev":null,"next":null}
     """;
 
     LinkData? product = standardSerializers.deserializeWith(
         LinkData.serializer, json.decode(jsonString));
-    expect(product?.first, "http:\/\/127.0.0.1:8000\/api\/models?page=1");
+    expect(product?.first, "http://127.0.0.1:8000/api/models?page=1");
   });
 
   test("parse meta", () {
@@ -179,7 +174,7 @@ void main() {
 
   test("parse complete meta", () {
     const jsonString = """
-    {"current_page":1,"from":1,"last_page":2,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/127.0.0.1:8000\/api\/products?page=1","label":"1","active":true},{"url":"http:\/\/127.0.0.1:8000\/api\/products?page=2","label":"2","active":false},{"url":"http:\/\/127.0.0.1:8000\/api\/products?page=2","label":"Next &raquo;","active":false}],"path":"http:\/\/127.0.0.1:8000\/api\/products","per_page":5,"to":5,"total":10}
+    {"current_page":1,"from":1,"last_page":2,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http://127.0.0.1:8000/api/products?page=1","label":"1","active":true},{"url":"http://127.0.0.1:8000/api/products?page=2","label":"2","active":false},{"url":"http://127.0.0.1:8000/api/products?page=2","label":"Next &raquo;","active":false}],"path":"http://127.0.0.1:8000/api/products","per_page":5,"to":5,"total":10}
     """;
 
     MetaData? product = standardSerializers.deserializeWith(

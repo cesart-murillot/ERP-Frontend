@@ -440,7 +440,7 @@ class MetaDataBuilder implements Builder<MetaData, MetaDataBuilder> {
 
   int? _current_page;
   int? get current_page => _$this._current_page;
-  set current_page(int? current_page) => _$this._current_page = current_page;
+  set current_page(int? currentPage) => _$this._current_page = currentPage;
 
   int? _from;
   int? get from => _$this._from;
@@ -448,7 +448,7 @@ class MetaDataBuilder implements Builder<MetaData, MetaDataBuilder> {
 
   int? _last_page;
   int? get last_page => _$this._last_page;
-  set last_page(int? last_page) => _$this._last_page = last_page;
+  set last_page(int? lastPage) => _$this._last_page = lastPage;
 
   ListBuilder<NavigationData>? _links;
   ListBuilder<NavigationData> get links =>
@@ -461,7 +461,7 @@ class MetaDataBuilder implements Builder<MetaData, MetaDataBuilder> {
 
   int? _per_page;
   int? get per_page => _$this._per_page;
-  set per_page(int? per_page) => _$this._per_page = per_page;
+  set per_page(int? perPage) => _$this._per_page = perPage;
 
   int? _to;
   int? get to => _$this._to;

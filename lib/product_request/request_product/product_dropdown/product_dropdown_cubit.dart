@@ -10,22 +10,25 @@ class ProductDropdownCubit extends Cubit<ProductDropdownState> {
 
   void populateProductDropdown() async {
     final url = preDefinedUri('api/products', {'only': 'model'});
-    Products products = await getObject(url, Products.serializer);
+    try {
+      Products products = await getObject(url, Products.serializer);
+      List<DropdownMenuItem<List<int>>> productItems = [];
 
-    List<DropdownMenuItem<List<int>>> productItems = [];
+      for (var p0 in products.products) {
+            productItems.add(DropdownMenuItem<List<int>>(
+              child: Text('${p0.modelProduct} - ${p0.remainUnits ?? 0} u.d.'),
+              value: [p0.id!],
+              enabled: p0.remainUnits == null
+                  ? false
+                  : p0.remainUnits! > 0
+                      ? true
+                      : false,
+            ));
+          }
 
-    for (var p0 in products.products) {
-      productItems.add(DropdownMenuItem<List<int>>(
-        child: Text('${p0.modelProduct} - ${p0.remainUnits ?? 0} u.d.'),
-        value: [p0.id!],
-        enabled: p0.remainUnits == null
-            ? false
-            : p0.remainUnits! > 0
-                ? true
-                : false,
-      ));
+      emit(const ProductDropdownState().itemsLoaded(productItems: productItems));
+    } catch (e) {
+      print(e);
     }
-
-    emit(const ProductDropdownState().itemsLoaded(productItems: productItems));
   }
 }

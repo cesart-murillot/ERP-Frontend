@@ -24,8 +24,8 @@ class MainPage extends StatelessWidget {
       create: (BuildContext context) => MainBloc()..add(const InitEvent()),
       child: Builder(
         builder: (context) {
-          return const MainMenu();
-          /*Scaffold(
+          return
+          Scaffold(
             appBar: AppBar(),
             drawer: Drawer(
               child: SingleChildScrollView(
@@ -111,7 +111,7 @@ class MainPage extends StatelessWidget {
               ),
             ),
             body: const BodyPage(),
-          );*/
+          );
         },
       ),
     );

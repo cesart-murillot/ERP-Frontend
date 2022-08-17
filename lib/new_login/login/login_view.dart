@@ -1,6 +1,5 @@
 import 'package:erp_fronted/new_login/login/login_state.dart';
 import 'package:erp_fronted/new_main/main/main_view.dart';
-import 'package:erp_fronted/new_main/main_menu/main_menu_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +26,7 @@ class LoginPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const MainMenuPage(),
+                    builder: (_) => const MainPage(),
                   ),
                 );
                 break;
@@ -41,7 +40,7 @@ class LoginPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => const MainMenuPage(),
+                        builder: (_) => const MainPage(),
                       ),
                     );
                   }

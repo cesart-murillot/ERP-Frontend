@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'income_cubit.dart';
-import 'income_state.dart';
 
 class IncomePage extends StatelessWidget {
   const IncomePage({Key? key}) : super(key: key);

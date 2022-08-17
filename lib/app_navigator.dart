@@ -1,5 +1,4 @@
 import 'package:erp_fronted/branch/bloc/branch_bloc.dart';
-import 'package:erp_fronted/branch/views/branch_detail_page.dart';
 import 'package:erp_fronted/branch/views/branch_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

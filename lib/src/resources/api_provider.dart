@@ -1,7 +1,5 @@
-import 'package:erp_fronted/employee/models/user_model.dart';
 import 'package:erp_fronted/module/models/module_model.dart';
 import 'package:erp_fronted/product/models/product_model.dart';
-import 'package:erp_fronted/src/resources/generic_serializer.dart';
 import 'package:http/http.dart' as http;
 
 enum UnEncodePath { products, branches, warehouses, modules, users, employees, entries, entryorders}

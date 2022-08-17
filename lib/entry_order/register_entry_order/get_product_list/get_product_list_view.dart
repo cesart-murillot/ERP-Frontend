@@ -1,11 +1,9 @@
 import 'package:erp_fronted/entry_order/register_entry_order/register_entry_order_bloc.dart';
-import 'package:erp_fronted/src/resources/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../register_entry_order_event.dart';
 import 'get_product_list_cubit.dart';
-import 'get_product_list_state.dart';
 
 class GetProductListPage extends StatelessWidget {
   const GetProductListPage({Key? key}) : super(key: key);

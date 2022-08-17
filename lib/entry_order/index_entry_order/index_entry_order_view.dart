@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-import '../check_entry_order/check_entry_order_view.dart';
 import 'index_entry_order_bloc.dart';
 import 'index_entry_order_event.dart';
 import 'index_entry_order_state.dart';

@@ -1,6 +1,5 @@
 import 'package:erp_fronted/inventory/product_transfer_detail/product_transfer_detail_view.dart';
 import 'package:erp_fronted/transfer_order/product_shipment/product_shipment_view.dart';
-import 'package:erp_fronted/transfer_order/transfer_order_list/transfer_order_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,7 +15,7 @@ class ProductTransferPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ProductTransferBloc()..add(InitEvent()),
+      create: (BuildContext context) => ProductTransferBloc()..add(const InitEvent()),
       child: Builder(
         builder: (context) => Scaffold(
           body: const StateViews(),

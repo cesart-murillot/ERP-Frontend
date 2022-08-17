@@ -1,4 +1,3 @@
-import 'package:erp_fronted/product_entry/product_entry_verify/product_entry_verify_view.dart';
 import 'package:erp_fronted/product_entry/verify_product_entry/verify_product_entry_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

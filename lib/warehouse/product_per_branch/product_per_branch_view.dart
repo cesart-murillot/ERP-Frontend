@@ -1,5 +1,4 @@
 import 'package:erp_fronted/inventory/detail_product_inventory/detail_product_inventory_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

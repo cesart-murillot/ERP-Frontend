@@ -12,7 +12,7 @@ class ProductAddPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ProductAddBloc()..add(InitEvent()),
+      create: (BuildContext context) => ProductAddBloc()..add(const InitEvent()),
       child: Builder(
         builder: (context) => Scaffold(
           appBar: AppBar(),

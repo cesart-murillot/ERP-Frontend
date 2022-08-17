@@ -3,6 +3,7 @@ import 'package:erp_fronted/dash_board/best_seller/best_seller_view.dart';
 import 'package:erp_fronted/dash_board/entry_order_key/entry_order_key_view.dart';
 import 'package:erp_fronted/dash_board/least_seller/least_seller_view.dart';
 import 'package:erp_fronted/dash_board/product_sale/product_sale_view.dart';
+import 'package:erp_fronted/dash_board/product_stock/product_stock_view.dart';
 import 'package:erp_fronted/dash_board/quotation_key/quotation_key_view.dart';
 import 'package:erp_fronted/dash_board/request_key/request_key_view.dart';
 import 'package:erp_fronted/dash_board/total_income/total_income_view.dart';
@@ -342,6 +343,9 @@ class GridTwoPointO extends StatelessWidget {
                     Flexible(
                       flex: 0,
                       child: QuotationKeyPage(),
+                    ),
+                    Flexible(
+                      child: ProductStockPage(),
                     ),
                   ],
                 ),

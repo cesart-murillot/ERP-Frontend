@@ -60,7 +60,7 @@ class _BranchFormState extends State<BranchForm> {
                     onPressed: () {
                       _addWarehouse();
                     },
-                    child: Text('Añádir un almacen')),
+                    child: const Text('Añádir un almacen')),
               ],
             ),
             ListView.builder(

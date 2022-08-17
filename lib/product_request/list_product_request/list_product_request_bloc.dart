@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:erp_fronted/branch/models/branch_model.dart';
 import 'package:erp_fronted/product_request/models/transfer_model.dart';
 import 'package:erp_fronted/src/resources/get_object.dart';
 import 'package:shared_preferences/shared_preferences.dart';

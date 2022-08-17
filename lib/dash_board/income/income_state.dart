@@ -7,15 +7,15 @@ class IncomeState extends Equatable {
   final States state;
 
   IncomeState init() {
-    return IncomeState();
+    return const IncomeState();
   }
 
   IncomeState clone() {
-    return IncomeState();
+    return const IncomeState();
   }
 
   @override
   List<Object?> get props => [];
 
-  IncomeState({this.errorMessage, this.state = States.initial});
+  const IncomeState({this.errorMessage, this.state = States.initial});
 }

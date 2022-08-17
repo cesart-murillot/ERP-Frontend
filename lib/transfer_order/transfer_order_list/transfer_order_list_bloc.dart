@@ -1,7 +1,5 @@
-import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:erp_fronted/src/resources/generic_serializer.dart';
 import 'package:erp_fronted/src/resources/get_object.dart';
 import 'package:erp_fronted/transfer_order/models/transfer_order_model.dart';
 

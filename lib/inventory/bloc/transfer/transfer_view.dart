@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'transfer_bloc.dart';
 import 'transfer_event.dart';
-import 'transfer_state.dart';
 
 class TransferPage extends StatelessWidget {
   @override

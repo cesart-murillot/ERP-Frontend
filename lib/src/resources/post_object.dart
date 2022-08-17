@@ -1,5 +1,3 @@
-import 'package:built_value/serializer.dart';
-import 'package:erp_fronted/src/resources/generic_serializer.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

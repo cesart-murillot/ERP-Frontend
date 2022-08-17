@@ -1,5 +1,4 @@
 import 'package:erp_fronted/entry_order/check_entry_order/check_entry_order_view.dart';
-import 'package:erp_fronted/entry_order/register_entry_order/register_entry_order_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';

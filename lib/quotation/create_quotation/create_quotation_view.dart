@@ -180,7 +180,7 @@ class QuotationDataTable extends StatelessWidget {
                         onChanged: (value) {},
                       ),
                     ),
-                    DataCell(
+                    const DataCell(
                       Text(
                         'text',
                       ),
