@@ -12,12 +12,15 @@ class ProductAddPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ProductAddBloc()..add(const InitEvent()),
+      create: (BuildContext context) =>
+      ProductAddBloc()
+        ..add(const InitEvent()),
       child: Builder(
-        builder: (context) => Scaffold(
-          appBar: AppBar(),
-          body: ProductAdd(),
-        ),
+        builder: (context) =>
+            Scaffold(
+              appBar: AppBar(),
+              body: ProductAdd(),
+            ),
       ),
     );
   }
@@ -43,30 +46,30 @@ class ProductAdd extends StatelessWidget {
                 state.showAdditionalInformation
                     ? AdditionalInformation()
                     : Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {
-                            context.read<ProductAddBloc>().add(ShowAddInfoEvent(
-                                true, state.showTechnicalInformation));
-                          },
-                          child: const Text('Información Adicional'),
-                        ),
-                      ),
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      context.read<ProductAddBloc>().add(ShowAddInfoEvent(
+                          true, state.showTechnicalInformation));
+                    },
+                    child: const Text('Información Adicional'),
+                  ),
+                ),
                 const Divider(
                   height: 8.0,
                 ),
                 state.showTechnicalInformation
                     ? TechnicalInformation()
                     : Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {
-                            context.read<ProductAddBloc>().add(ShowAddInfoEvent(
-                                state.showAdditionalInformation, true));
-                          },
-                          child: const Text('Información Técnica'),
-                        ),
-                      ),
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      context.read<ProductAddBloc>().add(ShowAddInfoEvent(
+                          state.showAdditionalInformation, true));
+                    },
+                    child: const Text('Información Técnica'),
+                  ),
+                ),
               ],
             ),
           ),
@@ -81,6 +84,7 @@ class GeneralInformation extends StatelessWidget {
 
   final TextEditingController model = TextEditingController();
   final TextEditingController format = TextEditingController();
+  final GlobalKey _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +96,10 @@ class GeneralInformation extends StatelessWidget {
           Text(
             'Información General',
             style: GoogleFonts.roboto(
-              textStyle: Theme.of(context).textTheme.titleLarge,
+              textStyle: Theme
+                  .of(context)
+                  .textTheme
+                  .titleLarge,
             ),
           ),
           const SizedBox(
@@ -111,6 +118,7 @@ class GeneralInformation extends StatelessWidget {
             height: 8.0,
           ),
           TextFormField(
+            key: _key,
             controller: format,
             onSaved: (value) {},
             decoration: const InputDecoration(
@@ -118,7 +126,49 @@ class GeneralInformation extends StatelessWidget {
               //icon: Icon(Icons.horizontal_rule),
               border: OutlineInputBorder(),
             ),
+            readOnly: true,
+            onTap: () {
+              RenderBox box =
+              _key.currentContext?.findRenderObject() as RenderBox;
+              Offset position =
+              box.localToGlobal(Offset.zero); //this is global position
+              print(position);
+              showDialog(
+                context: context,
+                builder: (_) => const CustomDialog(),
+              );
+            },
           )
+        ],
+      ),
+    );
+  }
+}
+
+class CustomDialog extends Dialog {
+  const CustomDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Column(
+        children: [
+          Flexible(
+            child: CustomScrollView(
+              primary: false,
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                      return ListTile(
+                        title: Text('$index'),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -147,7 +197,8 @@ class AdditionalInformation extends StatelessWidget {
               onPressed: () {
                 context.read<ProductAddBloc>().add(ShowAddInfoEvent(
                     false,
-                    BlocProvider.of<ProductAddBloc>(context)
+                    BlocProvider
+                        .of<ProductAddBloc>(context)
                         .state
                         .showTechnicalInformation));
               },
@@ -158,7 +209,10 @@ class AdditionalInformation extends StatelessWidget {
           Text(
             'Información Adicional',
             style: GoogleFonts.roboto(
-              textStyle: Theme.of(context).textTheme.titleLarge,
+              textStyle: Theme
+                  .of(context)
+                  .textTheme
+                  .titleLarge,
             ),
           ),
           const SizedBox(
@@ -259,7 +313,8 @@ class TechnicalInformation extends StatelessWidget {
             child: TextButton(
               onPressed: () {
                 context.read<ProductAddBloc>().add(ShowAddInfoEvent(
-                    BlocProvider.of<ProductAddBloc>(context, listen: false)
+                    BlocProvider
+                        .of<ProductAddBloc>(context, listen: false)
                         .state
                         .showAdditionalInformation,
                     false));
@@ -271,7 +326,10 @@ class TechnicalInformation extends StatelessWidget {
           Text(
             'Información Técnica',
             style: GoogleFonts.roboto(
-              textStyle: Theme.of(context).textTheme.titleLarge,
+              textStyle: Theme
+                  .of(context)
+                  .textTheme
+                  .titleLarge,
             ),
           ),
           const SizedBox(
