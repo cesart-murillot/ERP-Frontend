@@ -1,15 +1,30 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProductAddState extends Equatable {
   final bool showAdditionalInformation;
   final bool showTechnicalInformation;
 
+  final XFile? image;
+  final String model;
+  final String format;
+
   ProductAddState init() {
     return const ProductAddState();
   }
 
-  ProductAddState clone() {
-    return const ProductAddState();
+  ProductAddState clone({
+    XFile? image,
+    String? model,
+    String? format,
+  }) {
+    return ProductAddState(
+      image: image ?? this.image,
+      model: model ?? this.model,
+      format: format ?? this.format,
+    );
   }
 
   ProductAddState addAddInfo({
@@ -31,9 +46,18 @@ class ProductAddState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [showAdditionalInformation, showTechnicalInformation];
+  List<Object?> get props => [
+        showAdditionalInformation,
+        showTechnicalInformation,
+        image,
+        format,
+        model,
+      ];
 
   const ProductAddState({
+    this.format = '',
+    this.model = '',
+    this.image,
     this.showAdditionalInformation = false,
     this.showTechnicalInformation = false,
   });

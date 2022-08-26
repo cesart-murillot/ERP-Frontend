@@ -40,11 +40,12 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
   }
 }*/
 class App extends MaterialApp {
-  const App({Key? key})
+  App({Key? key})
       : super(
           debugShowCheckedModeBanner: false,
           key: key,
           home: const LoginPage(),
+          darkTheme: ThemeData.dark(),
         );
 }
 

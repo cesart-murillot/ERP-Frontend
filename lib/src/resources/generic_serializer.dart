@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:built_value/serializer.dart';
 import 'package:erp_fronted/src/models/serializers.dart';
 
-String? objectToString<T>(final T object, Serializer serializer){
+String objectToString<T>(final T object, Serializer serializer){
   final Object? objectSerialized = standardSerializers.serializeWith(serializer, object);
-  final String? objectString = jsonEncode(objectSerialized);
+  final String objectString = jsonEncode(objectSerialized);
 
   return objectString;
 }

@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'product_add_bloc.dart';
 import 'product_add_event.dart';
@@ -13,14 +16,14 @@ class ProductAddPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) =>
-      ProductAddBloc()
-        ..add(const InitEvent()),
+          ProductAddBloc()..add(const InitEvent()),
       child: Builder(
-        builder: (context) =>
-            Scaffold(
-              appBar: AppBar(),
-              body: ProductAdd(),
-            ),
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: const Text('Añadir Nuevo Producto'),
+          ),
+          body: ProductAdd(),
+        ),
       ),
     );
   }
@@ -29,48 +32,103 @@ class ProductAddPage extends StatelessWidget {
 class ProductAdd extends StatelessWidget {
   ProductAdd({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
+  final _model = TextEditingController();
+  final _format = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductAddBloc, ProductAddState>(
       builder: (context, state) {
-        return SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                GeneralInformation(),
-                const Divider(
-                  height: 8.0,
-                ),
-                state.showAdditionalInformation
-                    ? AdditionalInformation()
-                    : Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      context.read<ProductAddBloc>().add(ShowAddInfoEvent(
-                          true, state.showTechnicalInformation));
-                    },
-                    child: const Text('Información Adicional'),
+        return Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 512.0),
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      const ImagePickerForm(),
+                      const SizedBox(
+                        height: 8.0,
+                        width: 8.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: 76.0,
+                          child: TextFormField(
+                            controller: _model,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              label: Text('Modelo'),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Ingrese el modelo";
+                              }
+                              return null;
+                            },
+                            onSaved: (model) {
+                              if (model != null) {
+                                context.read<ProductAddBloc>().add(StoreModelEvent(model));
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: 76.0,
+                          child: TextFormField(
+                            controller: _format,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              label: Text('Formato'),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Seleccione un formato";
+                              }
+                              return null;
+                            },
+                            onSaved: (format) {
+                              if (format != null) {
+                                context.read<ProductAddBloc>().add(StoreFormatEvent(format));
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState?.save();
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => BlocProvider.value(
+                                      value: BlocProvider.of<ProductAddBloc>(
+                                          context),
+                                      child: const ConfirmationDialog(),
+                                    ),
+                                );
+                              }
+                            },
+                            child: const Text('Registrar'),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const Divider(
-                  height: 8.0,
-                ),
-                state.showTechnicalInformation
-                    ? TechnicalInformation()
-                    : Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      context.read<ProductAddBloc>().add(ShowAddInfoEvent(
-                          state.showAdditionalInformation, true));
-                    },
-                    child: const Text('Información Técnica'),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         );
@@ -96,10 +154,7 @@ class GeneralInformation extends StatelessWidget {
           Text(
             'Información General',
             style: GoogleFonts.roboto(
-              textStyle: Theme
-                  .of(context)
-                  .textTheme
-                  .titleLarge,
+              textStyle: Theme.of(context).textTheme.titleLarge,
             ),
           ),
           const SizedBox(
@@ -129,9 +184,9 @@ class GeneralInformation extends StatelessWidget {
             readOnly: true,
             onTap: () {
               RenderBox box =
-              _key.currentContext?.findRenderObject() as RenderBox;
+                  _key.currentContext?.findRenderObject() as RenderBox;
               Offset position =
-              box.localToGlobal(Offset.zero); //this is global position
+                  box.localToGlobal(Offset.zero); //this is global position
               print(position);
               showDialog(
                 context: context,
@@ -151,22 +206,15 @@ class CustomDialog extends Dialog {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Column(
-        children: [
-          Flexible(
-            child: CustomScrollView(
-              primary: false,
-              slivers: [
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                      return ListTile(
-                        title: Text('$index'),
-                      );
-                    },
-                  ),
-                ),
-              ],
+      child: CustomScrollView(
+        primary: false,
+        slivers: [
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return Text('$index');
+              },
+              childCount: 5,
             ),
           ),
         ],
@@ -197,8 +245,7 @@ class AdditionalInformation extends StatelessWidget {
               onPressed: () {
                 context.read<ProductAddBloc>().add(ShowAddInfoEvent(
                     false,
-                    BlocProvider
-                        .of<ProductAddBloc>(context)
+                    BlocProvider.of<ProductAddBloc>(context)
                         .state
                         .showTechnicalInformation));
               },
@@ -209,10 +256,7 @@ class AdditionalInformation extends StatelessWidget {
           Text(
             'Información Adicional',
             style: GoogleFonts.roboto(
-              textStyle: Theme
-                  .of(context)
-                  .textTheme
-                  .titleLarge,
+              textStyle: Theme.of(context).textTheme.titleLarge,
             ),
           ),
           const SizedBox(
@@ -310,26 +354,22 @@ class TechnicalInformation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Align(
+            alignment: Alignment.centerRight,
             child: TextButton(
               onPressed: () {
                 context.read<ProductAddBloc>().add(ShowAddInfoEvent(
-                    BlocProvider
-                        .of<ProductAddBloc>(context, listen: false)
+                    BlocProvider.of<ProductAddBloc>(context, listen: false)
                         .state
                         .showAdditionalInformation,
                     false));
               },
               child: const Text('Ocultar'),
             ),
-            alignment: Alignment.centerRight,
           ),
           Text(
             'Información Técnica',
             style: GoogleFonts.roboto(
-              textStyle: Theme
-                  .of(context)
-                  .textTheme
-                  .titleLarge,
+              textStyle: Theme.of(context).textTheme.titleLarge,
             ),
           ),
           const SizedBox(
@@ -422,6 +462,129 @@ class TechnicalInformation extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ImagePickerForm extends StatefulWidget {
+  const ImagePickerForm({Key? key}) : super(key: key);
+
+  @override
+  State<ImagePickerForm> createState() => _ImagePickerFormState();
+}
+
+class _ImagePickerFormState extends State<ImagePickerForm> {
+  //File? image;
+  XFile? image;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          width: 128.0,
+          height: 128.0,
+          child: image != null
+              ? Image.network(
+                  image!.path,
+                  width: 128.0,
+                  height: 128.0,
+                  fit: BoxFit.scaleDown,
+                )
+              : const FlutterLogo(
+                  size: 128.0,
+                ),
+        ),
+        Wrap(
+          children: [
+            IconButton(
+              onPressed: () {
+                pickImage(BlocProvider.of<ProductAddBloc>(context));
+              },
+              icon: const Icon(Icons.camera),
+            ),
+            IconButton(
+              onPressed: () {
+                upLoadPhoto(BlocProvider.of<ProductAddBloc>(context));
+              },
+              icon: const Icon(Icons.upload_file),
+            ),
+            if (image != null)
+              IconButton(
+                onPressed: () {
+                  removeImage();
+                },
+                icon: const Icon(Icons.delete),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Future pickImage(ProductAddBloc productAddBloc) async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (image == null) return;
+
+      //final imageTemporary = File(image.path);
+      final imageTemporary = XFile(image.path);
+      productAddBloc.add(UploadImageEvent(imageTemporary));
+      setState(() {
+        this.image = imageTemporary;
+      });
+    } catch (e) {
+      print('Failed to pick image ${e.toString()}');
+    }
+  }
+
+  Future upLoadPhoto(ProductAddBloc productAddBloc) async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+
+      final imageTemporary = XFile(image.path);
+      productAddBloc.add(UploadImageEvent(imageTemporary));
+      setState(() {
+        this.image = imageTemporary;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void removeImage() {
+    setState(() {
+      image = null;
+    });
+  }
+}
+
+class ConfirmationDialog extends StatelessWidget {
+  const ConfirmationDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProductAddBloc, ProductAddState>(
+      builder: (context, state) {
+        return AlertDialog(
+          title: const Text(''),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                context.read<ProductAddBloc>().add(const SaveDataEvent());
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
