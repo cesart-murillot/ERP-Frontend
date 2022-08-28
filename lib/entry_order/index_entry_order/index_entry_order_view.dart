@@ -27,8 +27,20 @@ class IndexEntryOrderPage extends StatelessWidget {
                   builder: (context) => RegisterEntryOrderPage(),
                 ),
               ).then(
-                (value) {
+                (registered) {
                   context.read<IndexEntryOrderBloc>().add(const ReloadEvent());
+                  if (registered is bool) {
+                    if (registered) {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return const ListTile(
+                            title: Text('Orden de ingreso registrada'),
+                          );
+                        },
+                      );
+                    }
+                  }
                 },
               );
             },

@@ -41,16 +41,8 @@ class StateViews extends StatelessWidget {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          case States.loadedAll:
-            return const AllEntryOrders();
-          case States.loadedVerified:
-            return const Center(
-              child: Text('LoadedVerified'),
-            );
-          case States.loadedPendent:
-            return const Center(
-              child: Text('LoadedPendent'),
-            );
+          case States.loaded:
+            return const EntryOrderIndex();
           case States.error:
             return Center(
               child: Text('${state.errorString}'),
@@ -143,6 +135,183 @@ class AllEntryOrders extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class EntryOrderIndex extends StatefulWidget {
+  const EntryOrderIndex({Key? key}) : super(key: key);
+
+  @override
+  State<EntryOrderIndex> createState() => _EntryOrderIndexState();
+}
+
+class _EntryOrderIndexState extends State<EntryOrderIndex> {
+  var allSelected = true;
+  var verifiedSelected = false;
+  var pendingSelected = false;
+  var errorSelected = false;
+  bool isSelected = true;
+
+  @override
+  Widget build(BuildContext context) {
+    final entryOrders = context.watch<IndexEntryOrderBloc>().state.entryOrders;
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          floating: true,
+          automaticallyImplyLeading: false,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: ChoiceChip(
+                selectedColor: Colors.teal,
+                label: const Text('Todas'),
+                selected: allSelected,
+                onSelected: (selected) {
+                  if (!allSelected) {
+                    context
+                        .read<IndexEntryOrderBloc>()
+                        .add(const AllSelectedEvent());
+                  }
+                  setState(() {
+                    allSelected = true;
+                    verifiedSelected = false;
+                    pendingSelected = false;
+                    errorSelected = false;
+                  });
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: ChoiceChip(
+                selectedColor: Colors.teal,
+                label: const Text('Verificadas'),
+                selected: verifiedSelected,
+                onSelected: (selected) {
+                  if (!verifiedSelected) {
+                    context
+                        .read<IndexEntryOrderBloc>()
+                        .add(const VerifiedSelectedEvent());
+                  }
+                  setState(() {
+                    allSelected = false;
+                    verifiedSelected = true;
+                    pendingSelected = false;
+                    errorSelected = false;
+                  });
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: ChoiceChip(
+                selectedColor: Colors.teal,
+                label: const Text('Pendientes'),
+                selected: pendingSelected,
+                onSelected: (selected) {
+                  if (!pendingSelected) {
+                    context
+                        .read<IndexEntryOrderBloc>()
+                        .add(const PendentSelectedEvent());
+                  }
+                  setState(() {
+                    allSelected = false;
+                    verifiedSelected = false;
+                    pendingSelected = true;
+                    errorSelected = false;
+                  });
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: ChoiceChip(
+                selectedColor: Colors.teal,
+                label: const Text('Errores'),
+                selected: errorSelected,
+                onSelected: (selected) {
+                  if (!errorSelected) {
+                    context
+                        .read<IndexEntryOrderBloc>()
+                        .add(const ErrorSelectedEvent());
+                  }
+                  setState(() {
+                    allSelected = false;
+                    verifiedSelected = false;
+                    pendingSelected = false;
+                    errorSelected = true;
+                  });
+                },
+              ),
+            )
+          ],
+        ),
+        if (entryOrders != null)
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final entryOrder = entryOrders.entryOrders[index];
+                final entryOrderDate =
+                    DateFormat('EEEE d MMMM, ' 'yy - HH:mm a').format(
+                        DateTime.parse(entryOrder.createdAt ?? '00000'));
+                final day = DateFormat('d MMM a')
+                    .format(DateTime.parse(entryOrder.createdAt ?? '00000'));
+                final hour = DateFormat('HH:mm')
+                    .format(DateTime.parse(entryOrder.createdAt ?? '00000'));
+                final verified = entryOrder.verifiedEntryOrder ?? false;
+                return Card(
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.all(8.0),
+                    leading: verified
+                        ? const Icon(
+                            Icons.check,
+                            color: Colors.greenAccent,
+                          )
+                        : const Icon(
+                            Icons.timelapse,
+                            color: Colors.yellowAccent,
+                          ),
+                    title: Text('Código: ${entryOrder.codeEntryOrder}'),
+                    //subtitle: Text(entryOrderDate),
+                    trailing: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(day),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(hour),
+                        ),
+                      ],
+                    ),
+                    onTap: () {
+                      if (entryOrder.id != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CheckEntryOrderPage(
+                              entryOrderId: entryOrder.id!,
+                            ),
+                          ),
+                        ).then(
+                          (value) => context
+                              .read<IndexEntryOrderBloc>()
+                              .add(const ReloadEvent()),
+                        );
+                      }
+                    },
+                  ),
+                );
+              },
+              childCount: entryOrders.entryOrders.length,
+            ),
+          )
+      ],
     );
   }
 }

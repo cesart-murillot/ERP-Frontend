@@ -43,89 +43,91 @@ class ProductAdd extends StatelessWidget {
           alignment: Alignment.topCenter,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 512.0),
-            child: SingleChildScrollView(
-              child: Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      const ImagePickerForm(),
-                      const SizedBox(
-                        height: 8.0,
-                        width: 8.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          height: 76.0,
-                          child: TextFormField(
-                            controller: _model,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              label: Text('Modelo'),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Ingrese el modelo";
-                              }
-                              return null;
-                            },
-                            onSaved: (model) {
-                              if (model != null) {
-                                context.read<ProductAddBloc>().add(StoreModelEvent(model));
-                              }
-                            },
-                          ),
+            child: Card(
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        const ImagePickerForm(),
+                        const SizedBox(
+                          height: 8.0,
+                          width: 8.0,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          height: 76.0,
-                          child: TextFormField(
-                            controller: _format,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              label: Text('Formato'),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Seleccione un formato";
-                              }
-                              return null;
-                            },
-                            onSaved: (format) {
-                              if (format != null) {
-                                context.read<ProductAddBloc>().add(StoreFormatEvent(format));
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: Padding(
+                        Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                _formKey.currentState?.save();
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => BlocProvider.value(
-                                      value: BlocProvider.of<ProductAddBloc>(
-                                          context),
-                                      child: const ConfirmationDialog(),
-                                    ),
-                                );
-                              }
-                            },
-                            child: const Text('Registrar'),
+                          child: SizedBox(
+                            height: 76.0,
+                            child: TextFormField(
+                              controller: _model,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                label: Text('Modelo'),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Ingrese el modelo";
+                                }
+                                return null;
+                              },
+                              onSaved: (model) {
+                                if (model != null) {
+                                  context.read<ProductAddBloc>().add(StoreModelEvent(model));
+                                }
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            height: 76.0,
+                            child: TextFormField(
+                              controller: _format,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                label: Text('Formato'),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Seleccione un formato";
+                                }
+                                return null;
+                              },
+                              onSaved: (format) {
+                                if (format != null) {
+                                  context.read<ProductAddBloc>().add(StoreFormatEvent(format));
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState?.save();
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => BlocProvider.value(
+                                        value: BlocProvider.of<ProductAddBloc>(
+                                            context),
+                                        child: const ConfirmationDialog(),
+                                      ),
+                                  );
+                                }
+                              },
+                              child: const Text('Registrar'),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -241,6 +243,7 @@ class AdditionalInformation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Align(
+            alignment: Alignment.centerRight,
             child: TextButton(
               onPressed: () {
                 context.read<ProductAddBloc>().add(ShowAddInfoEvent(
@@ -251,7 +254,6 @@ class AdditionalInformation extends StatelessWidget {
               },
               child: const Text('Ocultar'),
             ),
-            alignment: Alignment.centerRight,
           ),
           Text(
             'Información Adicional',
@@ -567,7 +569,7 @@ class ConfirmationDialog extends StatelessWidget {
     return BlocBuilder<ProductAddBloc, ProductAddState>(
       builder: (context, state) {
         return AlertDialog(
-          title: const Text(''),
+          title: const Text('Registrar Producto'),
           actions: [
             TextButton(
               onPressed: () {
@@ -579,6 +581,7 @@ class ConfirmationDialog extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
                 context.read<ProductAddBloc>().add(const SaveDataEvent());
+                Navigator.pop(context);
               },
               child: const Text('Ok'),
             ),

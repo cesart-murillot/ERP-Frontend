@@ -87,56 +87,67 @@ class Login extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginBloc(),
       child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: SizedBox(
-              width: 384.0,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextFormField(
-                    onSaved: (value) {
-                      if (value != null) {
-                        email.text = value;
-                      }
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Correo',
-                      icon: Icon(Icons.email),
-                      border: OutlineInputBorder(),
+        child: Form(
+          key: _formKey,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 512.0
+            ),
+            child: Card(
+              margin: const EdgeInsets.all(8.0),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: 76.0,
+                      child: TextFormField(
+                        onSaved: (value) {
+                          if (value != null) {
+                            email.text = value;
+                          }
+                        },
+                        decoration: const InputDecoration(
+                          labelText: 'Correo',
+                          icon: Icon(Icons.email),
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  TextFormField(
-                    obscureText: true,
-                    onSaved: (value) {
-                      if (value != null) {
-                        password.text = value;
-                      }
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Contraseña',
-                      icon: Icon(Icons.password),
-                      border: OutlineInputBorder(),
+                    const SizedBox(
+                      height: 8.0,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 16.0,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      _formKey.currentState?.save();
-                      context
-                          .read<LoginBloc>()
-                          .add(SubmitLogin(email.text, password.text));
-                    },
-                    child: const Text('Ingresar'),
-                  ),
-                ],
+                    SizedBox(
+                      height: 76.0,
+                      child: TextFormField(
+                        obscureText: true,
+                        onSaved: (value) {
+                          if (value != null) {
+                            password.text = value;
+                          }
+                        },
+                        decoration: const InputDecoration(
+                          labelText: 'Contraseña',
+                          icon: Icon(Icons.password),
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        _formKey.currentState?.save();
+                        context
+                            .read<LoginBloc>()
+                            .add(SubmitLogin(email.text, password.text));
+                      },
+                      child: const Text('Ingresar'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

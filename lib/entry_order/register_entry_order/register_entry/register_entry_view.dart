@@ -19,14 +19,14 @@ class RegisterEntryPage extends StatelessWidget {
             Row(
               children: [
                 const Flexible(
-                  flex: 4,
+                  flex: 3,
                   child: GetProductListPage(),
                 ),
                 const SizedBox(
                   width: 16.0,
                 ),
                 Flexible(
-                  flex: 1,
+                  flex: 2,
                   child: TextFormField(
                     onSaved: (value) {
                       BlocProvider.of<RegisterEntryOrderBloc>(context)

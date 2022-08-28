@@ -49,3 +49,12 @@ class SaveData extends RegisterEntryOrderEvent {
   @override
   List<Object?> get props => [];
 }
+
+class StoreProductQuantityEvent extends RegisterEntryOrderEvent {
+  final Map<String, int> productQuantity;
+
+  @override
+  List<Object?> get props => [productQuantity];
+
+  const StoreProductQuantityEvent(this.productQuantity);
+}

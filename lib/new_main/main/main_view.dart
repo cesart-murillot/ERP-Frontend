@@ -38,6 +38,8 @@ class MainPage extends StatelessWidget {
                         SizedBox(
                           height: 232.0,
                           child: DrawerHeader(
+                            decoration:
+                                const BoxDecoration(color: Colors.white30),
                             child: Column(
                               //mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -78,8 +80,6 @@ class MainPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            decoration:
-                                const BoxDecoration(color: Colors.white30),
                           ),
                         ),
                         const ModuleList(),

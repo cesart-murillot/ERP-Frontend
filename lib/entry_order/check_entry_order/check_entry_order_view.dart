@@ -114,95 +114,40 @@ class EntryOrderInformation extends StatelessWidget {
             .entryOrder!
             .createdAt!));
 
-    return Card(
-      margin: const EdgeInsets.all(8.0),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Row(
               children: [
                 Text(
                   'Codigo de Ingreso: $entryOrderCode',
                   style: GoogleFonts.roboto(
                     textStyle: Theme.of(context).textTheme.bodyLarge,
-                    fontSize: 14.0,
                   ),
                 ),
               ],
             ),
-            Row(
+          ),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Row(
               children: [
                 Text(
                   'Fecha de Registro: $registerDate',
                   style: GoogleFonts.roboto(
                     textStyle: Theme.of(context).textTheme.bodyLarge,
-                    fontSize: 14.0,
                   ),
                 ),
               ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ProductList extends StatelessWidget {
-  const ProductList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final entryOrderProduct = BlocProvider.of<CheckEntryOrderBloc>(context)
-        .state
-        .entryOrder
-        ?.entryOrderProduct;
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: entryOrderProduct?.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Card(
-          child: CheckboxListTile(
-            title: Text(
-              'Modelo: ${entryOrderProduct![index].product?.modelProduct}',
-              style: GoogleFonts.roboto(
-                textStyle: Theme.of(context).textTheme.bodyLarge,
-                fontSize: 14.0,
-              ),
-            ),
-            subtitle: Row(
-              children: [
-                Text(
-                  'Formato: ${entryOrderProduct[index].product?.formatProduct}',
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyLarge,
-                    fontSize: 14.0,
-                  ),
-                ),
-                const SizedBox(
-                  width: 16.0,
-                ),
-                Text(
-                  'Cantidad: ${entryOrderProduct[index].quantity}',
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyLarge,
-                    fontSize: 14.0,
-                  ),
-                ),
-              ],
-            ),
-            onChanged: (bool? value) {
-              context
-                  .read<CheckEntryOrderBloc>()
-                  .add(MarkAsCheckedEvent(index, value!));
-            },
-            value: context.watch<CheckEntryOrderBloc>().state.verified![index],
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }
@@ -236,23 +181,27 @@ class ProductEntryList extends StatelessWidget {
                 },
               );
             },
-            title: Text(
-              'Modelo: ${entryOrderProduct[index].product?.modelProduct}',
-              style: GoogleFonts.roboto(
-                textStyle: Theme.of(context).textTheme.bodyLarge,
+            title: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                'Modelo: ${entryOrderProduct[index].product?.modelProduct}',
+                style: GoogleFonts.roboto(
+                  textStyle: Theme.of(context).textTheme.bodyLarge,
+                ),
               ),
             ),
-            subtitle: Row(
-              children: [
-                Text(
-                  'Formato: ${entryOrderProduct[index].product?.formatProduct}',
-                  style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.bodyLarge,
-                  ),
+            subtitle: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                'Formato: ${entryOrderProduct[index].product?.formatProduct}',
+                style: GoogleFonts.roboto(
+                  textStyle: Theme.of(context).textTheme.bodyLarge,
                 ),
-              ],
+              ),
             ),
             trailing: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Cantidad: ${entryOrderProduct[index].quantity}',

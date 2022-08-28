@@ -24,6 +24,8 @@ class ProductListPage extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (_) => const ProductAddPage(),
                 ),
+              ).then(
+                (value) {},
               );
             },
             label: const Text('Añadir Producto'),
@@ -51,6 +53,16 @@ class ProductList extends StatelessWidget {
             return ListView.builder(
               itemCount: state.products!.products.length,
               itemBuilder: (context, index) {
+                if (state.products!.products[index].urlImageProduct != null) {
+                  final imageUrl = Uri(
+                    host: '127.0.0.1',
+                    port: 8000,
+                    path: state.products!.products[index].urlImageProduct,
+                    scheme: 'http',
+                  );
+                  print(imageUrl);
+                }
+                final product = state.products!.products[index];
                 return Card(
                   margin: const EdgeInsets.all(8.0),
                   child: ListTile(
@@ -64,11 +76,7 @@ class ProductList extends StatelessWidget {
                         ),
                       );
                     },
-                    leading: Image(
-                      image: NetworkImage(
-                        state.products!.products[index].urlImageProduct!,
-                      ),
-                    ),
+                    leading: FlutterLogo(),
                     title: Text(
                       '${state.products?.products[index].modelProduct}',
                     ),

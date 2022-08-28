@@ -15,20 +15,21 @@ class RegisterEntryOrderBloc extends Bloc<RegisterEntryOrderEvent, RegisterEntry
   final List<int> quantity = [];
   final List<String> code = [];
 
-  RegisterEntryOrderBloc() : super(const InitState()) {
+  RegisterEntryOrderBloc() : super(const RegisterEntryOrderState().init()) {
     on<InitEvent>(_init);
     on<StoreCodeEvent>(_storeCode);
     on<StoreProduct>(_storeProduct);
     on<StoreQuantity>(_storeQuantity);
     on<ClearMapList>(_clearMapList);
     on<SaveData>(_saveData);
+    on<StoreProductQuantityEvent>(_storeProductQuantityEvent);
   }
 
   FutureOr<void> _init(InitEvent event, Emitter<RegisterEntryOrderState> emit) {
   }
 
   FutureOr<void> _storeCode(StoreCodeEvent event, Emitter<RegisterEntryOrderState> emit) {
-    code.add(event.code);
+    emit(state.clone(entryOrder: event.code));
   }
 
   FutureOr<void> _storeProduct(StoreProduct event, Emitter<RegisterEntryOrderState> emit) {
@@ -40,22 +41,24 @@ class RegisterEntryOrderBloc extends Bloc<RegisterEntryOrderEvent, RegisterEntry
   }
 
   FutureOr<void> _clearMapList(ClearMapList event, Emitter<RegisterEntryOrderState> emit) {
-    products.clear();
-    quantity.clear();
-    code.clear();
+    final List<Map<String, int>> productQuantity = [];
+    emit(state.clone(productQuantity: productQuantity));
   }
 
   Future<FutureOr<void>> _saveData(SaveData event, Emitter<RegisterEntryOrderState> emit) async {
+    final productQuantityList = state.productQuantity;
+    final entryCode = state.entryOrder;
 
     var entryOrder = EntryOrder((entryOrder) {
-        for (int i = 0; i < products.length; i++) {
+        for (int i = 0; i < productQuantityList.length; i++) {
           var entryOrderProduct = EntryOrderProduct(((p0) {
-            p0.productId = products[i];
-            p0.quantity = quantity[i];
+            final productQuantity = productQuantityList[i];
+            p0.productId = productQuantity['productId'];
+            p0.quantity = productQuantity['quantity'];
           }));
           entryOrder.entryOrderProduct.add(entryOrderProduct);
         }
-        entryOrder.codeEntryOrder = code.first;
+        entryOrder.codeEntryOrder = entryCode;
       },
     );
 
@@ -63,10 +66,17 @@ class RegisterEntryOrderBloc extends Bloc<RegisterEntryOrderEvent, RegisterEntry
     final url = preDefinedUri('api/entryorders');
 
     try {
-      final String response = await postDataToApi(url, entryOrderString!);
-      print(response);
+      final String response = await postDataToApi(url, entryOrderString);
     } catch (e) {
-      print(e);
+      print('error');
+      emit(state.error(errorMessage: e.toString()));
     }
+  }
+
+  FutureOr<void> _storeProductQuantityEvent(StoreProductQuantityEvent event, Emitter<RegisterEntryOrderState> emit) {
+    final List<Map<String, int>> productQuantity = [];
+    productQuantity.addAll(state.productQuantity);
+    productQuantity.add(event.productQuantity);
+    emit(state.clone(productQuantity: productQuantity));
   }
 }
